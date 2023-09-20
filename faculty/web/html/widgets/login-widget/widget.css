@@ -1,0 +1,33 @@
+/* 
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    This stylesheet is targeting the login-widget for the platform
+ */
+
+.hc-ehealthi-login-widget {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 2em);
+    padding-bottom: 1em;
+}
+
+.hc-ehealthi-login-widget>.container {
+    display: inline-flex;
+    background-color: #96d6cec0;
+    padding: clamp(1px, 2.7vw, 3em);
+    padding-top: clamp(1px, 2.7vw, 3em);
+    border-radius: clamp(1px, 3vw, 3em);
+    padding-right: clamp(1px, 5vw, 7em);
+    border-top-right-radius: clamp(1px, 12vw, 7em);
+
+}
+
+
+
+.hc-ehealthi-login-widget>.container .hc-multi-flex-form-textbox>.container :is(input, textarea) {
+    background-color: transparent;
+    border-radius: 0.75em;
+    border: 1px solid black;
+}

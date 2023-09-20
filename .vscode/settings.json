@@ -1,0 +1,20 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/faculty/*/faculty.json"
+            ],
+            "url": "/system/schema/faculty/schema.json"
+        },
+        {
+            "fileMatch": [
+                "@system/descriptor.json"
+            ],
+            "url": "/system/schema/faculty/plugin/descriptor.json"
+        }
+    ],
+    "files.exclude": {
+        "data": true,
+        "node_modules": true
+    }
+}

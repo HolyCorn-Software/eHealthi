@@ -1,0 +1,105 @@
+/*  
+    Copyright 2022 HolyCorn Software
+    The Donor Forms Project
+    This is the footer widget
+*/
+
+.hc-donorforms-footer>.container {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    padding-top: 3.5em;
+    background-color: #3eebda;
+    background-color: var(--main-bg-color);
+    color: rgb(
+        calc(var(--accent-color-parts-r) + 100 + var(--main-bg-color-parts-r) * 0.7),
+        calc(var(--accent-color-parts-g) + 100 + var(--main-bg-color-parts-g) * 0.7),
+        calc(var(--accent-color-parts-b) + 100 + var(--main-bg-color-parts-b) * 0.7)
+    );
+}
+
+.hc-donorforms-footer>.container>.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position:relative;
+    height:100%;
+    gap: 2.5em;
+}
+
+.hc-donorforms-footer>.container>.main>.logo-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.hc-donorforms-footer>.container>.main>.logo-section>img {
+    width: 7em;
+}
+
+.hc-donorforms-footer>.container>.author-info {
+    text-align: center;
+    font-size: 0.85em;
+    padding-top:3em;
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hc-donorforms-footer>.container>.author-info a{
+    font-size:1em;
+    text-decoration:underline;
+}
+
+
+.hc-donorforms-footer>.container:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    pointer-events: none;
+
+    background-image: url('./res/footer-bg.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat:no-repeat;
+    opacity: 0.09;
+
+}
+
+
+
+.hc-donorforms-footer>.container>.main>.data-section {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top:2.5em;
+
+    min-height: 100%;
+    gap:1em;
+
+    font-size:clamp(0.75em, 3vw, 1.25em);
+}
+
+
+.hc-donorforms-footer a {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.25em;
+}
+
+
+@media screen and (max-width:885px){
+    .hc-donorforms-footer>.container>.main>.data-section {
+        justify-content: space-between;
+        gap:3.5em;
+    }
+}

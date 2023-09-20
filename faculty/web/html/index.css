@@ -1,0 +1,16 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    DeInstantWay Project
+    This stylesheet acts on the homepage
+*/
+
+
+body >.blank{
+    font-size:2em;
+    min-height:clamp(300px, 60vh, 800px);
+    text-align: center;
+    background-color:var(--accent-color);
+    display:flex;
+    align-items:center;
+}
+

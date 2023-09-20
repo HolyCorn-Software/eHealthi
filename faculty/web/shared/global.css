@@ -1,0 +1,31 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    DeInstantWay Project
+    This stylesheet contains globally needed style definitions for the platform
+*/
+
+
+:root {
+    --main-bg-color: rgb(28, 28, 42);
+
+    --main-bg-color-parts-r: 28;
+    --main-bg-color-parts-g: 28;
+    --main-bg-color-parts-b: 42;
+
+
+    --accent-color: rgb(255, 165, 0);
+    --accent-color-parts: 255 165 0;
+    --accent-color-parts-r: 255;
+    --accent-color-parts-g: 165;
+    --accent-color-parts-b: 0;
+
+
+
+}
+
+
+@media screen and (max-width: 683px) {
+    .hc-diw-homepage-guide>.container>.main>.steps {
+        justify-content: center !important;
+    }
+}

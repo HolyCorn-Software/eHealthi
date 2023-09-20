@@ -1,0 +1,92 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    DeInstantWay
+    This stylesheet works on the navbar widget
+*/
+
+
+@import '../../global.css';
+
+.hc-diw-navbar {
+    padding-top:1px;
+    position:sticky;
+    top:-2px;
+    z-index:10;
+}
+
+.hc-diw-navbar>.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5em;
+    padding-top: 0.65em;
+    padding-bottom: 0.75em;
+    background-color: var(--main-bg-color, black);
+    opacity: 0.8;
+}
+
+.hc-diw-navbar >.container:before{
+    position:absolute;
+    width:calc(100% - 5px);
+    height:100%;
+    top:0px;
+    left:5px;
+    z-index:-1;
+    content:'';
+    filter:invert(80%) blur(10px);
+    
+}
+
+.hc-diw-navbar>.container>.main {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.hc-diw-navbar>.container>.main>.middle {
+    flex-grow: 1;
+}
+
+.hc-diw-navbar >.container >.main >.left >.logo >img{
+    max-height:3em;
+    /* max-width:2em; */
+}
+
+.hc-diw-navbar >.container >.main >.right {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    max-width:15em;
+    padding-right:1.5vw;
+    flex-grow:0.75;
+}
+
+.hc-diw-navbar >.container >.main >.right >.links{
+    display:flex;
+    justify-content:space-between;
+}
+
+.hc-diw-navbar >.container >.main >.right >.links >*{
+    color:var(--main-bg-color);
+    filter:invert(100%);
+    text-decoration-line:none;
+    position:relative;
+}
+
+.hc-diw-navbar >.container >.main >.right >.links >*:before{
+    content: '';
+    position:absolute;
+    height:0.145em;
+    border-radius:0.5em;
+    width:0%;
+    top:100%;
+    background-color: var(--accent-color);
+    filter:invert(100%);
+    transition:0.5s 0.125s;
+    
+}
+
+.hc-diw-navbar >.container >.main >.right >.links >*:hover:before{
+    transition:0.35s 0.125s;
+    width:100%;
+}

@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "baseUrl": "",
+        "allowSyntheticDefaultImports": true,
+        "paths": {
+            "/$/system/static/*": [
+                "system/public/*"
+            ],
+            "/$/backend_dashboard/static/*": [
+                "faculty/backend_dashboard/public/*"
+            ],
+            "/$/modernuser/static/*": [
+                "faculty/modernuser/public/*"
+            ],
+            "/$/modernuser/role/static/*": [
+                "faculty/modernuser/role/public/*"
+            ],
+            "/$/modernuser/static/authentication/lib/*": [
+                "faculty/modernuser/authentication/lib/*"
+            ],
+            "/$/modernuser/notification/static/*": [
+                "faculty/modernuser/notification/public/*"
+            ],
+            "/$/modernuser/onboarding/static/*": [
+                "faculty/modernuser/onboarding/public/*"
+            ],
+            "/$/modernuser/$plugins/*":[
+                "faculty/modernuser/_.plugins/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

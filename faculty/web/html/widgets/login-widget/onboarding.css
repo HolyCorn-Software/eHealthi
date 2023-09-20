@@ -1,0 +1,27 @@
+/* 
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    This stylesheet works on the onboarding widget, found in the login-widget
+
+ */
+
+.hc-ehealthi-onboarding>.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+    position: relative;
+}
+
+.hc-ehealthi-onboarding>.container>.title {
+    font-weight: bolder;
+    font-size: 2em;
+    font-family: roboto;
+}
+
+.hc-ehealthi-onboarding>.container>.action>.hc-action-button {
+    width: 100%;
+}
+.hc-ehealthi-onboarding>.container>.action>.hc-action-button >.container {
+    color: #dcf7fc;
+    background-color: #296576;
+}

@@ -1,0 +1,12 @@
+{
+    "name": "web",
+    "label": "Web",
+    "init": "./exec.mjs",
+    "http": {
+        "staticPaths": {
+            "/$/shared/static/": "./shared/",
+            "/": "./html",
+            "/$/web/html/": "./html"
+        }
+    }
+}
