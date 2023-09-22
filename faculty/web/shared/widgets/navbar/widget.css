@@ -1,92 +1,104 @@
 /*  
     Copyright 2023 HolyCorn Software
-    DeInstantWay
-    This stylesheet works on the navbar widget
+    The eHealthi Project.
+    This stylesheet is meant for the navbar widget.
 */
 
 
-@import '../../global.css';
-
-.hc-diw-navbar {
-    padding-top:1px;
-    position:sticky;
-    top:-2px;
-    z-index:10;
-}
-
-.hc-diw-navbar>.container {
+.hc-ehealthi-navbar {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    padding-top: 1.5em;
+    z-index: 5;
+}
+
+
+.hc-ehealthi-navbar>.container {
+    display: inline-flex;
+    flex-direction: column;
+    width: 80%;
+    align-self: center;
+    border-radius: 1.5em;
     padding: 0.5em;
-    padding-top: 0.65em;
-    padding-bottom: 0.75em;
-    background-color: var(--main-bg-color, black);
-    opacity: 0.8;
+    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.575);
+    background-color: white;
 }
 
-.hc-diw-navbar >.container:before{
-    position:absolute;
-    width:calc(100% - 5px);
-    height:100%;
-    top:0px;
-    left:5px;
-    z-index:-1;
-    content:'';
-    filter:invert(80%) blur(10px);
-    
-}
-
-.hc-diw-navbar>.container>.main {
+.hc-ehealthi-navbar>.container>.main {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-
+    gap: clamp(1em, 5em, 5%);
 }
 
-.hc-diw-navbar>.container>.main>.middle {
+
+.hc-ehealthi-navbar>.container>.main>.logo-section {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    font-family: blinkerBold;
+    cursor: pointer;
+}
+
+
+.hc-ehealthi-navbar>.container>.main>.logo-section>img {
+    width: 3em;
+    height: 3em;
+    object-fit: contain;
+    object-position: center;
+    transition: 0.35s 0.125s;
+}
+
+.hc-ehealthi-navbar>.container>.main>.logo-section:hover>img {
+    transform: rotate(-60deg);
+}
+
+.hc-ehealthi-navbar>.container>.main>.logo-section>.label {
+    color: var(--accent-color);
+    filter: brightness(130%);
+}
+
+.hc-ehealthi-navbar>.container>.main>.trigger {
+    display: flex;
+    justify-content: flex-end;
+    gap: clamp(0.5em, 2em, 5%);
+    align-items: center;
     flex-grow: 1;
+    font-family: jua;
 }
 
-.hc-diw-navbar >.container >.main >.left >.logo >img{
-    max-height:3em;
-    /* max-width:2em; */
+.hc-ehealthi-navbar>.container>.main>.trigger>.item {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.hc-diw-navbar >.container >.main >.right {
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    max-width:15em;
-    padding-right:1.5vw;
-    flex-grow:0.75;
-}
-
-.hc-diw-navbar >.container >.main >.right >.links{
-    display:flex;
-    justify-content:space-between;
-}
-
-.hc-diw-navbar >.container >.main >.right >.links >*{
-    color:var(--main-bg-color);
-    filter:invert(100%);
-    text-decoration-line:none;
-    position:relative;
-}
-
-.hc-diw-navbar >.container >.main >.right >.links >*:before{
+.hc-ehealthi-navbar>.container>.main>.trigger>.item::before {
     content: '';
-    position:absolute;
-    height:0.145em;
-    border-radius:0.5em;
-    width:0%;
-    top:100%;
+    width: 0%;
+    --height: 0.25em;
+    height: var(--height);
+    top: calc(100% - var(--height) + (var(--height) / 2));
+    border-radius: var(--height);
     background-color: var(--accent-color);
-    filter:invert(100%);
-    transition:0.5s 0.125s;
-    
+    position: absolute;
+    z-index: -1;
+    transition: 0.25s 0.125s width, 0.25s 0.15s height, 0.25s 0.25s top, 0.25s 0.25s color;
+    color: black;
 }
 
-.hc-diw-navbar >.container >.main >.right >.links >*:hover:before{
-    transition:0.35s 0.125s;
-    width:100%;
+.hc-ehealthi-navbar>.container>.main>.trigger>.item:hover::before {
+    width: 100%;
+    height: 100%;
+    top: 0%;
+}
+
+.hc-ehealthi-navbar>.container>.main>.trigger>.item:hover {
+    color: white;
+    transition: 0.25s 0.25s;
 }

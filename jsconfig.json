@@ -24,8 +24,11 @@
             "/$/modernuser/onboarding/static/*": [
                 "faculty/modernuser/onboarding/public/*"
             ],
-            "/$/modernuser/$plugins/*":[
+            "/$/modernuser/$plugins/*": [
                 "faculty/modernuser/_.plugins/*"
+            ],
+            "/$/shared/static/*": [
+                "faculty/web/shared/*"
             ]
         }
     },

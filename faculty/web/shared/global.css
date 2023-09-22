@@ -13,7 +13,7 @@
     --main-bg-color-parts-b: 42;
 
 
-    --accent-color: rgb(255, 165, 0);
+    --accent-color: #17968E;
     --accent-color-parts: 255 165 0;
     --accent-color-parts-r: 255;
     --accent-color-parts-g: 165;
@@ -24,8 +24,17 @@
 }
 
 
-@media screen and (max-width: 683px) {
-    .hc-diw-homepage-guide>.container>.main>.steps {
-        justify-content: center !important;
-    }
+@font-face {
+    font-family: blinkerExtraBold;
+    src: url('./font/Blinker-ExtraBold.ttf');
+}
+
+@font-face {
+    font-family: blinkerBold;
+    src: url('./font/Blinker-Bold.ttf');
+}
+
+@font-face {
+    font-family: jua;
+    src: url('./font/Jua-Regular.ttf');
 }
