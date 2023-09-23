@@ -1,0 +1,26 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project.
+    This stylesheet works on the coming-soon widget.
+*/
+
+
+.hc-ehealthi-coming-soon>.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    font-size: clamp(1em, 3em, 8vw);
+    background-color: var(--accent-color);
+    align-items: center;
+    font-family: jua;
+    text-align: center;
+}
+
+.hc-ehealthi-coming-soon>.container>.label {
+    filter: invert(1);
+}
+
+.hc-ehealthi-coming-soon>.container>.image {
+    width: clamp(300px, 100vw - 3em, 1000px);
+}

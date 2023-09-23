@@ -8,9 +8,13 @@
 import FooterSection from "./section.mjs";
 import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { Widget } from "/$/system/static/html-hc/lib/widget/index.mjs";
+import ActionButton from "/$/system/static/html-hc/widgets/action-button/button.mjs";
 
 
 
+/**
+ * @extends Widget<Footer>
+ */
 export default class Footer extends Widget {
 
     constructor() {
@@ -22,17 +26,17 @@ export default class Footer extends Widget {
                 <div class='container'>
                     <div class='main'>
                         <div class='logo-section'>
-                            <img src='/$/shared/static/logo-minimal.png'>
+                            <img src='/$/shared/static/logo.png'>
                             <div class='copyright'>&copy; 2023</div>
                         </div>
 
-                        <div class='data-section'>
-                        
-                        </div>
+                        <div class='data-section'></div>
                         
                     </div>
 
-                    <div class='author-info'>Carefully Engineered by <a href='mailto:holycornsoftware@gmail.com'>HolyCorn Software</a></div>
+                    <div class='community-button'></div>
+
+                    <div class='author-info'><div class='label'>Carefully Engineered by</div> <div class='action' href='mailto:holycornsoftware@gmail.com'>HolyCorn Software</div></div>
                     
                 </div>
             `
@@ -66,52 +70,68 @@ export default class Footer extends Widget {
 
 
             {
-                title: `Contact`,
+                title: `Contact Us`,
                 links: [
                     {
-                        label: `holycornsoftware@gmail.com`,
+                        label: `Email`,
+                        href: '#'
+                    },
+                    {
+                        label: `Facebook`,
                         href: `#`
                     },
                     {
-                        label: `237 677683958`,
-                        href: `tel:237677683958`
+                        label: `WhatsApp`,
+                        href: `wa.me/237651449423`
                     },
-                    {
-                        label: `Mile 3, Nkwen Bamenda`,
-                        href: '#'
-                    }
+
                 ]
             },
 
             {
-                title: `Social Media`,
+                title: `Services`,
                 links: [
 
                     {
-                        label: `Facebook`,
-                        href: `#`
-                    }
+                        label: 'Counseling',
 
-                    ,
-
-                    {
-                        label: `Instagram`,
-                        href: `#`
                     },
-
-
                     {
-                        label: `Twitter`,
-                        href: `#`
+                        label: 'Family Planning',
+
+                    },
+                    {
+                        label: 'Consultation',
+
+                    },
+                    {
+                        label: 'Lab Tests',
+
                     },
                 ]
             },
 
-        ]
+        ];
+
+        /** @type {ActionButton} */ this.communityButton
+        this.widgetProperty(
+            {
+                selector: ['', ...ActionButton.classList].join('.'),
+                parentSelector: '.container >.community-button',
+                childType: 'widget',
+                property: 'communityButton'
+            }
+        );
+
+        this.communityButton = new ActionButton(
+            {
+                content: `Join Community`
+            }
+        )
 
     }
 
-    static get classList(){
+    static get classList() {
         return ['hc-donorforms-footer']
     }
 

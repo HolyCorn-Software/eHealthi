@@ -11,19 +11,17 @@
     padding-top: 3.5em;
     background-color: #3eebda;
     background-color: var(--main-bg-color);
-    color: rgb(
-        calc(var(--accent-color-parts-r) + 100 + var(--main-bg-color-parts-r) * 0.7),
-        calc(var(--accent-color-parts-g) + 100 + var(--main-bg-color-parts-g) * 0.7),
-        calc(var(--accent-color-parts-b) + 100 + var(--main-bg-color-parts-b) * 0.7)
-    );
+    color: white;
+    font-family: k2dThin;
+    font-size: clamp(0.75em, 3vw, 1.25em);
 }
 
 .hc-donorforms-footer>.container>.main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    position:relative;
-    height:100%;
+    position: relative;
+    height: 100%;
     gap: 2.5em;
 }
 
@@ -40,16 +38,21 @@
 
 .hc-donorforms-footer>.container>.author-info {
     text-align: center;
-    font-size: 0.85em;
-    padding-top:3em;
-    display:inline-flex;
-    align-items: center;
+    font-size: 0.95em;
+    padding-top: 2em;
+    display: inline-flex;
+    align-items: flex-end;
     justify-content: center;
+    gap: 0.5ch;
 }
 
-.hc-donorforms-footer>.container>.author-info a{
-    font-size:1em;
-    text-decoration:underline;
+
+.hc-donorforms-footer>.container>.author-info .action {
+    font-size: 0.95em;
+    font-weight: bolder;
+    display: inline-flex;
+    align-items: flex-end;
+    font-family: jua;
 }
 
 
@@ -62,10 +65,9 @@
     top: 0px;
     pointer-events: none;
 
-    background-image: url('./res/footer-bg.jpg');
     background-size: contain;
     background-position: center;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     opacity: 0.09;
 
 }
@@ -77,12 +79,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding-top:2.5em;
+    padding-top: 2.5em;
 
     min-height: 100%;
-    gap:1em;
+    gap: 1em;
 
-    font-size:clamp(0.75em, 3vw, 1.25em);
 }
 
 
@@ -97,9 +98,37 @@
 }
 
 
-@media screen and (max-width:885px){
+.hc-donorforms-footer>.container>.community-button {
+    align-self: center;
+    width: calc(clamp(350px, 100vw - 7em - 6em - 3em, 36em));
+    padding-top: 1.5em;
+    padding-left: 7em;
+    position: relative;
+    align-self: center;
+}
+
+.hc-donorforms-footer>.container>.community-button>.hc-action-button {
+    width: 100%;
+}
+
+.hc-donorforms-footer>.container>.community-button>.hc-action-button>.container {
+    background-color: var(--accent-color);
+    color: var(--main-bg-color);
+    font-size: 1.5em;
+    font-family: jua;
+    width: 100%;
+    border-radius: 0.75em;
+}
+
+
+@media screen and (max-width:885px) {
     .hc-donorforms-footer>.container>.main>.data-section {
         justify-content: space-between;
-        gap:3.5em;
+        gap: 3.5em;
+    }
+
+    .hc-donorforms-footer>.container>.community-button {
+        width: calc(100vw - 5em);
+        padding-left: 0px;
     }
 }

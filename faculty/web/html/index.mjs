@@ -12,6 +12,8 @@ import WhyUs from "./widgets/why-us/widget.mjs";
 import InfoServices from "./widgets/info-services/widget.mjs";
 import InfoTeam from "./widgets/info-team/widget.mjs";
 import InfoCommunity from "./widgets/info-community/widget.mjs";
+import ContactUs from "./widgets/contact-us/widget.mjs";
+import ComingSoon from "./widgets/coming-soon/widget.mjs";
 
 const navbar = new DIWNavbar()
 
@@ -36,6 +38,17 @@ document.body.appendChild(
 
 document.body.appendChild(
     new InfoCommunity().html
+)
+document.body.appendChild(
+    new ContactUs().html
+)
+
+document.body.appendChild(
+    new ComingSoon({ label: `eHealthi Mobile App`, image: 'bg.png' }).html
+)
+
+document.body.appendChild(
+    new Footer().html
 )
 
 hc.importModuleCSS(import.meta.url);

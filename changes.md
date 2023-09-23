@@ -1,11 +1,8 @@
 
 
-Updated to the latest version of modernuser, featuring better stability.
+Improved the UI, by adding more informative widgets.
 
-Updated platform logo.
+Added a footer to improve the UI.
 
-Improved design of navbar.
+Improved the design of the footer widget.
 
-Added more content to the UI, such as services, team, and community info.
-
-Updated to the latest version of the soul system, coming with a new widget, and UX improvements.

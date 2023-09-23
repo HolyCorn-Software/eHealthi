@@ -4,6 +4,9 @@
     This stylesheet gives the look, and feel, of the filled-button widget.
 */
 
+.hc-action-button.hc-ehealthi-filled-button {
+    --highlight-color: var(--accent-color, white);
+}
 
 .hc-action-button.hc-ehealthi-filled-button>.container {
     background-color: transparent;
@@ -22,7 +25,7 @@
     border-radius: inherit;
     filter: brightness(150%);
     opacity: 0.5;
-    background-color: var(--accent-color);
+    background-color: var(--highlight-color);
 }
 
 .hc-action-button.hc-ehealthi-filled-button.hoverAnimate:hover>.container>.content::after {
@@ -30,7 +33,6 @@
 }
 
 .hc-action-button.hc-ehealthi-filled-button.hoverAnimate:hover>.container>.content>* {
-    /* color: black; */
     transition: 0.25s 0.25s;
 }
 

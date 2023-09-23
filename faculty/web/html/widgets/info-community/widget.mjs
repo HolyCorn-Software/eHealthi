@@ -45,7 +45,8 @@ export default class InfoCommunity extends Widget {
 
         this.action = new ActionButton(
             {
-                content: `Join WhatsApp Community`
+                content: `Join WhatsApp Community`,
+                hoverAnimate: false
             }
         )
 
