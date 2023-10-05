@@ -61,7 +61,7 @@
     color: black;
     font-family: jua;
     border-radius: 0.5em;
-    font-size: clamp(0.75em, 1em, 4.5vw);
+    font-size: clamp(0.65em, 1em, 4vw);
 }
 
 .hc-ehealthi-info-community>.container>.content>.action>.hc-action-button:hover>.container {

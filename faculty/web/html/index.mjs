@@ -14,6 +14,9 @@ import InfoTeam from "./widgets/info-team/widget.mjs";
 import InfoCommunity from "./widgets/info-community/widget.mjs";
 import ContactUs from "./widgets/contact-us/widget.mjs";
 import ComingSoon from "./widgets/coming-soon/widget.mjs";
+import FrequentlyAskedQuestions from "./widgets/frequently-asked-questions/widget.mjs";
+import InfoMoto from "./widgets/info-moto/widget.mjs";
+import TargetDiseases from "./widgets/target-diseases/widget.mjs";
 
 const navbar = new DIWNavbar()
 
@@ -31,14 +34,27 @@ document.body.appendChild(
 document.body.appendChild(
     new InfoServices().html
 )
+document.body.appendChild(
+    new TargetDiseases().html
+)
 
 document.body.appendChild(
     new InfoTeam().html
 )
 
 document.body.appendChild(
+    new InfoMoto().html
+)
+
+document.body.appendChild(
+    new FrequentlyAskedQuestions().html
+)
+
+document.body.appendChild(
     new InfoCommunity().html
 )
+
+
 document.body.appendChild(
     new ContactUs().html
 )

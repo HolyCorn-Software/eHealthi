@@ -6,6 +6,7 @@
  */
 
 import FooterSection from "./section.mjs";
+import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { Widget } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import ActionButton from "/$/system/static/html-hc/widgets/action-button/button.mjs";
@@ -127,7 +128,16 @@ export default class Footer extends Widget {
             {
                 content: `Join Community`
             }
-        )
+        );
+
+        this.blockWithAction(async () => {
+            /** @type {ehealthi.ui.info_services.ServiceInfo[]} */
+            const services = (await hcRpc.system.settings.get({ faculty: 'web', name: 'organization_services', namespace: 'widgets' })) || [];
+            this.data[1] = {
+                title: `Services`,
+                links: services.map(x => ({ label: x.title })),
+            }
+        })
 
     }
 

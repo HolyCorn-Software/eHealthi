@@ -23,7 +23,10 @@ export default class Hero extends Widget {
                 innerHTML: `
                     <div class='container'>
                         <div class='main'>
-                            <div class='title'>Health, from Home.</div>
+                            <div class='text'>
+                                <div class='title'>Health, from Home.</div>
+                                <div class='caption'>Providing accessible and affordable primary healthcare services to communities around Africa.</div>
+                            </div>
                             <div class='action'></div>
                         </div>
                     </div>

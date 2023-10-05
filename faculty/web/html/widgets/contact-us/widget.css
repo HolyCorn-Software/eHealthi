@@ -12,7 +12,7 @@
 .hc-ehealthi-contact-us>.container {
     display: flex;
     flex-direction: column;
-    background-color: black;
+    background-color: #050555;
     padding-top: 2em;
     padding-bottom: 2em;
     width: 100%;
@@ -34,7 +34,7 @@
     transform: translateX(25%);
     align-self: center;
     background: url('./caption-image.png') no-repeat;
-    background-position: center;
+    background-position: 23% 20%;
 }
 
 .hc-ehealthi-contact-us>.container>.main>.form {
@@ -66,8 +66,8 @@
 }
 
 .hc-ehealthi-contact-us>.container>.main>.form>.action>.hc-ehealthi-filled-button {
-    width: 100%;
-    --highlight-color: rgb(223, 16, 102);
+    width: calc(100% - 1em);
+    --highlight-color: rgb(250, 11, 110);
 }
 
 .hc-ehealthi-contact-us>.container>.main>.form>.action>.hc-ehealthi-filled-button>.container {
@@ -108,7 +108,7 @@
         transform: translate(0, 0);
         width: clamp(250px, 500px + 1em, 100vw - 1.5em);
         aspect-ratio: 1/1;
-        border: 0.2em solid var(--accent-color);
+        border: 0.125em solid var(--accent-color);
     }
 
     .hc-ehealthi-contact-us>.container>.main>.form>img {

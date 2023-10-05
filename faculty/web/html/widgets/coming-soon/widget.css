@@ -15,10 +15,12 @@
     align-items: center;
     font-family: jua;
     text-align: center;
+    color: var(--main-bg-color);
 }
 
-.hc-ehealthi-coming-soon>.container>.label {
-    filter: invert(1);
+.hc-ehealthi-coming-soon>.container>.title {
+    filter: invert(1) brightness(1.75);
+    font-family: k2d;
 }
 
 .hc-ehealthi-coming-soon>.container>.image {

@@ -5,8 +5,16 @@
     "http": {
         "staticPaths": {
             "/$/shared/static/": "./shared/",
-            "/": "./html",
-            "/$/web/html/": "./html"
+            "/$/web/html/": "./html",
+            "/": "./html"
+        }
+    },
+    "meta": {
+        "settings": {
+            "widgets": {
+                "public": true,
+                "label": "Widgets public settings"
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
  */
 
 import FilledButton from "/$/shared/static/widgets/filled-button/widget.mjs";
+import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
@@ -102,39 +103,13 @@ export default class InfoServices extends Widget {
                 }
             );
 
-            setTimeout(() => { console.log(`labels: `, this[actionLabels]) }, 2000)
         }, 250)
         this.statedata.$0.addEventListener('services-$array-items-change', onchange)
         this.statedata.$0.addEventListener('services-change', onchange)
 
-
-        this.statedata.services = [
-            {
-                id: 'counseling',
-                title: 'Counseling',
-                image: new URL('./img-data/counseling.png', import.meta.url).href,
-                description: `We counsel our clients. Bla, bla bla; testing the UI, yes!`,
-            },
-            {
-                id: 'familyPlan',
-                title: 'Family Planning',
-                image: new URL('./img-data/counseling.png', import.meta.url).href,
-                description: `We help you decide when it's time to give birth, oka?`,
-            },
-            {
-                id: 'consultation',
-                title: 'Consultation',
-                image: new URL('./img-data/counseling.png', import.meta.url).href,
-                description: `Talk to us if ever you feel sick. Yes, thank you; bla bla bla.`,
-            },
-            {
-                id: 'labTest',
-                title: 'Lab Tests',
-                image: new URL('./img-data/counseling.png', import.meta.url).href,
-                description: `We carry out tests in the laboratory for the sake of bla bla bla.`,
-            },
-
-        ]
+        this.blockWithAction(async () => {
+            this.statedata.services = (await hcRpc.system.settings.get({ faculty: 'web', name: 'organization_services', namespace: 'widgets' })) || []
+        })
 
 
     }

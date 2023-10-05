@@ -1,0 +1,17 @@
+{
+    "admin": [
+        {
+            "label": "Contents",
+            "icon": "/$/shared/static/logo.png",
+            "name": "platform_content",
+            "supergroup": ""
+        },
+        {
+            "label": "Diseases",
+            "view": "./widget.mjs",
+            "name": "target_diseases",
+            "icon": "/$/shared/static/logo.png",
+            "group": "platform_content"
+        }
+    ]
+}

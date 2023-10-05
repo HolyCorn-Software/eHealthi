@@ -33,6 +33,7 @@
     align-items: center;
     justify-content: space-between;
     gap: clamp(1em, 5em, 5%);
+    font-size: clamp(0.5em, 1em, 3vw);
 }
 
 
@@ -59,7 +60,7 @@
 
 .hc-ehealthi-navbar>.container>.main>.logo-section>.label {
     color: var(--accent-color);
-    filter: brightness(130%);
+    filter: brightness(87%);
 }
 
 .hc-ehealthi-navbar>.container>.main>.trigger {
@@ -99,6 +100,5 @@
 }
 
 .hc-ehealthi-navbar>.container>.main>.trigger>.item:hover {
-    color: white;
     transition: 0.25s 0.25s;
 }

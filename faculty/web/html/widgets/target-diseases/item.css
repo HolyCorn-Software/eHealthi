@@ -1,0 +1,47 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    This stylesheet targets a single disease on the target-diseases widget
+*/
+
+
+.hc-ehealthi-target-diseases-item>.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    background-color: var(--accent-color);
+    aspect-ratio: 1/1;
+    width: clamp(6em, 8em, 5vw);
+    border-radius: 1em;
+    justify-content: center;
+    padding: 0.75em;
+}
+
+.hc-ehealthi-target-diseases-item>.container>.image {
+    width: 3em;
+    height: 3em;
+    position: relative;
+}
+
+.hc-ehealthi-target-diseases-item>.container>.image>* {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    object-position: center;
+    filter: invert(1) grayscale(1) brightness(2);
+}
+
+.hc-ehealthi-target-diseases-item:nth-child(2n)>.container {
+    background-color: #941275;
+    color: beige;
+}
+
+.hc-ehealthi-target-diseases-item:nth-child(2n)>.container>.image>* {
+    filter: grayscale(1) brightness(2);
+}
+
+.hc-ehealthi-target-diseases-item:nth-child(3n)>.container {
+    background-color: #c1e2ff;
+    color: var(--main-bg-color);
+}
