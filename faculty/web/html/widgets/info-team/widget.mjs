@@ -6,6 +6,7 @@
  */
 
 import Item from "./item.mjs";
+import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
@@ -64,6 +65,12 @@ export default class InfoTeam extends Widget {
             this[slider].items = this.statedata.items.map(item => new Item(item).html)
         }, 250));
 
+        this.blockWithAction(async () => {
+
+            /** @type {ehealthi.ui.info_team.Item[]} */
+            const res = (await hcRpc.system.settings.get({ faculty: 'web', name: 'team_info', namespace: 'widgets' })) || []
+            this.statedata.items = res
+        })
         this.statedata.items = [
             {
                 icon: new URL('./happy-doctor-1.png', import.meta.url).href,

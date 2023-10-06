@@ -41,7 +41,7 @@
     background-color: var(--accent-color);
     padding: 1em;
     padding-left: 10%;
-    width: clamp(250px, 450px, 80vw);
+    width: clamp(250px, 450px, 100vw - 4.5em);
 }
 
 .hc-ehealthi-contact-us>.container>.main>.form>img {

@@ -19,4 +19,16 @@ global {
             items: Item[]
         }>
     }
+
+
+    namespace faculty.managedsettings {
+        interface all {
+            team_info: {
+                faculty: 'web'
+                namespace: 'widgets'
+                data: ehealthi.ui.info_team.Item[]
+            }
+        }
+    }
+
 }

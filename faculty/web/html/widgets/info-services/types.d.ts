@@ -21,4 +21,15 @@ global {
         }>
 
     }
+
+    namespace faculty.managedsettings {
+        interface all {
+            organization_services: {
+                faculty: 'web'
+                namespace: 'widgets'
+                data: ehealthi.ui.info_services.ServiceInfo[]
+            }
+        }
+    }
+
 }

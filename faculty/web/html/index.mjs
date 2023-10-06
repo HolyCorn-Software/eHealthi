@@ -4,9 +4,8 @@
  * This script controls the home page
  */
 
-import DIWNavbar from "/$/shared/static/widgets/navbar/widget.mjs";
+import Navbar from "/$/shared/static/widgets/navbar/widget.mjs";
 import Footer from "/$/shared/static/widgets/footer/widget.mjs";
-import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import Hero from "./widgets/hero/widget.mjs";
 import WhyUs from "./widgets/why-us/widget.mjs";
 import InfoServices from "./widgets/info-services/widget.mjs";
@@ -18,12 +17,10 @@ import FrequentlyAskedQuestions from "./widgets/frequently-asked-questions/widge
 import InfoMoto from "./widgets/info-moto/widget.mjs";
 import TargetDiseases from "./widgets/target-diseases/widget.mjs";
 
-const navbar = new DIWNavbar()
 
-const footer = new Footer()
 
-document.body.appendChild(navbar.html)
-// document.body.appendChild(footer.html)
+document.body.appendChild(new Navbar().html)
+
 document.body.appendChild(
     new Hero().html
 )
@@ -66,5 +63,3 @@ document.body.appendChild(
 document.body.appendChild(
     new Footer().html
 )
-
-hc.importModuleCSS(import.meta.url);

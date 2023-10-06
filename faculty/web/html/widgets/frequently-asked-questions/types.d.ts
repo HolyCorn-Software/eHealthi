@@ -16,4 +16,14 @@ global {
             content: string
         }
     }
+
+    namespace faculty.managedsettings {
+        interface all {
+            frequently_asked_questions: {
+                faculty: 'web'
+                namespace: 'widgets'
+                data: ehealthi.ui.frequently_asked_questions.QuestionData[]
+            }
+        }
+    }
 }
