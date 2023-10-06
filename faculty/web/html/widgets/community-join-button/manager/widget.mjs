@@ -74,6 +74,13 @@ export default class SetCommunityLink extends Widget {
 
         this.html.$('.container >.action').appendChild(button.html)
 
+
+        this.blockWithAction(
+            async () => {
+                form.values = (await hcRpc.system.settings.get({ faculty: 'web', namespace: 'widgets', name: 'community_info' })) || {}
+            }
+        )
+
     }
 
     /** @readonly */
