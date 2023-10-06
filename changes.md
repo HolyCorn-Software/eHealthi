@@ -1,13 +1,9 @@
 .
 
-Updated to the latest version of backend_dashboard with minor performance improvements on the frontend.
+Improved code quality by correcting typos.
 
-Updated to the latest version of modernuser, with better UI, and platform stability.
+Added ability to manage contact information.
 
-Made the contact-us widget more responsive.
+Made contact information for both footer, and contact-us widget dynamic.
 
-Improved typing.
-
-Updated to the latest version of the soul system, with better platform stability.
-
-Added ability to manage information about team member from the admin dashboard.
+Invented a special widget for allowing the user join the organization's community, while making it possible for this information to be altered by an authorized personnel.

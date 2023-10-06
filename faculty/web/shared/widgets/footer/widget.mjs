@@ -5,11 +5,12 @@
  * Ported to the DeInstantWay Project
  */
 
+import CommunityJoinButton from "/$/web/html/widgets/community-join-button/widget.mjs";
 import FooterSection from "./section.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
+import { handle } from "/$/system/static/errors/error.mjs";
 import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { Widget } from "/$/system/static/html-hc/lib/widget/index.mjs";
-import ActionButton from "/$/system/static/html-hc/widgets/action-button/button.mjs";
 
 
 
@@ -114,29 +115,29 @@ export default class Footer extends Widget {
 
         ];
 
-        /** @type {ActionButton} */ this.communityButton
-        this.widgetProperty(
-            {
-                selector: ['', ...ActionButton.classList].join('.'),
-                parentSelector: '.container >.community-button',
-                childType: 'widget',
-                property: 'communityButton'
-            }
-        );
-
-        this.communityButton = new ActionButton(
-            {
-                content: `Join Community`
-            }
-        );
+        this.html.$('.container >.community-button').appendChild(new CommunityJoinButton().html)
 
         this.blockWithAction(async () => {
-            /** @type {ehealthi.ui.info_services.ServiceInfo[]} */
-            const services = (await hcRpc.system.settings.get({ faculty: 'web', name: 'organization_services', namespace: 'widgets' })) || [];
-            this.data[1] = {
-                title: `Services`,
-                links: services.map(x => ({ label: x.title })),
+            const loadContacts = async () => {
+                /** @type {ehealthi.ui.contact_us.SocialContact[]} */
+                const contacts = (await hcRpc.system.settings.get({ faculty: 'web', name: 'organization_contacts', namespace: 'widgets' })) || []
+                this.data[0] = {
+                    title: `Contact Us`,
+                    links: contacts
+                }
             }
+
+            const loadServices = async () => {
+                /** @type {ehealthi.ui.info_services.ServiceInfo[]} */
+                const services = (await hcRpc.system.settings.get({ faculty: 'web', name: 'organization_services', namespace: 'widgets' })) || [];
+                this.data[1] = {
+                    title: `Services`,
+                    links: services.map(x => ({ label: x.title })),
+                }
+            }
+
+            const results = await Promise.allSettled([loadServices(), loadContacts()])
+            results.filter(x => x.status === 'rejected').forEach(stat => handle(stat.reason))
         })
 
     }

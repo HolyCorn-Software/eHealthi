@@ -11,9 +11,9 @@ import WidgetSettingsManager from "../../widget-settings-manager/widget.mjs";
 
 
 /**
- * @extends WidgetSettingsManager<ehealthi.ui.info_services.ServiceInfo>
+ * @extends WidgetSettingsManager<ehealthi.ui.frequently_asked_questions.QuestionData>
  */
-export default class ServicesManager extends WidgetSettingsManager {
+export default class FrequentlyAskedQuestionsManager extends WidgetSettingsManager {
 
     constructor() {
         super(

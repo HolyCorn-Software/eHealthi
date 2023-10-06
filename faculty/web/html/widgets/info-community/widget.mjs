@@ -4,8 +4,9 @@
  * This widget (info-community), presents the user with the opportunity to join the organization's social media community
  */
 
+import CommunityJoinButton from "../community-join-button/widget.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
-import ActionButton from "/$/system/static/html-hc/widgets/action-button/button.mjs";
+
 
 
 /**
@@ -33,22 +34,7 @@ export default class InfoCommunity extends Widget {
             }
         );
 
-        /** @type {ActionButton} */ this.action
-        this.widgetProperty(
-            {
-                selector: ['', ...ActionButton.classList].join('.'),
-                parentSelector: '.container >.content >.action',
-                property: 'action',
-                childType: 'widget'
-            }
-        );
-
-        this.action = new ActionButton(
-            {
-                content: `Join WhatsApp Community`,
-                hoverAnimate: false
-            }
-        )
+        this.html.$('.container >.content >.action').appendChild(new CommunityJoinButton().html)
 
     }
 

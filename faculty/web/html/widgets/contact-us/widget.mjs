@@ -5,6 +5,7 @@
  */
 
 import FilledButton from "/$/shared/static/widgets/filled-button/widget.mjs";
+import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import MultiFlexForm from "/$/system/static/html-hc/widgets/multi-flex-form/flex.mjs";
 
@@ -97,7 +98,8 @@ export default class ContactUs extends Widget {
                             tag: 'a',
                             classes: ['social'],
                             attributes: {
-                                href: input.href
+                                href: input.href,
+                                target: '_blank'
                             },
                             innerHTML: `
                                 <img src='${input.icon}'>
@@ -128,7 +130,11 @@ export default class ContactUs extends Widget {
                 icon: new URL('./email.svg', import.meta.url).href,
                 href: '#'
             },
-        ]
+        ];
+
+        this.blockWithAction(async () => {
+            this.social = (await hcRpc.system.settings.get({ faculty: 'web', name: 'organization_contacts', namespace: 'widgets' })) || []
+        })
 
 
 

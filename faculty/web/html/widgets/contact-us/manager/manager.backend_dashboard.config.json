@@ -7,9 +7,9 @@
             "supergroup": ""
         },
         {
-            "label": "Services",
+            "label": "Contacts",
             "view": "./widget.mjs",
-            "name": "organization_services",
+            "name": "organization_contacts",
             "icon": "/$/shared/static/logo.png",
             "group": "platform_content"
         }

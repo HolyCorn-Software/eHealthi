@@ -13,6 +13,17 @@ global {
         interface SocialContact {
             icon: string
             href: string
+            label: string
+        }
+    }
+
+    namespace faculty.managedsettings {
+        interface all {
+            organization_contacts: {
+                namespace: 'widgets'
+                faculty: 'web'
+                data: ehealthi.ui.contact_us.SocialContact[]
+            }
         }
     }
 }
