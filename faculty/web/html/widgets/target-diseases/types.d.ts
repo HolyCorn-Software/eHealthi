@@ -14,6 +14,7 @@ global {
         interface TargetDisease {
             label: string
             image: string
+            content: string
         }
     }
 }

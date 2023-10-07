@@ -25,21 +25,30 @@ export default class Item extends Widget {
                 classes: Item.classList,
                 innerHTML: `
                     <div class='container'>
-                        <div class='image'></div>
-                        <div class='label'></div>
+                        <div class='top'>
+                            <div class='image'></div>
+                            <div class='label'></div>
+                        </div>
+                        <div class='bottom'>
+                            <div class='content'></div>
+                        </div>
                     </div>
                 `
             }
         );
 
-        /** @type {string} */ this.image
-        this.defineImageProperty({ selector: '.container >.image', property: 'image', mode: 'inline' })
-        /** @type {string} */ this.label
-        this.htmlProperty('.container >.label', 'label', 'innerHTML')
+        /** @type {ehealthi.ui.target_diseases.TargetDisease['image']} */ this.image
+        this.defineImageProperty({ selector: '.container >.top >.image', property: 'image', mode: 'inline' })
+        /** @type {ehealthi.ui.target_diseases.TargetDisease['label']} */ this.label
+        this.htmlProperty('.container >.top >.label', 'label', 'innerHTML')
+        /** @type {ehealthi.ui.target_diseases.TargetDisease['content']} */ this.content
+        this.htmlProperty('.container >.bottom >.content', 'content', 'innerHTML')
 
         Object.assign(this, data)
 
-        this.image ||= '/$/shared/static/logo.png'
+        this.waitTillDOMAttached(() => {
+            this.image ||= '/$/shared/static/logo.png'
+        })
 
     }
 

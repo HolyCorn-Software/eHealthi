@@ -11,7 +11,7 @@ import ListDataManager from "/$/system/static/html-hc/widgets/list-data-manager/
 
 
 /**
- * @template T
+ * @template {id: string} T
  * @extends ListDataManager<T>
  */
 export default class WidgetSettingsManager extends ListDataManager {
@@ -40,7 +40,10 @@ export default class WidgetSettingsManager extends ListDataManager {
                     input: form,
                     create: async (input) => {
                         // To make this method serve both for create, and update, we need to only work with new items that are truly new (that don't have ids)
-                        const items = [...this.content, ...input.filter(x => (typeof x.id) == 'undefined').map(x => ({ ...x, id: uuid() }))]
+                        const updates = input.filter(x => (typeof x.id) != 'undefined')
+                        const nw = input.filter(x => (typeof x.id) == 'undefined').map(x => ({ ...x, id: uuid() }))
+                        const old = this.content.filter(x => updates.findIndex(u => u.id == x.id) == -1)
+                        const items = [...old, ...updates, ...nw]
                         await hcRpc.engTerminal.faculty.settings.set('web', { namespace: 'widgets', name: settingsKey, value: items })
                     },
                     delete: async (input) => {

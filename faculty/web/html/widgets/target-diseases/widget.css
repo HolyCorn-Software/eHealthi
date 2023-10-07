@@ -27,6 +27,6 @@
 .hc-ehealthi-target-diseases>.container>.items {
     display: flex;
     flex-wrap: wrap;
-    gap: 2em;
+    gap: clamp(1em, 2em, 15vw);
     justify-content: center;
 }

@@ -27,6 +27,11 @@ export default class TargetDiseasesManager extends WidgetSettingsManager {
                         name: 'label',
                         label: `Name`,
                         view: '::text'
+                    },
+                    {
+                        name: 'content',
+                        label: `Description`,
+                        view: '::text'
                     }
                 ],
                 form: [
@@ -44,6 +49,13 @@ export default class TargetDiseasesManager extends WidgetSettingsManager {
                             url: '/$/uniqueFileUpload/upload',
                         }
                     ],
+                    [
+                        {
+                            label: `Description`,
+                            name: 'content',
+                            type: 'textarea'
+                        }
+                    ]
                 ],
                 settingsKey: 'target_diseases'
             }
