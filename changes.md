@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of the soul system, with marked speed improvements on the frontend.
+Updated to the latest version of the soul system, with slight improvements, and bug fixes related to caching.
