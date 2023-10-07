@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of the soul system, with minor UI bug fixes.
+Updated to the latest version of the soul system, with marked speed improvements on the frontend.
