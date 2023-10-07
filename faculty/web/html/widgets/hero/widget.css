@@ -44,6 +44,7 @@
     min-height: 50%;
     justify-content: flex-end;
     flex-direction: column;
+    padding-top: calc(3.5em - 2vw);
     gap: 4em;
     flex-grow: 1;
     width: 80%;

@@ -61,6 +61,7 @@
 .hc-ehealthi-navbar>.container>.main>.logo-section>.label {
     color: var(--accent-color);
     filter: brightness(87%);
+    max-width: 6em;
 }
 
 .hc-ehealthi-navbar>.container>.main>.trigger {
@@ -77,6 +78,7 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
+    min-width: max-content;
 }
 
 .hc-ehealthi-navbar>.container>.main>.trigger>.item::before {
