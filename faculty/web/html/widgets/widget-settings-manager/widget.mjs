@@ -39,13 +39,17 @@ export default class WidgetSettingsManager extends ListDataManager {
                     display: displayConfig,
                     input: form,
                     create: async (input) => {
-                        const items = [...this.content, ...input.map(x => ({ ...x, id: uuid() }))]
+                        // To make this method serve both for create, and update, we need to only work with new items that are truly new (that don't have ids)
+                        const items = [...this.content, ...input.filter(x => (typeof x.id) == 'undefined').map(x => ({ ...x, id: uuid() }))]
                         await hcRpc.engTerminal.faculty.settings.set('web', { namespace: 'widgets', name: settingsKey, value: items })
                     },
                     delete: async (input) => {
                         const items = this.content.filter(x => input.findIndex(y => x.id == y.id) == -1)
                         await hcRpc.engTerminal.faculty.settings.set('web', { namespace: 'widgets', name: settingsKey, value: items })
                     },
+                    edit: {
+
+                    }
                 }
             }
         )
