@@ -27,6 +27,7 @@
   "homepage": "https://github.com/HolyCorn-Software/eHealthi#readme",
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.427.0",
     "@babel/core": "^7.22.20",
     "@babel/preset-env": "^7.22.20",
     "archiver": "^6.0.1",
