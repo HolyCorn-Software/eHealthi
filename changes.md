@@ -1,7 +1,5 @@
 .
 
-Improved the UI the navbar widget.
+Updated to the latest version of the soul system, with better performance for frontend caching systems.
 
-Improved UI of hero widget.
-
-Made the platform name on the navbar dynamic.
+Updated to the latest version of uniqueFileUpload, with better stability.
