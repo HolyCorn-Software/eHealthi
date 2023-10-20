@@ -10,7 +10,7 @@
             "label": "Community",
             "view": "./widget.mjs",
             "name": "set_community_link",
-            "icon": "/$/shared/static/logo.png",
+            "icon": "./community.png",
             "group": "platform_content"
         }
     ]
