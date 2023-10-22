@@ -23,7 +23,7 @@ export default class TargetDiseases extends Widget {
                 classes: TargetDiseases.classList,
                 innerHTML: `
                     <div class='container'>
-                        <div class='title'>Illnesses we treat</div>
+                        <div class='title'>What we treat</div>
                         <div class='items'></div>
                     </div>
                 `
