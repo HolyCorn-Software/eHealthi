@@ -7,7 +7,7 @@
 .hc-ehealthi-info-community>.container {
     display: flex;
     flex-direction: column;
-    aspect-ratio: 1/1;
+    aspect-ratio: 3/2.25;
     padding-top: 3em;
     justify-content: center;
     --width: clamp(300px, 100vw - 3em, 1200px);
