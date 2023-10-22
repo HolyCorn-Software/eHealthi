@@ -11,7 +11,7 @@ import ListDataManager from "/$/system/static/html-hc/widgets/list-data-manager/
 
 
 /**
- * @template {id: string} T
+ * @template T
  * @extends ListDataManager<T>
  */
 export default class WidgetSettingsManager extends ListDataManager {

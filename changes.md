@@ -1,9 +1,7 @@
 .
 
-Updated to the latest version of modernuser, and uniqueFileUpload, featuring bug fixes.
+Corrected minor bugs, which affected typing.
 
-Updated to the latest version of the soul system, with bug fixes, and better UI.
+Improved UI of the target-diseases widget.
 
-Changed server identity in production.
-
-Improved UI of admin panel.
+Updated to the latest version of the soul system, with better UX, and stability.

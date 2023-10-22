@@ -9,7 +9,7 @@ import WidgetSettingsManager from "../../widget-settings-manager/widget.mjs";
 
 
 /**
- * @extends WidgetSettingsManager<ehealthi.ui.info_services.ServiceInfo>
+ * @extends WidgetSettingsManager<ehealthi.ui.target_diseases.TargetDisease>
  */
 export default class TargetDiseasesManager extends WidgetSettingsManager {
 
@@ -59,7 +59,7 @@ export default class TargetDiseasesManager extends WidgetSettingsManager {
                 ],
                 settingsKey: 'target_diseases'
             }
-        )
+        );
     }
 
 }
