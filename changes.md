@@ -1,7 +1,5 @@
 .
 
-Improved responsiveness of the info-services widget.
+Updated to the latest version of the soul system, with better caching.
 
-Improved UI of the info-community widget.
-
-Updated to the latest version of the soul system with more responsive widgets.
+Updated to the latest version of backend_dashboard, engTerminal, and modernuser, with better caching, and stability.
