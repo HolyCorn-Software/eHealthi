@@ -12,18 +12,25 @@ body {
     height: 100%;
 }
 
-body:before {
-    background-image: url('./res/bg.jpg');
-    background-size: cover;
-    background-position: center;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    filter: blur(8px);
-}
-
 body>.login {
     display: flex;
     flex-direction: column;
+}
+
+body .hc-telep-phone-login-widget {
+    height: unset;
+}
+
+body .hc-telep-phone-login-widget>.container>.top {
+    display: none;
+}
+
+
+body .hc-telep-phone-login-widget>.container>.caption {
+    display: none;
+}
+
+body .hc-cayofedpeople-login>.container {
+    background-color: unset;
+    padding-top: unset;
 }

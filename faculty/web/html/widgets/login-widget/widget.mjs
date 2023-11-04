@@ -6,8 +6,8 @@
  */
 
 import Onboarding from "./onboarding.mjs";
+import { pluginData } from "/$/modernuser/static/authentication/lib/widget-model.mjs";
 import LoginWidget from "/$/modernuser/static/widgets/login-widget/widget.mjs";
-import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { SlideContainer } from "/$/system/static/html-hc/widgets/slide-container/container.mjs";
 
@@ -64,8 +64,41 @@ export default class eHealthiLoginWidget extends Widget {
         this.main = new LoginWidget({ custom: { help: false, navigation: false } })
         this.onboarding = new Onboarding()
 
+        // Wait till the list of providers have been set on the login widget
+        const waitForProviders = async () => {
+            let watcher;
+            await new Promise((resolve) => {
+                watcher = new MutationObserver(() => {
+                    if (this.main.providers.length > 1) {
+                        resolve();
+                    }
+                });
+                watcher.observe(this.main.html, { subtree: true, childList: true })
+            });
+            watcher.disconnect()
+
+            this.main.providers = [...this.main.providers.sort((a, b) => /phone/.test(a[pluginData].name) ? -1 : /phone/.test(b[pluginData].name) ? 1 : 0)]
+            // Now that providers have been loaded, let's start noting the position of the action button on the phone login provider widget, and using it to enhance the UI
+            hc.watchToCSS(
+                {
+                    source: this.main.html,
+                    watch: {
+                        dimension: 'top',
+                    },
+                    apply: () => {
+                        this.html.style.setProperty('--magic-height', `${this.html.$(':is(.hc-ehealthi-onboarding>.container .hc-uniqueFileUpload, .hc-telep-phone-login-widget>.container>.main>.action)').getBoundingClientRect().top}px`)
+                    },
+                    target: this.html,
+                }
+            )
+
+            this.slider.index = 1
+        }
+
+        waitForProviders()
+
         this.main.onAction = async (widget, action, data) => {
-            
+
             // First things first... Actually allow the natural process to flow
             await LoginWidget.prototype.onAction.call(this.main, widget, action, data)
 

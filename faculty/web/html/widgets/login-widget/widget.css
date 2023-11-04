@@ -10,24 +10,110 @@
     flex-direction: column;
     justify-content: center;
     min-height: calc(100vh - 2em);
+    padding: 2em;
     padding-bottom: 1em;
+    position: relative;
+    --healthi-blue: #00A9FF;
 }
+
 
 .hc-ehealthi-login-widget>.container {
     display: inline-flex;
-    background-color: #96d6cec0;
     padding: clamp(1px, 2.7vw, 3em);
-    padding-top: clamp(1px, 2.7vw, 3em);
     border-radius: clamp(1px, 3vw, 3em);
-    padding-right: clamp(1px, 5vw, 7em);
-    border-top-right-radius: clamp(1px, 12vw, 7em);
+    background-color: rgb(247, 244, 239);
+    box-shadow: 0px 0px 0.25em lightgrey;
+    --caption-image-height: clamp(200px, 35vw, 15vh);
+    --caption-image-width: 85%;
+    padding-top: calc(var(--caption-image-height) + 3em);
+    --background-width: clamp(300px, 100vw, 400px);
+    max-width: 450px;
 
+}
+
+.hc-ehealthi-login-widget>.container::before {
+    content: '';
+    position: absolute;
+    width: var(--caption-image-width);
+    height: var(--caption-image-height);
+    background-image: url("./bg.png");
+    background-size: cover;
+    top: calc(var(--caption-image-height) / 10);
+    left: calc(50% - (var(--caption-image-width) * 0.5));
+    border-radius: calc(var(--caption-image-height) / 10);
+}
+
+.hc-ehealthi-login-widget::before {
+    position: absolute;
+    width: clamp(var(--caption-image-width, 30%), 100vw, 600px);
+    height: calc(var(--magic-height, 70%) + 8em);
+    content: '';
+    background-color: var(--accent-color);
+    border-bottom-right-radius: 10%;
+    border-bottom-left-radius: 10%;
+    top: -1em;
+    z-index: -1;
+}
+
+
+.hc-ehealthi-login-widget>.container :is(.hc-telep-phone-login-widget, *) .hc-multi-flex-form-textbox>.container :is(input, textarea) {
+    background-color: transparent;
+    border-radius: 0.75em;
+    border: 2px solid var(--healthi-blue);
+    padding: 0.5em;
+    padding-right: 0.125em;
+    font-family: jua;
+    font-size: 0.9em;
+    color: var(--healthi-blue);
+}
+
+.hc-ehealthi-login-widget>.container :is(.hc-telep-phone-login-widget, *) .hc-multi-flex-form-textbox>.container:before {
+    font-family: jua;
+    font-size: 0.95em;
+    color: var(--healthi-blue);
 }
 
 
 
-.hc-ehealthi-login-widget>.container .hc-multi-flex-form-textbox>.container :is(input, textarea) {
-    background-color: transparent;
-    border-radius: 0.75em;
-    border: 1px solid black;
+.hc-ehealthi-login-widget>.container .hc-telep-phone-login-widget>.container {
+    width: clamp(250px, 100vw - 5.5em, 400px);
+}
+
+.hc-ehealthi-login-widget>.container .hc-telep-phone-login-widget>.container>.main>.caption {
+    display: none;
+}
+
+.hc-ehealthi-login-widget .hc-cayofedpeople-login>.container::before {
+    background-image: none;
+}
+
+.hc-ehealthi-login-widget .hc-cayofedpeople-login>.container>.main-section {
+    padding-bottom: 0px;
+    gap: 0px;
+}
+
+.hc-ehealthi-login-widget .hc-cayofedpeople-login>.container>.main-section>.providers-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5em;
+}
+
+
+.hc-ehealthi-login-widget .hc-telep-phone-login-widget>.container>.main>.action>.hc-action-button>.container {
+    background-color: var(--healthi-blue);
+    color: white;
+    border-radius: 1em;
+}
+
+.hc-ehealthi-login-widget .hc-telep-phone-login-widget>.container>.main>.remember {
+    display: none;
+}
+
+.hc-ehealthi-login-widget .hc-uniqueFileUpload>.container>.main {
+    background-color: white;
+    color: var(--healthi-blue);
+    font-size: 1.5em;
+    font-family: jua;
+    box-shadow: 0px 0px 0.25em rgb(223, 197, 148);
+    border-radius: 0.5em;
 }

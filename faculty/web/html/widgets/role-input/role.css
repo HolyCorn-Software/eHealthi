@@ -17,11 +17,11 @@
 }
 
 .hc-ehealthi-inline-role-input-item:not(.selected)>.container {
-    box-shadow: 0px 0px 0.25em #155884;
+    box-shadow: 0px 0px 0.125em currentColor;
 }
 
 .hc-ehealthi-inline-role-input-item:not(.selected)>.container:hover {
-    box-shadow: 0px 0px 0.75em #155884;
+    box-shadow: 0px 0px 0.25em currentColor;
 }
 
 .hc-ehealthi-inline-role-input-item>.container>.image {
@@ -33,9 +33,9 @@
 }
 
 .hc-ehealthi-inline-role-input-item.selected>.container {
-    border: 1px solid rgb(4, 134, 185);
+    border: 1px solid currentColor;
 }
 
 .hc-ehealthi-inline-role-input-item>.container>.tick {
-    color: rgb(18, 102, 170);
+    color: currentColor;
 }
