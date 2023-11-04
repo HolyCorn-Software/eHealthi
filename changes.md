@@ -1,9 +1,7 @@
 .
 
-Updated to the latest version of modernuser, with better UI.
+Removed unnecessary test code affecting the login-widget widget.
 
-Updated to the latest version of the soul system, with better UI, and stability.
+Improved UI of the info-services widget.
 
-Improve UI of login page.
-
-Improved UI, and reponsiveness of the login-widget, and role-input widgets.
+Updated to the latest version of the soul system with better efficiency, and performance.

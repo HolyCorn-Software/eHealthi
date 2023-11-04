@@ -91,8 +91,6 @@ export default class eHealthiLoginWidget extends Widget {
                     target: this.html,
                 }
             )
-
-            this.slider.index = 1
         }
 
         waitForProviders()

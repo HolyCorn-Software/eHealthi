@@ -31,7 +31,6 @@
     border-radius: 1em;
     padding: 0px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: stretch;
     max-width: clamp(200px, 1300px, 100vw - 2em);
     min-width: clamp(200px, var(--content-max-width, 500px), 100vw - 2em);
@@ -73,6 +72,16 @@
 
     .hc-ehealthi-info-services>.container>.main>.hc-dual-pane-expander>.container>.main {
         max-width: 350px;
+
+        flex-wrap: wrap;
+    }
+
+    .hc-ehealthi-info-services-action-label {
+        font-size: 0.85em;
+    }
+
+    .hc-ehealthi-info-services>.container>.main>.hc-dual-pane-expander>.container>.main>.left>.options {
+        gap: 0.75em;
     }
 
     .hc-ehealthi-info-services>.container>.main>.hc-dual-pane-expander>.container>.main>.right {
@@ -130,7 +139,7 @@
 }
 
 .hc-ehealthi-info-services>.container>.main .hc-dual-pane-expander-screen>.container>.content {
-    text-align: left;
+    text-align: center;
     font-size: 0.75em;
     color: rgb(8, 47, 80);
     max-width: clamp(250px, 500px, 50vw - 2em);

@@ -24,8 +24,9 @@
     background-color: rgb(247, 244, 239);
     box-shadow: 0px 0px 0.25em lightgrey;
     --caption-image-height: clamp(200px, 35vw, 15vh);
+    --icon-size: 5em;
     --caption-image-width: 85%;
-    padding-top: calc(var(--caption-image-height) + 3em);
+    padding-top: calc(var(--caption-image-height) + 1em);
     --background-width: clamp(300px, 100vw, 400px);
     max-width: 450px;
 
@@ -43,10 +44,25 @@
     border-radius: calc(var(--caption-image-height) / 10);
 }
 
+.hc-ehealthi-login-widget>.container::after {
+    content: '';
+    position: absolute;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-image: url("/$/shared/static/logo.png");
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: calc(var(--caption-image-height) * 1.1 - (var(--icon-size) / 3));
+    left: calc(50% - (var(--icon-size) / 2));
+    background-color: inherit;
+    border-radius: 100%;
+}
+
 .hc-ehealthi-login-widget::before {
     position: absolute;
     width: clamp(var(--caption-image-width, 30%), 100vw, 600px);
-    height: calc(var(--magic-height, 70%) + 8em);
+    height: calc(var(--magic-height, 70%) + 2.5em);
     content: '';
     background-color: var(--accent-color);
     border-bottom-right-radius: 10%;
@@ -81,6 +97,12 @@
 
 .hc-ehealthi-login-widget>.container .hc-telep-phone-login-widget>.container>.main>.caption {
     display: none;
+}
+
+.hc-ehealthi-login-widget>.container .hc-telep-phone-login-widget>.container>.main>.change-auth-action {
+    color: var(--healthi-blue);
+    font-size: 0.95em;
+    font-family: k2d;
 }
 
 .hc-ehealthi-login-widget .hc-cayofedpeople-login>.container::before {
