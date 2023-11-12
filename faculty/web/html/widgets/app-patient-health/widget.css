@@ -1,0 +1,39 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    This stylesheet controls the app-patient-health widget, where the patient manages aspects directly related to his health
+*/
+
+
+
+.hc-ehealthi-app-patient-health>.container {
+    display: flex;
+    flex-direction: column;
+    min-height: var(--hc-ehealthi-device-frame-view-available-height);
+}
+
+.hc-ehealthi-app-patient-health>.container>:not(:is(.btn-init-appointment, :nth-child(2))) {
+    padding-top: 5em;
+}
+
+
+.hc-ehealthi-app-patient-health>.container>.important {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.hc-ehealthi-app-patient-health>.container>.important>.title {
+    font-size: 1.75em;
+    font-weight: bolder;
+}
+
+.hc-ehealthi-app-patient-health>.container>.btn-init-appointment {
+    position: sticky;
+    top: calc(100% - 5em);
+    height: 0px;
+}
+
+.hc-ehealthi-app-patient-health>.container>.btn-init-appointment>* {
+    width: 100%;
+}

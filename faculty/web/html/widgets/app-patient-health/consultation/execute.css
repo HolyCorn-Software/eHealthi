@@ -1,0 +1,13 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    This stylesheet modifies the parts of the app-patient-health widget, where the user gets to actually schedule the appointment
+*/
+
+.hc-ehealthi-app-patient-health-consultation-exec>.container>.stage {
+    min-height: calc(var(--hc-ehealthi-device-frame-view-available-height) - 15.5em);
+}
+
+.hc-ehealthi-app-patient-health-consultation-exec>.container>.btn-continue>.hc-action-button {
+    width: 100%;
+}

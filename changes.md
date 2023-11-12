@@ -1,7 +1,9 @@
 .
 
-Removed unnecessary test code affecting the login-widget widget.
+Updated to the latest version of modernuser, which particularly allows users to update their logins, and easily add new logins.
 
-Improved UI of the info-services widget.
+Updated to the latest version of the soul system, with new widgets, more robustness, and better performance.
 
-Updated to the latest version of the soul system with better efficiency, and performance.
+Improved typing.
+
+Added mobile application interfaces, especially for patients.

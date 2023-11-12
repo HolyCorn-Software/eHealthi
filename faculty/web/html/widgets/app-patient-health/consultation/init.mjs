@@ -1,0 +1,108 @@
+/**
+ * Copyright 2023 HolyCorn Software
+ * The eHealthi Project
+ * This widget, allows a user to commence the process of booking an appointment with a doctor. 
+ */
+
+import EHealthiArrowButton from "../../arrow-button/widget.mjs";
+import PatientConsultationExec from "./execute.mjs";
+import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
+import { NiceNumberInput } from "/$/system/static/html-hc/widgets/nice-number-input/input.mjs";
+import SimpleCalendar from "/$/system/static/html-hc/widgets/simple-calendar/widget.mjs";
+
+
+
+/**
+ * @extends Widget<PatientConsultationInit>
+ */
+export default class PatientConsultationInit extends Widget {
+
+
+    constructor() {
+        super();
+
+        this.html = hc.spawn(
+            {
+                classes: PatientConsultationInit.classList,
+                innerHTML: `
+                    <div class='container'>
+                        <div class='btn-continue'></div>
+                        <div class='sections'>
+                            <div class='section date'>
+                                <div class='title'>Choose a date</div>
+                            </div>
+
+                            <div class='section time'>
+                                <div class='title'>What time ?</div>
+                            </div>
+
+                            <div class='section doctor-select'>
+                                <div class='title'>Which doctor do you prefer ?</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        );
+
+        let exec;
+
+        const btnContinue = new EHealthiArrowButton({
+            content: `Continue`,
+            state: 'disabled',
+            onclick: async () => {
+                this.html.dispatchEvent(
+                    new WidgetEvent('backforth-goto', {
+                        detail: {
+                            title: `Consultation`,
+                            view: (exec ||= new PatientConsultationExec()).html
+                        }
+                    })
+                )
+            }
+        });
+
+        this.html.$('.container >.btn-continue').appendChild(
+            btnContinue.html
+        );
+
+        const dateSelect = new SimpleCalendar();
+
+        this.html.$('.container >.sections >.section.date').appendChild(
+            dateSelect.html
+        );
+
+        const timeSelect = new NiceNumberInput();
+        this.html.$('.container >.sections >.section.time').appendChild(
+            timeSelect.html
+        );
+        timeSelect.addEventListener('change', () => {
+            if (timeSelect.value > 23) {
+                timeSelect.value = 0
+            }
+            if (timeSelect.value < 0) {
+                timeSelect.value = 23
+            }
+        })
+        timeSelect.value = 10;
+
+        const onchange = () => {
+            if (dateSelect.selectedDate < new Date().setHours(0, 0, 0, 0)) {
+                btnContinue.state = 'disabled'
+                return;
+            }
+
+            btnContinue.state = 'initial'
+        };
+
+        timeSelect.addEventListener('change', onchange)
+        dateSelect.addEventListener('selectionchange', onchange)
+    }
+
+
+    /** @readonly */
+    static get classList() {
+        return ['hc-ehealthi-app-patient-health-consultation-init']
+    }
+
+}

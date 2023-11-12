@@ -9,7 +9,7 @@
     --main-bg-color: rgb(28, 28, 42);
     --accent-color: #179990;
     --accent-color: #18e8db;
-
+    --healthi-blue: #00A9FF;
 
 
 }
@@ -27,4 +27,12 @@
 @font-face {
     font-family: jua;
     src: url('./font/Jua-Regular.ttf');
+}
+
+html>body {
+    font-family: comfortaa;
+}
+
+body .hc-matazm-travel-timetable-navigation>.container>.main>.nav>.year-select {
+    display: none;
 }
