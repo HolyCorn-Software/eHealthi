@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of modernuser, with a bug fix.
+Improved UX of the app section, by making the profile management view auto-refresh after the user adds a login.

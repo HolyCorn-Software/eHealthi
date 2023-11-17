@@ -89,7 +89,6 @@ class LoginWidgetContainer extends Widget {
 
             setTimeout(() => this.html.$('.container').appendChild(instance.html), 500)
 
-            console.log(`this.html is `, this.html, `\nwhile instance.html is `, instance.html)
 
             instance.addEventListener('complete', async () => {
                 // In this where the user has entered his info, we can now create a login at the backend.

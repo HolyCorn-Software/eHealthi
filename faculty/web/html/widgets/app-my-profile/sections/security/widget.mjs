@@ -36,7 +36,7 @@ export default class SecuritySection extends Widget {
             }
         );
 
-        this.blockWithAction(
+        const load = () => this.blockWithAction(
             async () => {
                 this.logins = await hcRpc.modernuser.authentication.getMyLoginsMin()
             }
@@ -70,10 +70,12 @@ export default class SecuritySection extends Widget {
             const popup = new NewLoginPopup();
             popup.show()
             popup.addEventListener('complete', () => {
-                // reload
+                load()
             })
         })
 
+
+        load()
 
     }
 
