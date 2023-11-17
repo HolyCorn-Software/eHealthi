@@ -9,7 +9,9 @@
 .hc-ehealthi-app-patient-health>.container {
     display: flex;
     flex-direction: column;
-    min-height: var(--hc-ehealthi-device-frame-view-available-height);
+    position: relative;
+    height: var(--hc-ehealthi-device-frame-view-available-height);
+    overflow: auto;
 }
 
 .hc-ehealthi-app-patient-health>.container>:not(:is(.btn-init-appointment, :nth-child(2))) {
@@ -30,10 +32,34 @@
 
 .hc-ehealthi-app-patient-health>.container>.btn-init-appointment {
     position: sticky;
-    top: calc(100% - 5em);
+    top: calc(100% - 4.75em);
     height: 0px;
 }
 
 .hc-ehealthi-app-patient-health>.container>.btn-init-appointment>* {
     width: 100%;
+}
+
+
+.hc-ehealthi-app-patient-health>.container>.main {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.hc-ehealthi-app-patient-health>.container>.main>.calendar {
+    transform: translateX(-1em);
+}
+
+
+.hc-ehealthi-app-patient-health>.container>.main>.stage {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding-bottom: 7em;
+}
+
+.hc-ehealthi-app-patient-health>.container>.main>.stage>.date-caption {
+    font-size: 0.85em;
+    color: rgb(83, 82, 82);
 }

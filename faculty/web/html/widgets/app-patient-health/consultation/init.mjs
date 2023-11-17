@@ -45,6 +45,7 @@ export default class PatientConsultationInit extends Widget {
             }
         );
 
+        /** @type {PatientConsultationExec} */
         let exec;
 
         const btnContinue = new EHealthiArrowButton({
@@ -55,10 +56,16 @@ export default class PatientConsultationInit extends Widget {
                     new WidgetEvent('backforth-goto', {
                         detail: {
                             title: `Consultation`,
-                            view: (exec ||= new PatientConsultationExec()).html
+                            view: (exec ||= new PatientConsultationExec({
+                                time: dateSelect.selectedDate.setHours(timeSelect.value, 0, 0, 0),
+                            })).html
                         }
                     })
                 )
+
+                exec.addEventListener('dismiss', () => {
+                    exec = null
+                }, { once: true })
             }
         });
 
@@ -102,7 +109,7 @@ export default class PatientConsultationInit extends Widget {
 
     /** @readonly */
     static get classList() {
-        return ['hc-ehealthi-app-patient-health-consultation-init']
+        return ['hc-ehealthi-app-patient-health-appointment-init']
     }
 
 }

@@ -13,3 +13,6 @@
 [submodule "faculty/uniqueFileUpload"]
 	path = faculty/uniqueFileUpload
 	url = https://github.com/HolyCorn-Software/uniqueFileUpload
+[submodule "faculty/finance"]
+	path = faculty/finance
+	url = https://github.com/HolyCorn-Software/finance

@@ -32,7 +32,10 @@ export default class PatientHealth extends Widget {
 
                         <div class='main'>
                             <div class='calendar'></div>
-                            <div class='stage'></div>
+                            <div class='stage'>
+                                <div class='date-caption'></div>
+                                <div class='content'></div>
+                            </div>
                         </div>
 
                     </div>
@@ -50,7 +53,9 @@ export default class PatientHealth extends Widget {
 
         this.content.$('.container >.important').appendChild(new HealthAlerts().html)
 
-        this.content.$('.container >.main >.calendar').appendChild(new SimpleCalendar().html)
+        this.calendar = new SimpleCalendar()
+        this.content.$('.container >.main >.calendar').appendChild(this.calendar.html)
+
 
         this.content.$('.container >.btn-init-appointment').appendChild(
             new EHealthiArrowButton(
@@ -71,6 +76,17 @@ export default class PatientHealth extends Widget {
             ).html
         );
 
+        this.calendar.addEventListener('selectionchange', () => {
+            const today = new Date().setHours(0, 0, 0, 0)
+            const haveVerb = this.calendar.selectedDate - today >= 0 ? 'have' : 'had'
+            this.content.$('.container >.main >.stage >.date-caption').innerHTML = `${this.calendar.selectedDate == today ? `Today` : `On ${this.calendar.selectedDate.toDateString()}`}, you ${haveVerb}`
+        });
+
+        this.waitTillDOMAttached().then(() => {
+            console.log(`Initializing with latest date`)
+            this.calendar.selectedDate = new Date()
+
+        })
 
     }
 

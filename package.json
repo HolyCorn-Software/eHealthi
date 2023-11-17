@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --experimental-json-modules start.mjs"
+    "start": "node --experimental-json-modules --trace-warnings start.mjs"
   },
   "repository": {
     "type": "git",

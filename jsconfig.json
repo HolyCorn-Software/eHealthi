@@ -29,6 +29,15 @@
             ],
             "/$/shared/static/*": [
                 "faculty/web/shared/*"
+            ],
+            "/$/finance/static/*": [
+                "faculty/finance/public/*"
+            ],
+            "/$/finance/payment/static/*": [
+                "faculty/finance/payment/public/*"
+            ],
+            "/$/finance/product/static/*": [
+                "faculty/finance/product/public/*"
             ]
         }
     },

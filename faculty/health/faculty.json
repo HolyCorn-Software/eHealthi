@@ -1,0 +1,25 @@
+{
+    "name": "health",
+    "label": "Faculty of Health",
+    "init": "./exec.mjs",
+    "meta": {
+        "modernuser": {
+            "permissions": [
+                {
+                    "label": "View other's appointments",
+                    "name": "permissions.health.appointment.view",
+                    "inherits": [
+                        "permissions.modernuser.profiles.search"
+                    ]
+                },
+                {
+                    "label": "View, and modify other's appointments",
+                    "name": "permissions.health.appointment.supervise",
+                    "inherits": [
+                        "permissions.health.appointment.view"
+                    ]
+                }
+            ]
+        }
+    }
+}

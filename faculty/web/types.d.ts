@@ -18,10 +18,4 @@ global {
             }
         }
     }
-    namespace modernuser.profile {
-        interface UserProfileMeta {
-            birthDate: number
-            sex: "M" | "F"
-        }
-    }
 }
