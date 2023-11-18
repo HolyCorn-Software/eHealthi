@@ -7,9 +7,14 @@
 import eHealthiLoginWidget from "../../widgets/login-widget/widget.mjs";
 import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 
+const loginContainer = hc.spawn({ classes: ['login'] })
+
+document.body.appendChild(
+    loginContainer
+)
 
 const widget = new eHealthiLoginWidget()
 
-document.body.querySelector('.login').appendChild(widget.html)
+loginContainer.appendChild(widget.html)
 
 hc.importModuleCSS(import.meta.url);

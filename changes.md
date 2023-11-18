@@ -1,3 +1,3 @@
 .
 
-Improved UX of the app section, by making the profile management view auto-refresh after the user adds a login.
+Improved the construction of the app login page, to something more compatible with the service-worker loader.
