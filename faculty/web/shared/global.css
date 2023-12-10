@@ -11,6 +11,8 @@
     --accent-color: #18e8db;
     --healthi-blue: #00A9FF;
 
+    --app-bg: #f3f8fc;
+    background-color: var(--app-bg);
 
 }
 
@@ -34,5 +36,5 @@ html>body {
 }
 
 body .hc-matazm-travel-timetable-navigation>.container>.main>.nav>.year-select {
-    display: none;
+    display: none !important;
 }

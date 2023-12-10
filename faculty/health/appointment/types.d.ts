@@ -7,6 +7,7 @@
 
 
 import { Collection } from "mongodb"
+import AppointmentController from "./controller.mjs"
 
 global {
     namespace ehealthi.health.appointment {
@@ -21,18 +22,21 @@ global {
             /** If payment is required, this field is the id of the payment to be made. */
             payment: string
             /** This field indicates if the {@link payment} has been made. */
-            paid: boolean
+            paid: number
             /** This field is the time when the appointment is expected to happen. */
             time: number
             /** This field indicates if the doctor even started the appointment. */
-            opened: boolean
+            opened: number
+            /** This field tells us when the appointment was created */
+            created: number
             /** This field indicates if the doctor has marked the appointment over. */
             complete: boolean
         }
 
         type AppointmentInit = Pick<Appointment, "doctor" | "patient" | "userid" | "time">
+        type AppointmentMutableData = Pick<Appointment, "doctor" | "time">
 
-        type AppointmentCollection = soul.util.archivecollectiongroup.ArchiveCollection<Appointment>
+        type AppointmentCollection = soul.util.workerworld.TaskCollection<Appointment>
 
         interface Collections {
             recent: AppointmentCollection
@@ -44,7 +48,7 @@ global {
 
             interface NotificationJob {
 
-                /** The appointment we're notifying users about */
+                /** The id appointment we're notifying users about */
                 appointment: string
 
                 /** The time the notification is supposed to be sent */
@@ -53,20 +57,24 @@ global {
                 /** Who is to be notified about the appointment */
                 user: 'doctor' | 'patient' | 'admin'
 
-                doctorType: 'old' | 'current'
-
-                /** 
-                 * This field indicates if this is the first notification to the admin, or doctor. 
-                 * That is, the notification just telling him that an appointment has just been scheduled, and needs to be confirmed.
-                 */
-                inital: boolean
-
                 /**
                  * This tells us the type of notification we're sending.
-                 * default notifications, just go to tell the user, that his appointment is upcoming.
-                 * change notifications, indicate, that doctor, or the time for the appointment has been changed
+                 * reminder notifications, just go to tell the user, that his appointment is upcoming.
+                 * change notifications, indicate, that doctor, or the time for the appointment has been changed.
+                 * 'initial' notifications, tell the doctor, and admin, that an appointment has just been booked.
                  */
-                type: 'default' | 'change'
+                type: 'reminder' | 'change' | 'initial'
+
+                /** 
+                 * This field is set, if the appointment was transferred to another doctor. 
+                 * In that case, this field would contain the id of the previous doctor.
+                */
+                oldDoctor: string
+
+                /**
+                 * This field is present when the time has changed.
+                 */
+                oldTime: number
 
             }
 
@@ -74,6 +82,45 @@ global {
 
             interface Collections {
                 main: NotificationTasksCollection
+            }
+        }
+
+        namespace chat {
+            interface ChatEntry {
+                chat: string
+                patient: string
+                doctor: string
+            }
+
+            interface ChatControlJob {
+                chat: string
+                action: 'open' | 'close'
+                time: string
+                appointment: string
+            }
+
+            type ChatEntriesCollection = Collection<ChatEntry>
+
+            type ChatControlJobsCollection = Collection<ChatControlJob>
+
+            interface ControllerArgs {
+                controllers: {
+                    appointment: AppointmentController
+                }
+            }
+
+            interface Collections {
+                chats: ChatEntriesCollection
+                control: ChatControlJobsCollection
+            }
+
+        }
+    }
+
+    namespace modernuser.ui.notification {
+        interface ClientFrontendEvents {
+            'ehealthi-health-new-timetable-entry': {
+                data: ehealthi.health.appointment.Appointment
             }
         }
     }

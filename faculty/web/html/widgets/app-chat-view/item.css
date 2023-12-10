@@ -1,0 +1,97 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    The app-chat-view widget
+    This stylesheet, targets a single item on the widget.
+*/
+
+
+.hc-ehealthi-app-chat-view-item>.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75em;
+    background-color: rgb(255, 252, 252);
+    border-radius: 1.25em;
+
+}
+
+.hc-ehealthi-app-chat-view-item[direction='incoming']>.container {
+    border-top-left-radius: 0px;
+}
+
+
+.hc-ehealthi-app-chat-view-item[direction='outgoing']>.container {
+    border-top-right-radius: 0px;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main {
+    display: flex;
+    gap: 0.75em;
+
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.icon {
+    width: 4.5em;
+    align-self: flex-start;
+    border-radius: 0.85em;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-position: center;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    max-width: calc(100% - 8.25em);
+    position: relative;
+    flex-grow: 1;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.details>* {
+    max-width: 100%;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.details>.title {
+    font-size: 1.15em;
+    font-weight: bolder;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.details>.caption {
+    max-height: 3.25em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 0.75em;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.indicators {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25em;
+    flex-direction: column;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.indicators>.latest-time {
+    font-size: 0.75em;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.indicators>.count {
+    aspect-ratio: 1/1;
+    background-color: var(--healthi-blue, #1a4cd8);
+    color: white;
+    min-width: 0.5ex;
+    max-width: clamp(1em, 100%, 1.5em);
+    border-radius: 50%;
+    padding: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: masterly;
+}
+
+.hc-ehealthi-app-chat-view-item>.container>.main>.indicators>.count:empty {
+    display: none;
+}

@@ -4,10 +4,12 @@
  * This widget (app-patient-home), provides the interface (in a high-level way) for a patient to interact with app.
  */
 
+import AppChatView from "../app-chat-view/widget.mjs";
 import MyProfile from "../app-my-profile/widget.mjs";
 import PatientHealth from "../app-patient-health/widget.mjs";
 import DeviceFrame from "../device-frame/widget.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
+import BackForth from "/$/system/static/html-hc/widgets/back-forth/widget.mjs";
 
 
 /**
@@ -37,13 +39,13 @@ export default class PatientHome extends Widget {
                     {
                         id: 'health',
                         label: 'Health',
-                        content: new PatientHealth().html,
+                        content: new BackForth({ view: new PatientHealth().html }).html,
                         icon: 'doctor-love.png'
                     },
                     {
                         id: 'chat',
                         label: 'Chat',
-                        content: hc.spawn({ innerHTML: 'Chat' }),
+                        content: new AppChatView().html,
                         icon: 'message.svg'
                     },
                     {

@@ -41,6 +41,22 @@ export default class AppointmentPublicMethods {
     }
 
     /**
+     * This method modifies an appointment
+     * @param {object} param0 
+     * @param {string} param0.id
+     * @param {ehealthi.health.appointment.AppointmentMutableData} param0.data
+     * 
+     */
+    async modify({ id, data }) {
+        return await this[controller].modify(
+            {
+                ...arguments[1],
+                userid: (await muser_common.getUser(arguments[0])).id
+            }
+        )
+    }
+
+    /**
      * This method retrieves an appointment from the database
      * @param {object} param0 
      * @param {string} param0.id
@@ -57,6 +73,21 @@ export default class AppointmentPublicMethods {
                 userid: userid,
             }
         )
+    }
+
+
+    /**
+     * This method is for the admin.
+     * 
+     * It returns all appointments that are ready (paid for), that haven't been started.
+     * 
+     * Users call methods from the TimetableController instead.
+     * 
+     * @param {object} data
+     * @param {number} data.start Appointments created before this time would be ignored
+     */
+    async getReadyAppointments(data) {
+        return await this[controller].getReadyAppointments({ ...arguments[1], userid: (await muser_common.getUser(arguments[0])).id })
     }
 
 

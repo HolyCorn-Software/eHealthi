@@ -9,6 +9,7 @@ import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import defineImageProperty from "/$/system/static/html-hc/lib/widget/widget-image.mjs";
+import BackForth from "/$/system/static/html-hc/widgets/back-forth/widget.mjs";
 
 
 const nav = Symbol()
@@ -115,7 +116,9 @@ class ViewContainer extends Widget {
             }
         );
 
-        this.html.$('.container').appendChild(content)
+        const backforth = new BackForth({ view: content })
+
+        this.html.$('.container').appendChild(backforth.html)
         this.visible = visible
 
         this.html.setAttribute('view-container-id', id)

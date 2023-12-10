@@ -4,12 +4,11 @@
  * This widget provides an interface for the patient to benefit from direct health-related features.
  */
 
-import SimpleCalendar from "/$/system/static/html-hc/widgets/simple-calendar/widget.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import HealthAlerts from "../app-health-alerts/widget.mjs";
 import EHealthiArrowButton from "../arrow-button/widget.mjs";
-import BackForth from "/$/system/static/html-hc/widgets/back-forth/widget.mjs";
 import PatientConsultationInit from "./consultation/init.mjs";
+import MainView from "./main/widget.mjs";
 
 
 export default class PatientHealth extends Widget {
@@ -18,7 +17,7 @@ export default class PatientHealth extends Widget {
 
         super();
 
-        this.content = hc.spawn(
+        this.html = hc.spawn(
             {
                 classes: PatientHealth.classList,
                 innerHTML: `
@@ -30,34 +29,28 @@ export default class PatientHealth extends Widget {
                             <div class='title'>Important</div>
                         </div>
 
-                        <div class='main'>
-                            <div class='calendar'></div>
-                            <div class='stage'>
-                                <div class='date-caption'></div>
-                                <div class='content'></div>
-                            </div>
-                        </div>
+                        <div class='main'></div>
 
                     </div>
                 `
             }
         );
 
-        const backForth = new BackForth(
+        // TODO: Wrap this view in a backforth
+
+        this.widgetProperty(
             {
-                view: this.content
-            }
+                selector: ['', ...MainView.classList].join('.'),
+                parentSelector: ':scope >.container >.main',
+                childType: 'widget',
+            }, 'main'
         )
+        this.main = new MainView()
 
-        this.html = backForth.html
-
-        this.content.$('.container >.important').appendChild(new HealthAlerts().html)
-
-        this.calendar = new SimpleCalendar()
-        this.content.$('.container >.main >.calendar').appendChild(this.calendar.html)
+        this.html.$('.container >.important').appendChild(new HealthAlerts(this.main.statedata).html)
 
 
-        this.content.$('.container >.btn-init-appointment').appendChild(
+        this.html.$('.container >.btn-init-appointment').appendChild(
             new EHealthiArrowButton(
                 {
                     content: `See the doctor`,
@@ -76,17 +69,6 @@ export default class PatientHealth extends Widget {
             ).html
         );
 
-        this.calendar.addEventListener('selectionchange', () => {
-            const today = new Date().setHours(0, 0, 0, 0)
-            const haveVerb = this.calendar.selectedDate - today >= 0 ? 'have' : 'had'
-            this.content.$('.container >.main >.stage >.date-caption').innerHTML = `${this.calendar.selectedDate == today ? `Today` : `On ${this.calendar.selectedDate.toDateString()}`}, you ${haveVerb}`
-        });
-
-        this.waitTillDOMAttached().then(() => {
-            console.log(`Initializing with latest date`)
-            this.calendar.selectedDate = new Date()
-
-        })
 
     }
 

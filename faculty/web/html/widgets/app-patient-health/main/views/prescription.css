@@ -1,0 +1,10 @@
+/*  
+    Copyright 2023 HolyCorn Software
+    The eHealthi Project
+    This stylesheet targets the app-patient-health widget, where it determines the looks of a single view that shows 
+    the user information about a prescription to be taken.
+*/
+
+.hc-ehealthi-app-patient-health-main-view-prescription-item.hc-ehealthi-app-patient-health-main-view-item>.container {
+    background-color: #43f0ff;
+}

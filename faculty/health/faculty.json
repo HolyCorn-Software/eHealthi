@@ -18,8 +18,26 @@
                     "inherits": [
                         "permissions.health.appointment.view"
                     ]
+                },
+                {
+                    "name": "permissions.health.prescriptions.make",
+                    "label": "Prescribe drugs, and others",
+                    "inherits": [
+                        "permissions.modernuser.profiles.search"
+                    ]
+                },
+                {
+                    "name": "permissions.health.commerce.modify",
+                    "label": "Modify commercial information."
                 }
             ]
+        }
+    },
+    "http": {
+        "staticPaths": {
+            "${fPath}/static/": "./public/",
+            "${fPath}/appointment/static/": "./appointment/public/",
+            "${fPath}/prescription/static/": "./prescription/public/"
         }
     }
 }

@@ -16,3 +16,6 @@
 [submodule "faculty/finance"]
 	path = faculty/finance
 	url = https://github.com/HolyCorn-Software/finance
+[submodule "faculty/chat"]
+	path = faculty/chat
+	url = https://github.com/HolyCorn-Software/chat
