@@ -11,9 +11,6 @@ import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/acti
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 
 
-/**
- * @extends Widget<AppChatView>
- */
 export default class AppChatView extends Widget {
 
 
@@ -99,8 +96,6 @@ export default class AppChatView extends Widget {
         this.blockWithAction(async () => {
             this.statedata.chats = await hcRpc.chat.getMyChatsMetadata()
         })
-
-
 
     }
 

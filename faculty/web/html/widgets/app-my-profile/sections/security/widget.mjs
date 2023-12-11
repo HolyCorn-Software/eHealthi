@@ -13,10 +13,6 @@ import BrandedBinaryPopup from "/$/system/static/html-hc/widgets/branded-binary-
 import runMan from "/$/system/static/run/lib.mjs";
 
 
-
-/**
- * @extends Widget<SecuritySection>
- */
 export default class SecuritySection extends Widget {
 
     constructor() {

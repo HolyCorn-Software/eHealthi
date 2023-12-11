@@ -82,11 +82,15 @@ export default class PrescriptionController {
         /** @type {Parameters<collections['prescriptions']['find']>['0']} */
         const filter = { $or: [{ patient: userid }] }
 
+        const todate = new Date().setHours(0, 0, 0, 0)
+
         if (typeof active !== 'undefined') {
             filter.$or[0].$or =
                 active ? [
                     {
-                        started: { $gt: 0 }
+                        started: { $gt: 0 },
+                        ended: { $exists: false },
+                        intake: { $gt: { end: todate } }
                     }
                 ] : [
                     {
@@ -96,8 +100,13 @@ export default class PrescriptionController {
                     },
                     {
                         started: {
-                            $lte: 0
+                            $not: {
+                                $gt: 0
+                            }
                         }
+                    },
+                    {
+                        ended: { $lte: Date.now() }
                     }
                 ]
 

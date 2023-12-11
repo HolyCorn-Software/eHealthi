@@ -71,7 +71,7 @@ export default class TimetableController {
         /** 
          * @type {Parameters<this[controllers]['appointment']['dbController']['find']>[0]}
          * Generally, we're looking for apppointments that were either scheduled after a given time, or created after a given time.
-         *  */
+         */
         const mainPriorityQuery = {
             $or: [
                 {
@@ -153,6 +153,16 @@ export default class TimetableController {
                 } : {})
             }
         }
+
+        // And then, regular prescriptions
+
+        for await (const item of await this[controllers].prescription.getPrescriptions({ userid, active: true })) {
+            yield TimetableController.wrapPrescription(item, {
+                user: await getUser(item.doctor),
+            })
+        }
+
+
 
 
     }
