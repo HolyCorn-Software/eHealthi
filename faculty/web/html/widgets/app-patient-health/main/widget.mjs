@@ -122,12 +122,12 @@ export default class MainView extends Widget {
                     let intakes = item.intake
                     intakes = intakes.sort((a, b) => a.start > b.start ? 1 : a.start == b.start ? 0 : -1)
 
-                    if (!item.started || (intakes[0].start > currDate) || (intakes[intakes.length - 1].end < currDate)) {
+                    if (!item.started || (intakes[0].start > currDate) || (intakes[intakes.length - 1].end < currDate) || (item.ended > 0)) {
                         return []
                     }
                     return intakes.map(intake => {
                         return intake.dosage.map(dose => {
-                            const html = new PrescriptionView(item, dose).html
+                            const html = new PrescriptionView(item, dose, currDate).html
                             html.time = dose.time
                             return html
                         })
@@ -195,13 +195,24 @@ export default class MainView extends Widget {
                 const client = await ModernuserEventClient.get()
 
                 client.events.addEventListener('ehealthi-health-new-timetable-entry', (event) => {
-                    /** @type {ehealthi.health.appointment.Appointment} */
-                    const appointment = event.detail.data
+                    /** @type {ehealthi.health.timetable.TimetableEntry} */
+                    const entry = event.detail.data
                     this.statedata.items = [
-                        ...this.statedata.$0data.items.filter(x => x.id !== appointment.id),
-                        appointment
+                        ...this.statedata.$0data.items.filter(x => x.id !== entry.id),
+                        entry
                     ]
                     draw()
+                });
+
+                client.events.addEventListener('ehealthi-health-prescription-changed', (event) => {
+                    /** @type {ehealthi.health.prescription.Prescription} */
+                    const prescription = event.detail.data
+                    const existing = this.statedata.items.find(x => x.id == prescription.id)
+                    if (existing) {
+                        Object.assign(existing, prescription)
+                        console.log(`Time to re-draw!`)
+                        draw()
+                    }
                 })
 
                 // Whenever there's a connection, or re-connection, we fetch the latest info from the server

@@ -8,6 +8,7 @@
 import TimetableItemView from "./item.mjs";
 import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import ActionButton from "/$/system/static/html-hc/widgets/action-button/button.mjs";
+import HCTSBrandedPopup from "/$/system/static/html-hc/widgets/branded-popup/popup.mjs";
 
 
 
@@ -18,8 +19,9 @@ export default class PrescriptionView extends TimetableItemView {
      * 
      * @param {ehealthi.health.prescription.Prescription} prescription
      * @param {ehealthi.health.prescription.IntakeDose}  intake
+     * @param {number} time
      */
-    constructor(prescription, intake) {
+    constructor(prescription, intake, time) {
         super(
             {
                 image: new URL('./medication.svg', import.meta.url).href,
@@ -30,7 +32,27 @@ export default class PrescriptionView extends TimetableItemView {
                         {
                             content: `Info`,
                             onclick: () => {
+                                const timePrefix = time == new Date().setHours(0, 0, 0, 0) ? 'Today' : new Date(time).toDateString()
                                 // Show a popup with medication info.
+                                new HCTSBrandedPopup(
+                                    {
+                                        content: hc.spawn(
+                                            {
+                                                classes: ['hc-ehealthi-health-app-patient-health-prescription-detail-view'],
+                                                innerHTML: `
+                                                    <div class='container'>
+                                                        <div class='prescription-label'>${prescription.label}</div>
+                                                        <div class='time-label'>
+                                                            <div class='prefix'>${timePrefix},</div>
+                                                            <div class='content'>${hc.toTimeString(new Date(intake.time))}</div>
+                                                        </div>
+                                                        <div class='notes'>${prescription.notes || 'Take on an empty stomach. Drink a lot of water after that, and avoid citrus fruits like orange.'}</div>
+                                                    </div>
+                                                `
+                                            }
+                                        )
+                                    }
+                                ).show()
                             }
                         }
                     ).html

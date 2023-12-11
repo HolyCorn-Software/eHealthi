@@ -206,6 +206,19 @@ export default class PrescriptionController {
             throw new Exception(`You can't modify this prescription again. It's been more than ${MAX_MODIFY_TIME_hrs} hours.`)
         }
 
+
+        // Inform frontend components, that the prescription has changed
+        this.informPrescriptionChanged(
+            {
+                ...data,
+                notes: data.notes,
+                label: data.label,
+                intake: data.intake
+
+            }
+        ).catch(e => { console.warn(`Failed to inform frontend components, that prescription has changed`, e) })
+
+
         await collections.prescriptions.updateOne({ id }, {
             $set: {
                 intake: data.intake,
@@ -222,7 +235,7 @@ export default class PrescriptionController {
      * @param {string} param0.userid
      */
     async end({ id, userid }) {
-        await this.getPrescriptionSecured(
+        const data = await this.getPrescriptionSecured(
             {
                 id,
                 userid,
@@ -230,12 +243,46 @@ export default class PrescriptionController {
             }
         );
 
+        // Inform frontend components, that the prescription has changed
+        this.informPrescriptionChanged(
+            {
+
+                ...data,
+                ended: Date.now(),
+            }
+        ).catch(e => { console.warn(`Failed to inform frontend components, that prescription has changed`, e) })
+
+        if (1) {
+            // TODO: Remove this test code
+            return;
+        }
+
         await collections.prescriptions.updateOne({ id }, {
             $set: {
                 ended: Date.now()
             }
         })
 
+    }
+
+
+    /**
+     * This method informs frontend components, that a prescription has changed.
+     * @param {ehealthi.health.prescription.Prescription} prescription 
+     */
+    async informPrescriptionChanged(prescription) {
+
+        // Inform frontend components, that the prescription has changed
+        const modernuser = await muser_common.getConnection()
+        await modernuser.notification.events.inform(
+            {
+                userids: [prescription.patient, prescription.doctor],
+                event: 'ehealthi-health-prescription-changed',
+                detail: {
+                    data: prescription
+                }
+            }
+        )
     }
 
 }

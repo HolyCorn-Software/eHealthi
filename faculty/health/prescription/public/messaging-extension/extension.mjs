@@ -206,7 +206,7 @@ class MessageViewExtensionWidget extends Widget {
                                         positive: `End Prescription`,
                                         negative: `Go back`,
                                         execute: async () => {
-                                            // await hcRpc.health.prescription.end({ id: this.statedata.id })
+                                            await hcRpc.health.prescription.end({ id: this.statedata.id })
                                             this.statedata.ended = Date.now()
                                             drawUI()
                                         }

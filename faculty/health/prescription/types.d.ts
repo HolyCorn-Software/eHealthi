@@ -78,4 +78,12 @@ global {
             'permissions.health.prescriptions.make': true
         }
     }
+
+    namespace modernuser.ui.notification {
+        interface ClientFrontendEvents {
+            'ehealthi-health-prescription-changed': {
+                data: ehealthi.health.prescription.Prescription
+            }
+        }
+    }
 }

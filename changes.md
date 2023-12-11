@@ -1,7 +1,8 @@
 .
 
-Updated to the latest version of the soul system, with better UX, and efficiency.
+Enabled possibility of ending a prescription.
 
-Improved the algorithm for fetching current prescriptions from the database.
+Made the parts of the UI, that have to do with prescriptions, more reactive. Changes can be easily propagated.
 
-Improved the algorithm for fetching timetable entries, from the database.
+Added possibility of viewing details of prescription, from the timetable view.
+
