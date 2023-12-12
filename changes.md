@@ -1,5 +1,3 @@
 .
 
-Improved the algorithms, that deal with updating the frontend, of modifications made in the backend.
-
-Fixed minor bug with the calendar, resulting from time differences between server, and client.
+Updated to the latest version of muser_common (2.02), with a minor fix related to permission checking.
