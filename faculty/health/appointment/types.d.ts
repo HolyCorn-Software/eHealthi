@@ -29,6 +29,8 @@ global {
             opened: number
             /** This field tells us when the appointment was created */
             created: number
+            /** This field indicates the last time the appointment was modified */
+            modified: number
             /** This field indicates if the doctor has marked the appointment over. */
             complete: boolean
         }

@@ -76,7 +76,7 @@ export default class MainView extends Widget {
         const download = new DelayedAction(() => {
             this.blockWithAction(
                 async () => {
-                    const latestLastEntry = this.statedata.items.sort((a, b) => a.time > b.time ? 1 : -1).reverse()[0]
+                    const latestLastEntry = this.statedata.items.sort((a, b) => a.time || a.modified > b.time || b.modified ? 1 : -1).reverse()[0]
                     const looper = await hcRpc.health.timetable.getRecentEntries(
                         {
                             start: latestLastEntry?.time || new Date().setHours(0, 0, 0, 0)
@@ -103,7 +103,10 @@ export default class MainView extends Widget {
         const draw = async () => {
 
             const currDate = this.calendar.selectedDate.getTime()
-            const entries = this.statedata.$0data.items.filter(x => (x["@timetable-entry"].date.start <= currDate) && (x["@timetable-entry"].date.end >= currDate))
+            function absoluteTime(time) {
+                return new Date(time).setHours(0, 0, 0, 0)
+            }
+            const entries = this.statedata.$0data.items.filter(x => (absoluteTime(x["@timetable-entry"].date.start) <= currDate) && (absoluteTime(x["@timetable-entry"].date.end) >= currDate))
 
             // So finally, these are the things that would be drawn
             /**
@@ -210,7 +213,6 @@ export default class MainView extends Widget {
                     const existing = this.statedata.items.find(x => x.id == prescription.id)
                     if (existing) {
                         Object.assign(existing, prescription)
-                        console.log(`Time to re-draw!`)
                         draw()
                     }
                 })

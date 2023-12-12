@@ -1,8 +1,5 @@
 .
 
-Enabled possibility of ending a prescription.
+Improved the algorithms, that deal with updating the frontend, of modifications made in the backend.
 
-Made the parts of the UI, that have to do with prescriptions, more reactive. Changes can be easily propagated.
-
-Added possibility of viewing details of prescription, from the timetable view.
-
+Fixed minor bug with the calendar, resulting from time differences between server, and client.

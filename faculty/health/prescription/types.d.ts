@@ -27,6 +27,10 @@ global {
              * The time the prescription was made
              */
             created: number
+            /**
+            * Contains the time the prescription was last modified
+            */
+            modified: number
 
             /**
              * How prescription would be consumed

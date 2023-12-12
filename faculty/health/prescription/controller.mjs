@@ -8,7 +8,7 @@
 import muser_common from "muser_common";
 import shortUUID from "short-uuid";
 import CommerceController from "../commerce/controller.mjs";
-import nodeUtil from 'node:util'
+
 import { CollectionProxy } from "../../../system/database/collection-proxy.js";
 
 
@@ -63,7 +63,8 @@ export default class PrescriptionController {
                 id,
                 doctor: prescription.userid,
                 userid: prescription.userid,
-                created: Date.now()
+                created: Date.now(),
+                modified: Date.now()
             }
         );
 
@@ -76,8 +77,9 @@ export default class PrescriptionController {
      * @param {object} param0 
      * @param {string} param0.userid
      * @param {active} param0.active If set to true, only prescriptions that are currently in the following, would be fetched, and if false, only out-of-use prescriptions would be fetched. If ignored, both would be fetched
+     * @param {number} param0.start If set, we'll only get prescriptions, that have been modified after a given time.
      */
-    async *getPrescriptions({ userid, active } = {}) {
+    async *getPrescriptions({ userid, active, start } = {}) {
 
         /** @type {Parameters<collections['prescriptions']['find']>['0']} */
         const filter = { $or: [{ patient: userid }] }
@@ -90,23 +92,63 @@ export default class PrescriptionController {
                     {
                         started: { $gt: 0 },
                         ended: { $exists: false },
-                        intake: { $gt: { end: todate } }
+                        intake: { $gt: { end: todate } },
+                        $or: [
+                            {
+                                modified: { $exists: false },
+                            },
+                            {
+                                modified: {
+                                    $gt: start || 0
+                                }
+                            }
+                        ]
                     }
                 ] : [
                     {
                         started: {
                             $exists: false,
-                        }
+                        },
+                        $or: [
+                            {
+                                modified: { $exists: false },
+                            },
+                            {
+                                modified: {
+                                    $gt: start || 0
+                                }
+                            }
+                        ]
                     },
                     {
                         started: {
                             $not: {
                                 $gt: 0
                             }
-                        }
+                        },
+                        $or: [
+                            {
+                                modified: { $exists: false },
+                            },
+                            {
+                                modified: {
+                                    $gt: start || 0
+                                }
+                            }
+                        ]
                     },
                     {
-                        ended: { $lte: Date.now() }
+                        ended: { $lte: Date.now() },
+                        $or: [
+                            {
+                                modified: { $exists: false },
+                            },
+                            {
+                                modified: {
+                                    $gt: start || 0
+                                }
+                            }
+                        ]
                     }
                 ]
 
@@ -178,7 +220,7 @@ export default class PrescriptionController {
         );
 
 
-        await collections.prescriptions.updateOne({ id }, { $set: { started: Date.now() } })
+        await collections.prescriptions.updateOne({ id }, { $set: { started: Date.now(), modified: Date.now() } })
 
 
     }
@@ -213,7 +255,8 @@ export default class PrescriptionController {
                 ...data,
                 notes: data.notes,
                 label: data.label,
-                intake: data.intake
+                intake: data.intake,
+                modified: Date.now()
 
             }
         ).catch(e => { console.warn(`Failed to inform frontend components, that prescription has changed`, e) })
@@ -223,7 +266,8 @@ export default class PrescriptionController {
             $set: {
                 intake: data.intake,
                 notes: data.notes,
-                label: data.label
+                label: data.label,
+                modified: Date.now()
             }
         })
 
@@ -249,17 +293,14 @@ export default class PrescriptionController {
 
                 ...data,
                 ended: Date.now(),
+                modified: Date.now()
             }
         ).catch(e => { console.warn(`Failed to inform frontend components, that prescription has changed`, e) })
 
-        if (1) {
-            // TODO: Remove this test code
-            return;
-        }
-
         await collections.prescriptions.updateOne({ id }, {
             $set: {
-                ended: Date.now()
+                ended: Date.now(),
+                modified: Date.now()
             }
         })
 

@@ -55,13 +55,34 @@ export default class TimetableController {
                 $or: [
                     {
                         doctor: userid,
+                        $or: [
+                            {
+                                modified: { $exists: false },
+                                created: { $gt: start }
+                            },
+                            {
+                                modified: {
+                                    $gt: start || 0
+                                }
+                            }
+                        ]
                     },
                     {
                         patient: userid,
+                        $or: [
+                            {
+                                modified: { $exists: false },
+                                created: { $gt: start }
+                            },
+                            {
+                                modified: {
+                                    $gt: start || 0
+                                }
+                            }
+                        ]
                     }
                 ],
                 paid: { $not: { $gt: 0 } },
-                time: { $gte: start },
 
                 $stages: ['recent']
             }
@@ -75,16 +96,18 @@ export default class TimetableController {
         const mainPriorityQuery = {
             $or: [
                 {
+                    modified: { $exists: false },
                     created: {
-                        $gte: start
+                        $gt: start
                     },
                 },
                 {
-                    time: {
-                        $gte: start
-                    },
+                    modified: {
+                        $gt: start || 0
+                    }
                 }
-            ]
+            ],
+
         }
 
         const confirmedAppointments = await this[controllers].appointment.dbController.find(
@@ -135,7 +158,7 @@ export default class TimetableController {
 
         }
 
-        const pendingPrescriptions = await this[controllers].prescription?.getPrescriptions({ userid, active: false })
+        const pendingPrescriptions = (await this[controllers].prescription?.getPrescriptions({ userid, active: false, start })) || []
 
         for await (const item of pendingPrescriptions) {
             yield TimetableController.wrapPrescription(item, {
@@ -156,7 +179,7 @@ export default class TimetableController {
 
         // And then, regular prescriptions
 
-        for await (const item of await this[controllers].prescription.getPrescriptions({ userid, active: true })) {
+        for await (const item of await this[controllers].prescription.getPrescriptions({ userid, active: true, start })) {
             yield TimetableController.wrapPrescription(item, {
                 user: await getUser(item.doctor),
             })

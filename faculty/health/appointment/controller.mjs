@@ -157,7 +157,7 @@ export default class AppointmentController {
                 for await (const appointment of items) {
                     try {
                         if ((await finance.payment.getPayment({ id: appointment.payment })).done) {
-                            await this.dbController.updateOne({ id: appointment.id, $stages: ['recent'] }, { $set: { paid: Date.now() } })
+                            await this.dbController.updateOne({ id: appointment.id, $stages: ['recent'] }, { $set: { paid: Date.now(), modified: Date.now() } })
                         }
                     } catch (e) {
                         console.error(`Could not process likely past payment for appointment ${appointment.id}.\n`, e)
@@ -199,6 +199,8 @@ export default class AppointmentController {
         const nw = {
             ...init,
             id,
+            modified: Date.now(),
+            created: Date.now()
         }
 
         if (payment) {
