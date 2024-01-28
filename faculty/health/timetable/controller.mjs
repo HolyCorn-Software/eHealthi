@@ -30,6 +30,16 @@ export default class TimetableController {
                     event: 'ehealthi-health-new-timetable-entry',
                     detail: {
                         data
+                    },
+                    options: {
+                        aggregation: {
+                            timeout: 20_000,
+                            sameData: true,
+                        },
+                        precallWait: 1000,
+                        timeout: 5000,
+                        retries: 10,
+                        retryDelay: 2000
                     }
                 }
             )
@@ -40,9 +50,38 @@ export default class TimetableController {
      * This method returns entries, such as appointments, and prescriptions, in ascending order
      * @param {object} param0 
      * @param {string} param0.userid
-     * @param {number} param0.start
+     * @param {ehealthi.health.timetable.StartParam} param0.start
      */
     async* getRecentEntries({ userid, start } = {}) {
+
+
+        /** 
+         * @type {Parameters<this[controllers]['appointment']['dbController']['find']>[0]}
+         * Generally, we're looking for apppointments that were either scheduled after a given time, or created after a given time.
+         */
+        const timeQuery = {
+            $or: [
+                start.modified ? {
+                    modified: {
+                        $gt: start.modified
+                    }
+                } : undefined,
+                start.created ? {
+                    created: {
+                        $gt: start.created
+                    },
+
+                } : undefined,
+                start.time ? {
+                    time: { $gt: start.time || 0 }
+                } : undefined
+            ].filter(x => typeof x != 'undefined'),
+
+        }
+
+        if (timeQuery.$or.length == 0) {
+            delete timeQuery.$or
+        }
 
         /** @type {modernuser.profile.UserProfileData[]} */
         const users = []
@@ -55,31 +94,11 @@ export default class TimetableController {
                 $or: [
                     {
                         doctor: userid,
-                        $or: [
-                            {
-                                modified: { $exists: false },
-                                created: { $gt: start }
-                            },
-                            {
-                                modified: {
-                                    $gt: start || 0
-                                }
-                            }
-                        ]
+                        ...timeQuery
                     },
                     {
                         patient: userid,
-                        $or: [
-                            {
-                                modified: { $exists: false },
-                                created: { $gt: start }
-                            },
-                            {
-                                modified: {
-                                    $gt: start || 0
-                                }
-                            }
-                        ]
+                        ...timeQuery
                     }
                 ],
                 paid: { $not: { $gt: 0 } },
@@ -89,26 +108,6 @@ export default class TimetableController {
         )
 
 
-        /** 
-         * @type {Parameters<this[controllers]['appointment']['dbController']['find']>[0]}
-         * Generally, we're looking for apppointments that were either scheduled after a given time, or created after a given time.
-         */
-        const mainPriorityQuery = {
-            $or: [
-                {
-                    modified: { $exists: false },
-                    created: {
-                        $gt: start
-                    },
-                },
-                {
-                    modified: {
-                        $gt: start || 0
-                    }
-                }
-            ],
-
-        }
 
         const confirmedAppointments = await this[controllers].appointment.dbController.find(
 
@@ -117,11 +116,11 @@ export default class TimetableController {
                     {
 
                         doctor: userid,
-                        ...mainPriorityQuery
+                        ...timeQuery
                     },
                     {
                         patient: userid,
-                        ...mainPriorityQuery
+                        ...timeQuery
                     }
                 ],
                 $stages: ['ready'],

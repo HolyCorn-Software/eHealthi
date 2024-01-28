@@ -45,6 +45,12 @@ global {
             }
         }
 
+        interface StartParam {
+            modified: number
+            time: number
+            created: number
+        }
+
 
     }
 }

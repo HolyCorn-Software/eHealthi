@@ -5,7 +5,6 @@
  */
 
 import PatientHome from "../widgets/app-patient-home/widget.mjs";
-import DeviceFrame from "../widgets/device-frame/widget.mjs";
 
 
 // TODO: Implement logic of showing either patient, or doctor UI.

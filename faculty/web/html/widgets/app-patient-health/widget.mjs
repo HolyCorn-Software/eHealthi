@@ -36,8 +36,6 @@ export default class PatientHealth extends Widget {
             }
         );
 
-        // TODO: Wrap this view in a backforth
-
         this.widgetProperty(
             {
                 selector: ['', ...MainView.classList].join('.'),

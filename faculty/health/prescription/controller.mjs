@@ -8,6 +8,7 @@
 import muser_common from "muser_common";
 import shortUUID from "short-uuid";
 import CommerceController from "../commerce/controller.mjs";
+import nodeUtil from 'node:util'
 
 import { CollectionProxy } from "../../../system/database/collection-proxy.js";
 
@@ -77,78 +78,54 @@ export default class PrescriptionController {
      * @param {object} param0 
      * @param {string} param0.userid
      * @param {active} param0.active If set to true, only prescriptions that are currently in the following, would be fetched, and if false, only out-of-use prescriptions would be fetched. If ignored, both would be fetched
-     * @param {number} param0.start If set, we'll only get prescriptions, that have been modified after a given time.
+     * @param {ehealthi.health.timetable.StartParam} param0.start If set, we'll only get prescriptions, that have been modified after a given time.
      */
     async *getPrescriptions({ userid, active, start } = {}) {
 
         /** @type {Parameters<collections['prescriptions']['find']>['0']} */
-        const filter = { $or: [{ patient: userid }] }
+        const filter = { patient: userid }
 
         const todate = new Date().setHours(0, 0, 0, 0)
 
+        /**
+         * @type {Parameters<collections['prescriptions']['find']>['0']}
+         */
+        const timeQuery = {
+            $or: [
+                start.created ? {
+                    created: { $gt: start?.created || 0 },
+                } : undefined,
+                start.modified ? {
+                    modified: {
+                        $gt: start?.modified || 0
+                    }
+                } : undefined,
+            ].filter(x => typeof x != 'undefined')
+        }
+
+        if (timeQuery.$or.length == 0) {
+            delete timeQuery.$or
+        }
+
         if (typeof active !== 'undefined') {
-            filter.$or[0].$or =
+            filter.$or =
                 active ? [
                     {
                         started: { $gt: 0 },
-                        ended: { $exists: false },
-                        intake: { $gt: { end: todate } },
-                        $or: [
-                            {
-                                modified: { $exists: false },
-                            },
-                            {
-                                modified: {
-                                    $gt: start || 0
-                                }
-                            }
-                        ]
+                        ended: { $not: { $gt: 0 } },
+                        intake: { $gte: { end: todate } },
+                        ...timeQuery
                     }
                 ] : [
                     {
+                        ...timeQuery,
                         started: {
-                            $exists: false,
+                            $not: { $gt: 0 }
                         },
-                        $or: [
-                            {
-                                modified: { $exists: false },
-                            },
-                            {
-                                modified: {
-                                    $gt: start || 0
-                                }
-                            }
-                        ]
                     },
                     {
-                        started: {
-                            $not: {
-                                $gt: 0
-                            }
-                        },
-                        $or: [
-                            {
-                                modified: { $exists: false },
-                            },
-                            {
-                                modified: {
-                                    $gt: start || 0
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        ended: { $lte: Date.now() },
-                        $or: [
-                            {
-                                modified: { $exists: false },
-                            },
-                            {
-                                modified: {
-                                    $gt: start || 0
-                                }
-                            }
-                        ]
+                        ...timeQuery,
+                        ended: { $gt: 0 },
                     }
                 ]
 
@@ -156,7 +133,7 @@ export default class PrescriptionController {
 
 
 
-        for await (const item of collections.prescriptions.find(filter)) {
+        for await (const item of collections.prescriptions.find(filter, { projection: { _id: 0 } })) {
             yield item
         }
     }
@@ -184,7 +161,7 @@ export default class PrescriptionController {
      */
 
     async getPrescriptionSecured({ id, userid, doctorOnly }) {
-        const data = await collections.prescriptions.findOne({ id });
+        const data = await collections.prescriptions.findOne({ id }, { projection: { _id: 0 } });
         if (!data) {
             throw new Exception(`The prescription with id '${id}', was not found.`);
         }
@@ -321,6 +298,17 @@ export default class PrescriptionController {
                 event: 'ehealthi-health-prescription-changed',
                 detail: {
                     data: prescription
+                },
+                options: {
+                    exclude: [prescription.doctor],
+                    aggregation: {
+                        timeout: 20_000,
+                        sameData: true,
+                    },
+                    precallWait: 1000,
+                    timeout: 5000,
+                    retries: 10,
+                    retryDelay: 2000
                 }
             }
         )

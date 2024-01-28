@@ -76,10 +76,18 @@ export default class MainView extends Widget {
         const download = new DelayedAction(() => {
             this.blockWithAction(
                 async () => {
-                    const latestLastEntry = this.statedata.items.sort((a, b) => a.time || a.modified > b.time || b.modified ? 1 : -1).reverse()[0]
+                    const isEmpty = this.statedata.items.length == 0
+                    const timeStart = isEmpty ? new Date().setHours(0, 0, 0, 0) : undefined;
+                    const modifiedStart = isEmpty ? undefined : this.statedata.items.sort((a, b) => a.modified || 0 > b.modified || 0 ? 1 : -1).reverse()[0]?.modified;
+                    const createdStart = isEmpty ? undefined : this.statedata.items.sort((a, b) => a.created > b.created ? 1 : -1).reverse()[0]?.created;
                     const looper = await hcRpc.health.timetable.getRecentEntries(
                         {
-                            start: latestLastEntry?.time || new Date().setHours(0, 0, 0, 0)
+                            start: {
+                                time: timeStart,
+                                modified: modifiedStart,
+                                created: createdStart
+                            }
+
                         }
                     )
 

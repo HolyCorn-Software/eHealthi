@@ -7,6 +7,7 @@
 
 
 import PrescriptionInput from "../widgets/prescription-input/widget.mjs";
+import ChatMessaging from "/$/chat/messaging/static/widgets/chat-messaging/widget.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { handle } from "/$/system/static/errors/error.mjs";
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
@@ -24,11 +25,12 @@ EventBasedExtender.eventTarget.addEventListener('telep-chat-messaging-extend', (
         if (!(me.meta?.isDoctor ?? true)) {
             return;
         }
-        /** @type {telep.chat.management.Chat} */
-        const chat = event.detail.data
+        const chat = ''
+        /** @type {ChatMessaging} */
+        const widget = event.detail.data.widget
 
         return {
-            html: new ComposeChatExtensionWidget({ patient: chat.recipients.find(x => x !== me.id), chat }).html,
+            html: new ComposeChatExtensionWidget({ chat, me, widget }).html,
         }
     })())
 });
@@ -250,10 +252,10 @@ class ComposeChatExtensionWidget extends Widget {
     /**
      * 
      * @param {object} param0 
-     * @param {string} param0.patient
-     * @param {telep.chat.management.Chat} param0.chat
+     * @param {ChatMessaging} param0.widget
+     * @param {modernuser.profile.UserProfileData} param0.me
      */
-    constructor({ patient, chat } = {}) {
+    constructor({ widget, me } = {}) {
         super()
         this.html = hc.spawn(
             {
@@ -283,7 +285,7 @@ class ComposeChatExtensionWidget extends Widget {
         let timeout;
 
         const createNew = () => {
-            main = new PrescriptionInput({ patient })
+            main = new PrescriptionInput({ patient: widget.chat.recipients.find(x => x != me.id) })
             popup = new HCTSBrandedPopup(
                 {
                     content: hc.spawn(
@@ -318,12 +320,12 @@ class ComposeChatExtensionWidget extends Widget {
                             // the prescription process.
 
                             if (!id) {
-                                id = await hcRpc.health.prescription.prescribe({ ...main.value, patient });
+                                id = await hcRpc.health.prescription.prescribe({ ...main.value, patient: widget.chat.recipients.find(x => x != me.id) });
                             }
-                            await hcRpc.chat.messaging.sendMessage(
+                            widget.messages.push(
                                 {
                                     type: 'meta',
-                                    chat: chat.id,
+                                    chat: widget.chat.id,
                                     data: {
                                         meta: {
                                             contentType: 'ehealthi-health-prescription',
@@ -333,9 +335,13 @@ class ComposeChatExtensionWidget extends Widget {
                                                 }
                                             }
                                         }
-                                    }
+                                    },
+                                    isNew: true,
+                                    isOwn: true,
+                                    time: Date.now(),
+
                                 }
-                            );
+                            )
 
                             popup.hide()
 

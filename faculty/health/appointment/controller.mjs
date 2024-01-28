@@ -300,7 +300,7 @@ export default class AppointmentController {
      * @param {string} param0.userid The id of the user wanting it. 
      */
     async getAppointment({ id, userid }) {
-        const data = await this.dbController.findOne({ id })
+        const data = await this.dbController.findOne({ id }, { projection: { _id: 0 } })
 
         if (!data) {
             throw new Exception(`The appointment you're looking for, was not found.`)
@@ -346,6 +346,9 @@ export default class AppointmentController {
             {
                 sort: {
                     time: 'asc'
+                },
+                projection: {
+                    _id: 0
                 }
             }
         );

@@ -64,7 +64,7 @@ export default class Item extends Widget {
         this.statedata.$0.addEventListener('caption-change', () => this.html.$('.container >.main >.details >.caption').innerHTML = this.statedata.caption || '---')
         this.statedata.$0.addEventListener('label-change', () => this.html.$('.container >.main >.details >.title').innerHTML = this.statedata.label)
         this.statedata.$0.addEventListener('icon-change', () => this[icon] = this.statedata.icon)
-        this.statedata.$0.addEventListener('unreadCount-change', () => this.html.$('.container >.main >.indicators >.count').innerHTML = this.statedata.unreadCount)
+        this.statedata.$0.addEventListener('unreadCount-change', () => this.html.$('.container >.main >.indicators >.count').innerHTML = this.statedata.unreadCount < 1 ? '' : this.statedata.unreadCount)
         this.statedata.$0.addEventListener('lastTime-change', () => this.html.$('.container >.main >.indicators >.latest-time').innerHTML = new Date(this.statedata.lastTime).toTimeString().split(' ')[0].split(':').slice(0, 2).join(':'))
         this.statedata.$0.addEventListener('lastDirection-change', () => this.html.setAttribute('direction', this.statedata.lastDirection))
 
@@ -72,10 +72,27 @@ export default class Item extends Widget {
 
         let widget;
 
+        /** @returns {Chat} */
+        const getWidget = () => widget ||= new Chat(this.statedata)
+
         this.html.addEventListener('click', () => {
-            widget ||= new Chat(this.statedata)
+            const widget = getWidget();
             this.html.dispatchEvent(new WidgetEvent('backforth-goto', { detail: { view: widget.html } }))
-        })
+            widget.messaging.addEventListener('unread-count-change', () => {
+                this.statedata.unreadCount = widget.messaging.unreadCount
+            });
+            widget.messaging.addEventListener('last-message-change', () => {
+                const msgs = widget.messaging.messages
+                const msg = msgs[msgs.length - 1]
+                this.statedata.lastDirection = msg.isOwn ? 'outgoing' : 'incoming'
+                // TODO: implement captioning extension
+                this.statedata.caption = msg.data.text || (msg.data.media && msg.data.media.caption || '')
+                this.statedata.lastTime = msg.edited?.time || msg.time
+                this.statedata.unreadCount = widget.messaging.unreadCount
+                this.statedata.icon = widget.messaging.chat.icon
+                this.statedata.label = widget.messaging.chat.label
+            })
+        });
 
 
 

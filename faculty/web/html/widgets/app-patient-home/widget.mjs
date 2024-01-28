@@ -38,13 +38,13 @@ export default class PatientHome extends Widget {
                 frame.statedata.items = [
                     {
                         id: 'health',
-                        label: 'Health',
-                        content: new BackForth({ view: new PatientHealth().html }).html,
+                        label: 'Hospital',
+                        content: new PatientHealth().html,
                         icon: 'doctor-love.png'
                     },
                     {
                         id: 'chat',
-                        label: 'Chat',
+                        label: 'Chats',
                         content: new AppChatView().html,
                         icon: 'message.svg'
                     },

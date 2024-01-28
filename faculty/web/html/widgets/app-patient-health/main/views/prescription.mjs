@@ -46,7 +46,8 @@ export default class PrescriptionView extends TimetableItemView {
                                                             <div class='prefix'>${timePrefix},</div>
                                                             <div class='content'>${hc.toTimeString(new Date(intake.time))}</div>
                                                         </div>
-                                                        <div class='notes'>${prescription.notes || 'Take on an empty stomach. Drink a lot of water after that, and avoid citrus fruits like orange.'}</div>
+                                                        <div class='intake-label'>${intake.quantity.value} ${intake.quantity.label}</div>
+                                                        <div class='notes'>${prescription.notes || ''}</div>
                                                     </div>
                                                 `
                                             }

@@ -39,10 +39,18 @@ export default class PrescriptionPublicMethods {
      * @param {string} param0.id
      */
     async getPrescription({ id }) {
-        return await this[controller].getPrescription(
+        return new JSONRPC.MetaObject(
+            await this[controller].getPrescription(
+                {
+                    ...arguments[1],
+                    userid: (await muser_common.getUser(arguments[0])).id
+                }
+            ),
             {
-                ...arguments[1],
-                userid: (await muser_common.getUser(arguments[0])).id
+                cache: {
+                    expiry: 10 * 60 * 1000,
+                    tag: `prescription-${arguments[1]?.id}`
+                }
             }
         )
     }
@@ -53,10 +61,15 @@ export default class PrescriptionPublicMethods {
      * @param {string} param0.id
      */
     async start({ id }) {
-        await this[controller].start(
+        return new JSONRPC.MetaObject(
+            await this[controller].start(
+                {
+                    ...arguments[1],
+                    userid: (await muser_common.getUser(arguments[0])).id
+                }
+            ),
             {
-                ...arguments[1],
-                userid: (await muser_common.getUser(arguments[0])).id
+                rmCache: [`prescription-${arguments[0]?.id}`]
             }
         )
     }
@@ -68,10 +81,15 @@ export default class PrescriptionPublicMethods {
      * @param {ehealthi.health.prescription.PrescriptionMutableData} param0.data
      */
     async modify({ id, data }) {
-        await this[controller].modify(
+        return new JSONRPC.MetaObject(
+            await this[controller].modify(
+                {
+                    ...arguments[1],
+                    userid: (await muser_common.getUser(arguments[0])).id
+                }
+            ),
             {
-                ...arguments[1],
-                userid: (await muser_common.getUser(arguments[0])).id
+                rmCache: [`prescription-${arguments[0]?.id}`]
             }
         )
     }
@@ -81,10 +99,15 @@ export default class PrescriptionPublicMethods {
      * @param {string} param0.id
      */
     async end({ id }) {
-        await this[controller].end(
+        return new JSONRPC.MetaObject(
+            await this[controller].end(
+                {
+                    ...arguments[1],
+                    userid: (await muser_common.getUser(arguments[0])).id
+                }
+            ),
             {
-                ...arguments[1],
-                userid: (await muser_common.getUser(arguments[0])).id
+                rmCache: [`prescription-${arguments[0]?.id}`]
             }
         )
     }

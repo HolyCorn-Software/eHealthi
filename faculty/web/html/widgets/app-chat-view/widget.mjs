@@ -5,6 +5,7 @@
  */
 
 import Item from "./item.mjs";
+import ChatEventClient from "/$/chat/static/event-client/client.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
@@ -95,6 +96,17 @@ export default class AppChatView extends Widget {
 
         this.blockWithAction(async () => {
             this.statedata.chats = await hcRpc.chat.getMyChatsMetadata()
+
+            const instance = await ChatEventClient.create()
+            instance.events.addEventListener('telep-chat-new-chat', (event) => {
+                /** @type {this['statedata']['$0data']['chats'][number]} */
+                const chat = event.detail.chat
+                this.items = [
+                    chat,
+                    ...this.items.filter(x => x.id != chat.id)
+                ]
+
+            })
         })
 
     }

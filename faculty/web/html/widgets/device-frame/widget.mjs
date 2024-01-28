@@ -7,6 +7,7 @@
 
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
+import osBackButtonManager from "/$/system/static/html-hc/lib/util/os-back-button/manager.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import defineImageProperty from "/$/system/static/html-hc/lib/widget/widget-image.mjs";
 import BackForth from "/$/system/static/html-hc/widgets/back-forth/widget.mjs";
@@ -95,6 +96,8 @@ export default class DeviceFrame extends Widget {
 }
 
 
+const backforth = Symbol()
+
 class ViewContainer extends Widget {
     /**
      * 
@@ -116,10 +119,40 @@ class ViewContainer extends Widget {
             }
         );
 
-        const backforth = new BackForth({ view: content })
+        this.widgetProperty(
+            {
+                selector: ['', ...BackForth.classList].join('.'),
+                parentSelector: ':scope >.container',
+                childType: 'widget',
+            },
+            backforth
+        );
 
-        this.html.$('.container').appendChild(backforth.html)
-        this.visible = visible
+        this.htmlProperty(undefined, 'visible', 'class', () => {
+            setTimeout(() => {
+                if (this.visible) {
+                    this[backforth] ||= (() => {
+                        const backforth = new BackForth({ view: content })
+                        osBackButtonManager.register(
+                            {
+                                signal: this.destroySignal,
+                                html: this.html,
+                                callback: (params) => {
+                                    if (backforth.canGoBack) {
+                                        backforth.goBack()
+                                        return true
+                                    }
+                                    params.pass()
+                                }
+                            }
+                        )
+                        return backforth
+                    })()
+                }
+            }, 20)
+        })
+
+        /** @type {boolean} */ this.visible = visible
 
         this.html.setAttribute('view-container-id', id)
 
@@ -127,13 +160,6 @@ class ViewContainer extends Widget {
     }
     get id() {
         return this.html.getAttribute('view-container-id')
-    }
-
-    set visible(visible) {
-        this.html.classList.toggle('visible', visible)
-    }
-    get visible() {
-        return this.html.classList.contains('visible')
     }
 
     /** @readonly */
