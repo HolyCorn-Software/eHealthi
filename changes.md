@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of the chat faculty, with improvements concerning calling.
+Updated to the latest version of the soul system, with better frontend resource caching.
