@@ -152,7 +152,7 @@ Possible options are: issue"
         sudo cp "$TLS_CA" "$TLS_CA.tmp"
 
         git pull --recurse-submodule
-        git submodule foreach 'git pull && git checkout main'
+        git submodule foreach 'git checkout main && git pull'
         enable_command
 
         # Copy back the old TLS certificate, CA certificate, and key
