@@ -68,12 +68,10 @@ export default class AppChatView extends Widget {
         this.statedata.$0.addEventListener('chats-change', onchange)
 
         this.waitTillDOMAttached().then(() => {
-            this.statedata.chats = [...' '.repeat(5)].map(x => [
+            this.statedata.chats = [...' '.repeat(2)].map(x => [
                 {
-                    label: `Tanko Fabiola`,
-                    caption: `I went for consultation, and
-                    the doctor said we have to
-                    take long walks to get back.`,
+                    label: `Loading...`,
+                    caption: `Loading your chats.`,
                     id: 'tanko-0',
                     lastTime: Date.now() - 10 * 60 * 1000,
                     unreadCount: 2,
@@ -81,10 +79,8 @@ export default class AppChatView extends Widget {
                     lastDirection: 'incoming'
                 },
                 {
-                    label: `Awah Sandrine`,
-                    caption: `I went for consultation, and
-                    the doctor said we have to
-                    take long walks to get back.`,
+                    label: `Loading...`,
+                    caption: `Loading all your chats, please wait.`,
                     id: 'tanko-0',
                     lastTime: Date.now() - 30 * 60 * 1000 + (Math.random() * 60000),
                     unreadCount: 1,

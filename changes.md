@@ -1,5 +1,5 @@
 .
 
-Updated to the latest version of the soul system, with a frontend resource reporting bug fix.
+Updated to the latest version of the chat faculty, with a minor bug fix.
 
-Updated to the latest version of backend_dashboard without the previous debugging turned on.
+Improved UX, by changing the text the user sees, when chats are loading.
