@@ -43,6 +43,8 @@ export class AppointmentNotificationController {
                         }
                     }
 
+                    console.log(`Processing task `, task)
+
                     const appointment = await parent.getAppointment({ id: task.appointment })
                     switch (task.type) {
                         case 'initial': {
@@ -84,9 +86,14 @@ export class AppointmentNotificationController {
                                         }
                                     )
                                 }
-                            } else {
-                                console.log(`Notifying the user of the change`)
-                                // Over here, we're informing the patient, that some things about the appointment has changed 
+                            }
+
+
+
+                            if (!task.oldDoctor || task.user != 'doctor') {
+                                // We can't inform the new doctor, that there's a change. He should have had a, "you have a new appointment" notification.
+
+                                // Over here, we're informing both patient and doctor, that some things about the appointment has changed 
                                 await AppointmentNotificationTemplates.changeNotify(
                                     {
                                         userType: task.user,
@@ -180,7 +187,9 @@ export class AppointmentNotificationController {
                         appointment: appointment.id,
                         type: 'initial',
                         user: 'doctor',
-                        time: Date.now() + (10 * 60 * 1000) // Let's give the doctor up to 10 mins, so that if the appointment is re-scheduled, we'd have time to cancel the notification
+                        // Let's give the doctor up to 10 mins, so that if the appointment is re-scheduled, we'd have time to cancel the notification,
+                        // However, if the doctor is just being told, that the time changed, then that's something urgent. Let's do it within 20s.
+                        time: change && (!change.prevDoctor) ? Date.now() + (20_000) : Date.now() + (10 * 60 * 1000)
                     }
                 );
             }

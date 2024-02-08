@@ -53,9 +53,7 @@ export default class AppointmentAdmin extends ListDataManager {
                             label: 'Date and Time',
                             name: 'time',
                             view: (time) => {
-                                const date = new Date(time);
-                                const isLate = time < Date.now()
-                                return `<div class='${isLate ? 'hc-ehealthi-health-appointment-admin-item-late' : ''}'>${new Date().setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0) ? 'Today' : date.toDateString()} ${date.toLocaleTimeString()}</div>`
+                                return `<div class='${time < Date.now() ? 'hc-ehealthi-health-appointment-admin-item-late' : ''}'>${new Date().setHours(0, 0, 0, 0) == new Date(time).setHours(0, 0, 0, 0) ? 'Today' : new Date(time).toDateString()} ${new Date(time).toLocaleTimeString()}</div>`
                             }
                         }
                     ],

@@ -278,7 +278,7 @@ async function doctorNwNotify(appointment) {
             template: DOCTOR_NEW_APPOINTMENT.name,
             data: [
                 profiles[0].label,
-                profiles[1].label,
+                profiles[1].label || "No name",
                 timeString(appointment.time)
             ],
             language: 'en'
@@ -292,7 +292,7 @@ async function doctorNwNotify(appointment) {
  * This method informs the patient, of the changes made to his appointment with a doctor.
  * @param {object} param0
  * @param {ehealthi.health.appointment.Appointment} param0.appointment 
- * @param {number} param0.oldDoctor
+ * @param {string} param0.oldDoctor
  * @param {number} param0.oldTime
  * @param {"patient"|"doctor"} param0.userType
  */
@@ -308,7 +308,7 @@ async function changeNotify({ appointment, userType, oldDoctor, oldTime }) {
             language: 'en',
             template: APPOINTMENT_CHANGE.name,
             data: [
-                otherPerson.label,
+                otherPerson.label || "No Name",
                 timeString(oldTime || appointment.time),
                 userType == 'patient' ? oldDoctor ? otherPerson.label : 'the same doctor' : 'the same patient',
                 oldTime ? timeString(appointment.time) : 'the same day, and time'
@@ -336,7 +336,7 @@ async function doctorRemovedNotify({ appointment, oldDoctor }) {
             language: 'en',
             template: APPOINTMENT_DOCTOR_REMOVED.name,
             data: [
-                patientProfile.label,
+                patientProfile.label || "No name",
                 timeString(appointment.time),
                 nwDoctorProfile.label
             ]
