@@ -1,5 +1,5 @@
 .
 
-Updated to the latest version of modernuser, with slightly better load time.
+Updated to the latest version of the soul system, with better frontend load speed.
 
-Temporarily disabled logo at page loader, to test optimization.
+Fixed minor bug with notification delivery.

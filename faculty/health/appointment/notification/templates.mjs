@@ -275,7 +275,7 @@ async function doctorNwNotify(appointment) {
     await (await modernuser()).notification.notifyUser(
         {
             userid: appointment.doctor,
-            template: DOCTOR_NEW_APPOINTMENT,
+            template: DOCTOR_NEW_APPOINTMENT.name,
             data: [
                 profiles[0].label,
                 profiles[1].label,
