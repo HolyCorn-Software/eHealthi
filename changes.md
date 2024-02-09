@@ -1,5 +1,7 @@
 .
 
-Updated to the latest version of the chat faculty, with a minor bug fix.
+Updated to the latest version of the faculty of finance, with bug fixes.
 
-Improved UX, by changing the text the user sees, when chats are loading.
+Updated to the latest version of modernuser, wth UI improvements.
+
+Updated to the latest version of the soul system, with bug fixes.
