@@ -1,3 +1,3 @@
 .
 
-Resized logo, to speed-up download of frontend resources.
+Updated to the latest version of the soul system in order to trace a bug.
