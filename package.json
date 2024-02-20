@@ -41,7 +41,7 @@
     "google-auth-library": "^9.1.0",
     "live-plugin-manager": "^0.17.1",
     "mongodb": "^6.3.0",
-    "muser_common": "^2.1.0",
+    "muser_common": "^3.0.0",
     "node-fetch": "^3.3.1",
     "node-static": "^0.7.11",
     "short-uuid": "^4.2.2",
