@@ -37,7 +37,8 @@
         "staticPaths": {
             "${fPath}/static/": "./public/",
             "${fPath}/appointment/static/": "./appointment/public/",
-            "${fPath}/prescription/static/": "./prescription/public/"
+            "${fPath}/prescription/static/": "./prescription/public/",
+            "${fPath}/records/static/": "./records/public/"
         }
     }
 }

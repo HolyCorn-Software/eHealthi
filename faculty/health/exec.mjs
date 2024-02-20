@@ -9,6 +9,7 @@
 import AppointmentController from "./appointment/controller.mjs"
 import CommerceController from "./commerce/controller.mjs"
 import PrescriptionController from "./prescription/controller.mjs"
+import MedicalRecordsController from "./records/controller.mjs"
 import HealthPublicMethods from "./remote/public.mjs"
 import TimetableController from "./timetable/controller.mjs"
 
@@ -31,9 +32,11 @@ export default async function () {
         prescription: prescriptionController
     });
 
+    const recordsController = new MedicalRecordsController()
+
     const faculty = FacultyPlatform.get()
 
-    faculty.remote.public = new HealthPublicMethods({ appointment: appointmentController, timetable: timetableController, prescription: prescriptionController })
+    faculty.remote.public = new HealthPublicMethods({ appointment: appointmentController, timetable: timetableController, prescription: prescriptionController, records: recordsController })
 
     await appointmentController.init()
     console.log(`${FacultyPlatform.get().descriptor.label.cyan} running!!`)

@@ -48,7 +48,7 @@ export default class NewLoginPopup extends HCTSBrandedPopup {
                         ]
                     }).flat(),
                     {
-                        label: `Choose Login`,
+                        label: `Add Login`,
                         id: '',
                         parent: undefined,
                     }
