@@ -22,7 +22,7 @@
     content: '';
     width: 45%;
     height: 45%;
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     position: absolute;
     left: calc(100% - (45% / 2));
     top: calc(45% / 4);

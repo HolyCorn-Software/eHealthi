@@ -112,7 +112,7 @@
 }
 
 .hc-donorforms-footer>.container>.community-button>.hc-action-button>.container {
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     color: var(--main-bg-color);
     font-size: 1.5em;
     font-family: jua;

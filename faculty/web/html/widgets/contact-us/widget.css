@@ -38,7 +38,7 @@
 }
 
 .hc-ehealthi-contact-us>.container>.main>.form {
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     padding: 1em;
     padding-left: 10%;
     width: clamp(250px, 450px, 100vw - 4.5em);
@@ -108,7 +108,7 @@
         transform: translate(0, 0);
         width: clamp(250px, 500px + 1em, 100vw - 1.5em);
         aspect-ratio: 1/1;
-        border: 0.125em solid var(--accent-color);
+        border: 0.125em solid var(--theme-color);
     }
 
     .hc-ehealthi-contact-us>.container>.main>.form>img {

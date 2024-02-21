@@ -69,7 +69,7 @@
 }
 
 .hc-ehealthi-app-my-profile-data>.container>.action>.hc-action-button>.container {
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     font-family: inherit;
     color: inherit;
     border-radius: 0.5em;

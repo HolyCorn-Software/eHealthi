@@ -63,7 +63,7 @@
     content: '';
     width: 1em;
     height: 1em;
-    color: var(--accent-color);
+    color: var(--theme-color);
     background-image: url("./res/settings.svg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -85,7 +85,7 @@
     height: 100%;
     top: 0px;
     left: 0px;
-    color: var(--accent-color);
+    color: var(--theme-color);
     border-radius: inherit;
     pointer-events: none;
     opacity: 0;

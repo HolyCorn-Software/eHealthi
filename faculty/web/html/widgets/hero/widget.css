@@ -18,7 +18,7 @@
     height: 100%;
     top: 0px;
     left: 0px;
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     filter: brightness(70%);
     position: absolute;
     pointer-events: none;

@@ -11,7 +11,7 @@
     flex-direction: column;
     padding: 0.5em;
     font-size: 0.85em;
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     width: clamp(200px, 350px, 100vw - 9em);
     border-radius: 1.25em;
 }

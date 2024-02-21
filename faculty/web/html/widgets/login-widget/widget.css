@@ -63,7 +63,7 @@
     width: clamp(var(--caption-image-width, 30%), 100vw, 600px);
     height: calc(var(--magic-height, 70%) + 2.5em);
     content: '';
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     border-bottom-right-radius: 10%;
     border-bottom-left-radius: 10%;
     top: -1em;

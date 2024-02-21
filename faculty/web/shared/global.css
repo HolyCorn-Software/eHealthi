@@ -7,9 +7,10 @@
 
 :root {
     --main-bg-color: rgb(28, 28, 42);
-    --accent-color: #179990;
-    --accent-color: #18e8db;
+    --theme-color: #18e8db;
     --healthi-blue: #00A9FF;
+    --accent-color: var(--healthi-blue);
+
 
     --app-bg: #f3f8fc;
     background-color: var(--app-bg);

@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     width: clamp(10em, 20em, 15vw);
     border-radius: 1em;
     justify-content: center;

@@ -10,7 +10,7 @@
 
 .hc-ehealthi-app-patient-health-appointment-exec>.container>.btn-continue>.hc-action-button {
     width: 100%;
-    --color-primary: var(--accent-color);
+    --color-primary: var(--theme-color);
     --color-secondary: black;
 
 }
@@ -28,7 +28,7 @@
     font-size: 7.5em;
     width: 1em;
     height: 1em;
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     padding: 0.5em;
     border-radius: 50%;
     color: white;

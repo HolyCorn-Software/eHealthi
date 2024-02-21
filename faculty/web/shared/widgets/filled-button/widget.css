@@ -5,7 +5,7 @@
 */
 
 .hc-action-button.hc-ehealthi-filled-button {
-    --highlight-color: var(--accent-color, white);
+    --highlight-color: var(--theme-color, white);
 }
 
 .hc-action-button.hc-ehealthi-filled-button>.container {

@@ -11,7 +11,7 @@
     gap: 1em;
     padding: 1em;
     font-size: clamp(1em, 3em, 8vw);
-    background-color: var(--accent-color);
+    background-color: var(--theme-color);
     align-items: center;
     font-family: jua;
     text-align: center;
