@@ -13,9 +13,6 @@ import { SlideContainer } from "/$/system/static/html-hc/widgets/slide-container
 
 
 
-/**
- * @extends Widget<eHealthiLoginWidget>
- */
 export default class eHealthiLoginWidget extends Widget {
 
     constructor() {
@@ -89,6 +86,7 @@ export default class eHealthiLoginWidget extends Widget {
                         this.html.style.setProperty('--magic-height', `${this.html.$(':is(.hc-ehealthi-onboarding>.container .hc-uniqueFileUpload, .hc-telep-phone-login-widget>.container>.main>.action)').getBoundingClientRect().top}px`)
                     },
                     target: this.html,
+                    signal: this.destroySignal
                 }
             )
         }
