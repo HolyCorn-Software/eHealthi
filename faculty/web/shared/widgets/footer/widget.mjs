@@ -13,10 +13,6 @@ import { hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { Widget } from "/$/system/static/html-hc/lib/widget/index.mjs";
 
 
-
-/**
- * @extends Widget<Footer>
- */
 export default class Footer extends Widget {
 
     constructor() {
@@ -29,10 +25,12 @@ export default class Footer extends Widget {
                     <div class='main'>
                         <div class='logo-section'>
                             <img src='/$/shared/static/logo.png'>
-                            <div class='copyright'>&copy; 2023</div>
+                            <div class='copyright'>&copy; 2023 - 2024</div>
                         </div>
 
-                        <div class='data-section'></div>
+                        <div class='data-section'>
+                            <div class='data-section-main'></div>
+                        </div>
                         
                     </div>
 
@@ -44,10 +42,10 @@ export default class Footer extends Widget {
             `
         });
 
-        /** @type {[import("./types.js").FooterSectionData]} */ this.data
+        /** @type {import("./types.js").FooterSectionData[]} */ this.data
         this.pluralWidgetProperty({
             selector: '.hc-donorforms-footer-section',
-            parentSelector: '.container >.main >.data-section',
+            parentSelector: '.container >.main >.data-section >.data-section-main',
             property: 'data',
             transforms: {
                 /**
@@ -112,6 +110,16 @@ export default class Footer extends Widget {
                     },
                 ]
             },
+
+            {
+                title: `Legal`,
+                links: [
+                    {
+                        label: `Privacy Policy`,
+                        href: '/pages/privacy/'
+                    }
+                ]
+            }
 
         ];
 

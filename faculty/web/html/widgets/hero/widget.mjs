@@ -10,9 +10,6 @@ import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 
 
 
-/**
- * @extends Widget<Hero>
- */
 export default class Hero extends Widget {
 
     constructor() {
@@ -38,7 +35,13 @@ export default class Hero extends Widget {
             new FilledButton({
                 content: `Contact Us`
             }).html
-        )
+        );
+
+        /** @type {string} */ this.caption
+        /** @type {string} */ this.title
+        for (const key of ['caption', 'title']) {
+            this.htmlProperty(`:scope >.container >.main >.text >.${key}`, key, 'innerHTML')
+        }
 
 
     }

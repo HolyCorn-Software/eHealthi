@@ -67,33 +67,9 @@ export default class InfoTeam extends Widget {
 
         this.blockWithAction(async () => {
 
-            /** @type {ehealthi.ui.info_team.Item[]} */
-            const res = (await hcRpc.system.settings.get({ faculty: 'web', name: 'team_info', namespace: 'widgets' })) || []
-            this.statedata.items = res
+            this.statedata.items = (await hcRpc.system.settings.get({ faculty: 'web', name: 'team_info', namespace: 'widgets' })) || []
         })
-        this.statedata.items = [
-            {
-                icon: new URL('./happy-doctor-1.png', import.meta.url).href,
-                label: 'Platine Nyuyki, MD.',
-                roleLabel: 'Chief Executive Officer'
-            },
-            {
-                icon: new URL('./happy-doctor-1.png', import.meta.url).href,
-                label: 'Platine Nyuyki, MD.',
-                roleLabel: 'Chief Executive Officer'
-            },
-            {
-                icon: new URL('./happy-doctor-1.png', import.meta.url).href,
-                label: 'Platine Nyuyki, MD.',
-                roleLabel: 'Chief Executive Officer'
-            },
-            {
-                icon: new URL('./happy-doctor-1.png', import.meta.url).href,
-                label: 'Platine Nyuyki, MD.',
-                roleLabel: 'Chief Executive Officer'
-            },
 
-        ];
 
         const directions = [-1, 1]
         const navigationButtons = [...this.html.$$('.container >.content >.navigation >*')]

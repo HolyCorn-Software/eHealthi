@@ -12,6 +12,6 @@ export declare interface FooterLink {
 
 
 export declare interface FooterSectionData {
-    title: string,
-    links: [FooterLink]
+    title: string
+    links: FooterLink[]
 }

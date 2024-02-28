@@ -22,7 +22,7 @@ global {
 
 
     namespace faculty.managedsettings {
-        interface all {
+        type all = {
             team_info: {
                 faculty: 'web'
                 namespace: 'widgets'

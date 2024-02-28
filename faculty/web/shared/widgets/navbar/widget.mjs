@@ -9,9 +9,6 @@ import dictionary from "/$/system/static/lang/dictionary.mjs";
 
 
 
-/**
- * @extends Widget<Navbar>
- */
 export default class Navbar extends Widget {
 
 
@@ -76,7 +73,7 @@ export default class Navbar extends Widget {
         // Disclaimer: !
         // Don't use blockWithAction(), because computed style :: position would be 'static' before the stylesheets load, and because of that, the
         // position would be updated to 'relative'. Relative position is bad for the navbar.
-        this.html.$('.container >.main >.logo-section >.label').innerHTML = dictionary.getString({ code: 'platform_name', nullValue: 'E-Healthi Doctors' })
+        this.html.$('.container >.main >.logo-section >.label').innerHTML = dictionary.getString({ code: 'platform_name', nullValue: 'eHealthi Doctors' })
     }
 
     /**

@@ -40,6 +40,7 @@
     text-align: center;
     font-size: 0.95em;
     padding-top: 2em;
+    padding-left: 10%;
     display: inline-flex;
     align-items: flex-end;
     justify-content: center;
@@ -77,13 +78,22 @@
 .hc-donorforms-footer>.container>.main>.data-section {
     flex-grow: 1;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
     padding-top: 2.5em;
 
     min-height: 100%;
-    gap: 1em;
 
+}
+
+.hc-donorforms-footer>.container>.main>.data-section>.data-section-main {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1em;
+    width: 100%;
+    max-width: 50em;
 }
 
 
@@ -100,7 +110,7 @@
 
 .hc-donorforms-footer>.container>.community-button {
     align-self: center;
-    width: calc(clamp(350px, 100vw - 7em - 6em - 3em, 36em));
+    width: calc(clamp(350px, 100vw - 7em - 6em - 3em, 38em));
     padding-top: 1.5em;
     padding-left: 7em;
     position: relative;
@@ -122,13 +132,17 @@
 
 
 @media screen and (max-width:885px) {
-    .hc-donorforms-footer>.container>.main>.data-section {
+    .hc-donorforms-footer>.container>.main>.data-section>.data-section-main {
         justify-content: space-between;
         gap: 3.5em;
     }
 
     .hc-donorforms-footer>.container>.community-button {
         width: calc(100vw - 5em);
+        padding-left: 0px;
+    }
+
+    .hc-donorforms-footer>.container>.author-info {
         padding-left: 0px;
     }
 }

@@ -1,9 +1,11 @@
 .
 
-Updated to the latest version of the chat faculty, with better UX, new features, and bug fixes.
+Improved code-completion.
 
-Updated to the latest version of modernuser, with more efficiency.
+Updated to the latest version of the soul system, with better code quality.
 
-Updated to the latest version of the soul system, with more efficiency.
+Created privacy-policy page, and added ability for admin to update it.
 
-Improved efficiency.
+Updated to the latest version of modernuser, with bug fixes, and improvements.
+
+Updated to the latest version of the faculty of chat, with better stability.
