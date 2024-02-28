@@ -18,7 +18,7 @@ export default class FooterSection extends Widget {
      * @param {string} param0.title
      * @param {[import("./types.js").FooterLink]} param0.links
      */
-    constructor({title, links}={}) {
+    constructor({ title, links } = {}) {
         super();
 
         this.html = hc.spawn({
@@ -49,7 +49,7 @@ export default class FooterSection extends Widget {
                         tag: 'a',
                         innerHTML: data.label,
                         attributes: {
-                            href: data.href
+                            href: data.href || '#'
                         }
                     })
                     return a;
@@ -77,7 +77,7 @@ export default class FooterSection extends Widget {
                 href: '#'
             },
         ];
-        
+
         Object.assign(this, arguments[0]);
 
     }
