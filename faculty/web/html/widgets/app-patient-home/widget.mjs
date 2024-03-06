@@ -5,11 +5,9 @@
  */
 
 import AppChatView from "../app-chat-view/widget.mjs";
-import MyProfile from "../app-my-profile/widget.mjs";
 import PatientHealth from "../app-patient-health/widget.mjs";
 import DeviceFrame from "../device-frame/widget.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
-import BackForth from "/$/system/static/html-hc/widgets/back-forth/widget.mjs";
 
 
 /**
@@ -37,10 +35,16 @@ export default class PatientHome extends Widget {
                 const frame = new DeviceFrame()
                 frame.statedata.items = [
                     {
-                        id: 'health',
-                        label: 'Hospital',
+                        id: 'home',
+                        label: 'Home',
                         content: new PatientHealth().html,
-                        icon: 'doctor-love.png'
+                        icon: '/$/shared/static/logo.png'
+                    },
+                    {
+                        id: 'consult',
+                        label: 'Consult',
+                        content: hc.spawn({ innerHTML: `Coming soon` }),
+                        icon: 'doctor-love.png',
                     },
                     {
                         id: 'chat',
@@ -49,10 +53,10 @@ export default class PatientHome extends Widget {
                         icon: 'message.svg'
                     },
                     {
-                        id: 'me',
-                        label: 'Me',
-                        content: new MyProfile().html,
-                        icon: 'user.png'
+                        id: 'lab',
+                        label: 'Lab',
+                        content: hc.spawn({ innerHTML: `Coming soon` }),
+                        icon: 'labs.svg'
                     }
                 ]
 

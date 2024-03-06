@@ -52,7 +52,7 @@ export default class DeviceFrame extends Widget {
             }, 50, 250
         ));
 
-        this[nav].addEventListener('change', () => {
+        this[nav].addEventListener('change', new DelayedAction(() => {
             const currentlyVisible = this[contentItems].find(x => x.visible);
             if (currentlyVisible) {
                 currentlyVisible.visible = false
@@ -61,7 +61,7 @@ export default class DeviceFrame extends Widget {
             if (target) {
                 target.visible = true
             }
-        })
+        }, 250, 5000))
 
         this.statedata.items = [
             {

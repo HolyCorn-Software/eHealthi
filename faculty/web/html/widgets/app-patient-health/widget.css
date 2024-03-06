@@ -14,9 +14,6 @@
     overflow: auto;
 }
 
-.hc-ehealthi-app-patient-health>.container>:not(:is(.btn-init-appointment, :nth-child(2))) {
-    padding-top: 5em;
-}
 
 
 .hc-ehealthi-app-patient-health>.container>.important {
@@ -30,6 +27,7 @@
     font-weight: bolder;
 }
 
+
 .hc-ehealthi-app-patient-health>.container>.btn-init-appointment {
     position: sticky;
     top: calc(100% - 4.75em);
@@ -41,6 +39,36 @@
     width: 100%;
 }
 
+.hc-ehealthi-app-patient-health>.container>.hold-profile {
+    position: sticky;
+    top: 1em;
+    left: calc(100% - 3em);
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.main {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.25em;
+    width: 3.5em;
+    position: relative;
+    align-items: center;
+    font-weight: 900;
+    background-color: white;
+    border-radius: 1em;
+    padding: 0.25em;
+    padding-bottom: 0em;
+}
+
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    position: relative;
+    background-size: cover;
+}
 
 .hc-ehealthi-app-patient-health>.container>.main {
     display: flex;
@@ -48,4 +76,5 @@
     gap: 1em;
     padding-bottom: 7em;
     padding-left: 0.25em;
+    padding-top: 5em;
 }

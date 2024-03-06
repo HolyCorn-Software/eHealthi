@@ -9,6 +9,8 @@ import HealthAlerts from "../app-health-alerts/widget.mjs";
 import EHealthiArrowButton from "../arrow-button/widget.mjs";
 import PatientConsultationInit from "./consultation/init.mjs";
 import MainView from "./main/widget.mjs";
+import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
+import MyProfile from "../app-my-profile/widget.mjs";
 
 
 export default class PatientHealth extends Widget {
@@ -24,6 +26,12 @@ export default class PatientHealth extends Widget {
                     <div class='container'>
 
                         <div class='btn-init-appointment'></div>
+                        <div class='hold-profile'>
+                            <div class='main'>
+                                <div class='icon'></div>
+                                <div class='label'>Me</div>
+                            </div>
+                        </div>
                         
                         <div class='important'>
                             <div class='title'>Important</div>
@@ -66,6 +74,35 @@ export default class PatientHealth extends Widget {
                 }
             ).html
         );
+
+        /** @type {string} */ this.meIcon
+        this.defineImageProperty(
+            {
+                selector: '.container >.hold-profile >.main >.icon',
+                mode: 'background',
+                property: 'meIcon',
+                fallback: '/$/shared/static/logo.png'
+            }
+        )
+
+        this.blockWithAction(async () => {
+            const me = await hcRpc.modernuser.authentication.whoami(true)
+            this.meIcon = me.icon
+        });
+
+
+        this.html.$('.container >.hold-profile >.main').addEventListener('click', () => {
+            let profileUI;
+            this.html.dispatchEvent(
+                new WidgetEvent('backforth-goto', {
+                    detail: {
+                        title: `Me`,
+                        view: (profileUI ||= new MyProfile()).html,
+                    },
+                    bubbles: true
+                })
+            )
+        }, { signal: this.destroySignal })
 
 
     }

@@ -1,3 +1,7 @@
 .
 
-Updated to the latest version of the soul system, with more speed, and efficiency.
+Updated to the latest version of the soul system, with better UI.
+
+Improved UI.
+
+Added Laboratory UI feature.
