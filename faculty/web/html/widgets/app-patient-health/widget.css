@@ -68,7 +68,7 @@
     border-radius: inherit;
     position: relative;
     background-size: cover;
-    filter: blur(0.000625em) grayscale(0.8) invert(0.2);
+    filter: blur(0.025em);
 }
 
 .hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon::after,
@@ -92,7 +92,8 @@
     font-size: 1.5em;
     top: 1em;
     font-family: jua;
-    color: #a0f7f2;
+    color: var(--theme-color);
+    opacity: 0.6;
 }
 
 .hc-ehealthi-app-patient-health>.container>.main {
