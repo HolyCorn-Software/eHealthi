@@ -57,17 +57,42 @@
     align-items: center;
     font-weight: 900;
     background-color: white;
-    border-radius: 1em;
-    padding: 0.25em;
-    padding-bottom: 0em;
+    border-radius: 1.5em;
+    --main-padding: 0.5em;
+    padding: var(--main-padding);
 }
 
 .hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon {
     width: 100%;
     aspect-ratio: 1/1;
-    border-radius: 50%;
+    border-radius: inherit;
     position: relative;
     background-size: cover;
+    filter: blur(0.000625em) grayscale(0.8) invert(0.2);
+}
+
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon::after,
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon::before {
+    content: '';
+    position: absolute;
+    width: calc((var(--main-padding) / 1) + 100%);
+    height: calc((var(--main-padding) / 1) + 100%);
+    top: calc(var(--main-padding) / -2);
+    left: calc(var(--main-padding) / -2);
+    border-radius: inherit;
+}
+
+
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon::after {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.label {
+    position: absolute;
+    font-size: 1.5em;
+    top: 1em;
+    font-family: jua;
+    color: #a0f7f2;
 }
 
 .hc-ehealthi-app-patient-health>.container>.main {
