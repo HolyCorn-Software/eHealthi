@@ -117,6 +117,10 @@ export default class Footer extends Widget {
                     {
                         label: `Privacy Policy`,
                         href: '/pages/privacy/'
+                    },
+                    {
+                        label: `Support`,
+                        href: `/pages/support/`
                     }
                 ]
             }

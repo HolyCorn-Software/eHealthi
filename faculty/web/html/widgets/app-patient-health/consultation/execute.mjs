@@ -68,7 +68,7 @@ export default class PatientConsultationExec extends Widget {
                 state: 'disabled'
             }
         );
-        /** @type {(event: 'dismiss', cb: (event: CustomEvent)=>void, opts: AddEventListenerOptions)} */ this.addEventListener
+        /** @type {(event: 'dismiss', cb: (event: CustomEvent)=>void, opts?: AddEventListenerOptions)} */ this.addEventListener
 
 
         this.html.$('.container >.btn-continue').appendChild(

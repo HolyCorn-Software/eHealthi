@@ -63,10 +63,11 @@
     border-radius: 0px;
     border: 0.0625em solid currentColor;
     font-family: k2dThin;
+    resize: vertical;
 }
 
 .hc-ehealthi-contact-us>.container>.main>.form>.action>.hc-ehealthi-filled-button {
-    width: calc(100% - 1em);
+    width: 100%;
     --highlight-color: rgb(250, 11, 110);
 }
 

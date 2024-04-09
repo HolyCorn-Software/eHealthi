@@ -6,6 +6,7 @@
 
 import FilledButton from "/$/shared/static/widgets/filled-button/widget.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
+import { handle } from "/$/system/static/errors/error.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import MultiFlexForm from "/$/system/static/html-hc/widgets/multi-flex-form/flex.mjs";
 
@@ -26,7 +27,7 @@ export default class ContactUs extends Widget {
                         <div class='main'>
                             <div class='image'></div>
                             <div class='form'>
-                                <img src='$/shared/static/logo.png' class='logo'>
+                                <img src='/$/shared/static/logo.png' class='logo'>
                                 <div class='title'>Contact Us</div>
                                 <div class='form'></div>
                                 <div class='action'></div>
@@ -83,7 +84,16 @@ export default class ContactUs extends Widget {
             }
         );
         this.action = new FilledButton({
-            content: `Contact Us`
+            content: `Contact Us`,
+            onclick: async () => {
+                try {
+                    await hcRpc.web.requestSupport(this.form.value)
+                    setTimeout(() => this.form.values = {}, 2000)
+                    this.action.state = 'success'
+                } catch (e) {
+                    handle(e)
+                }
+            }
         });
 
         /** @type {ehealthi.ui.contact_us.SocialContact[]} */ this.social

@@ -6,13 +6,14 @@
 
 
 import ''
+import WebPublicMethods from "./remote/public.mjs"
 
 global {
     namespace faculty {
         interface faculties {
             web: {
                 remote: {
-                    public: {}
+                    public: WebPublicMethods
                     internal: {}
                 }
             }

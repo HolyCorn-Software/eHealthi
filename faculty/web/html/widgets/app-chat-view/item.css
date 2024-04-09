@@ -9,7 +9,7 @@
 .hc-ehealthi-app-chat-view-item>.container {
     display: flex;
     flex-direction: column;
-    padding: 0.75em;
+    padding: clamp(0.25em, 0.75em, 2vw);
     background-color: rgb(255, 252, 252);
     border-radius: 1.25em;
 
@@ -31,11 +31,11 @@
 }
 
 .hc-ehealthi-app-chat-view-item>.container>.main>.icon {
-    width: 4.5em;
+    width: clamp(2.5em, 4.5em, 15.5vw);
     align-self: flex-start;
     border-radius: 0.85em;
     aspect-ratio: 1/1;
-    background-size: cover;
+    background-size: 100%;
     background-position: center;
 }
 

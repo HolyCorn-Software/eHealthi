@@ -6,8 +6,6 @@
 
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import HealthAlerts from "../app-health-alerts/widget.mjs";
-import EHealthiArrowButton from "../arrow-button/widget.mjs";
-import PatientConsultationInit from "./consultation/init.mjs";
 import MainView from "./main/widget.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import MyProfile from "../app-my-profile/widget.mjs";
@@ -29,7 +27,6 @@ export default class PatientHealth extends Widget {
                         <div class='hold-profile'>
                             <div class='main'>
                                 <div class='icon'></div>
-                                <div class='label'>Me</div>
                             </div>
                         </div>
                         
@@ -44,36 +41,18 @@ export default class PatientHealth extends Widget {
             }
         );
 
-        this.widgetProperty(
-            {
-                selector: ['', ...MainView.classList].join('.'),
-                parentSelector: ':scope >.container >.main',
-                childType: 'widget',
-            }, 'main'
-        )
-        this.main = new MainView()
+        // this.widgetProperty(
+        //     {
+        //         selector: ['', ...MainView.classList].join('.'),
+        //         parentSelector: ':scope >.container >.main',
+        //         childType: 'widget',
+        //     }, 'main'
+        // )
+        // this.main = new MainView()
 
-        this.html.$('.container >.important').appendChild(new HealthAlerts(this.main.statedata).html)
+        this.html.$('.container >.important').appendChild(new HealthAlerts().html)
 
 
-        this.html.$('.container >.btn-init-appointment').appendChild(
-            new EHealthiArrowButton(
-                {
-                    content: `See the doctor`,
-                    onclick: async () => {
-                        this.html.dispatchEvent(
-                            new WidgetEvent('backforth-goto', {
-                                detail: {
-                                    title: `Consultation`,
-                                    view: new PatientConsultationInit().html,
-                                },
-                                bubbles: true
-                            })
-                        )
-                    }
-                }
-            ).html
-        );
 
         /** @type {string} */ this.meIcon
         this.defineImageProperty(

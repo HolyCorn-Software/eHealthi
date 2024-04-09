@@ -24,7 +24,7 @@ global {
                         user: modernuser.profile.UserProfileData
                     }
                 }
-            } & (TimetableAppointmentMeta | TimetablePrescriptionMeta | TimetablePaymentMeta)
+            } & (TimetableAppointmentMeta & TimetablePrescriptionMeta & TimetablePaymentMeta)
         )
 
         interface TimetablePaymentMeta {
@@ -53,4 +53,16 @@ global {
 
 
     }
+
+    namespace modernuser.ui.notification {
+        interface ClientFrontendEvents {
+            'ehealthi-health-new-timetable-entry': {
+                data: ehealthi.health.timetable.TimetableEntry
+            }
+            'ehealthi-health-appointment-changed': {
+                data: Pick<ehealthi.health.timetable.TimetableEntry, keyof ehealthi.health.appointment.AppointmentMutableData | "@timetable-entry">
+            }
+        }
+    }
+
 }

@@ -39,3 +39,19 @@ html>body {
 body .hc-matazm-travel-timetable-navigation>.container>.main>.nav>.year-select {
     display: none !important;
 }
+
+body .hc-telep-chat-widget>.container {
+    color: black;
+}
+
+body .hc-telep-chat-widget>.container>.action-bar {
+    font-size: 1.1em;
+}
+
+body .hc-telep-chat-messaging-compose>.container>.main {
+    color: black;
+}
+
+body .hc-back-forth>.container>.nav>.title {
+    font-size: 1.35em;
+}

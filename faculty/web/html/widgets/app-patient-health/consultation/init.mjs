@@ -11,10 +11,6 @@ import { NiceNumberInput } from "/$/system/static/html-hc/widgets/nice-number-in
 import SimpleCalendar from "/$/system/static/html-hc/widgets/simple-calendar/widget.mjs";
 
 
-
-/**
- * @extends Widget<PatientConsultationInit>
- */
 export default class PatientConsultationInit extends Widget {
 
 
@@ -65,9 +61,12 @@ export default class PatientConsultationInit extends Widget {
 
                 exec.addEventListener('dismiss', () => {
                     exec = null
+                    this.dispatchEvent(new CustomEvent("dismiss"))
                 }, { once: true })
             }
         });
+        
+        /** @type {(event: 'dismiss', cb: (event: CustomEvent)=>void, opts?: AddEventListenerOptions)} */ this.addEventListener
 
         this.html.$('.container >.btn-continue').appendChild(
             btnContinue.html

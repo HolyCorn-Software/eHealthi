@@ -4,6 +4,7 @@
  * This widget (app-patient-home), provides the interface (in a high-level way) for a patient to interact with app.
  */
 
+import AppAppointsmentView from "../app-appointments/widget.mjs";
 import AppChatView from "../app-chat-view/widget.mjs";
 import PatientHealth from "../app-patient-health/widget.mjs";
 import DeviceFrame from "../device-frame/widget.mjs";
@@ -38,12 +39,12 @@ export default class PatientHome extends Widget {
                         id: 'home',
                         label: 'Home',
                         content: new PatientHealth().html,
-                        icon: '/$/shared/static/logo.png'
+                        icon: 'home.svg'
                     },
                     {
                         id: 'consult',
                         label: 'Consult',
-                        content: hc.spawn({ innerHTML: `Coming soon` }),
+                        content: new AppAppointsmentView().html,
                         icon: 'doctor-love.png',
                     },
                     {

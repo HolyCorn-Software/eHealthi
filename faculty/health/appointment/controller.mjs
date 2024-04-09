@@ -288,6 +288,20 @@ export default class AppointmentController {
             }
         );
 
+        if (changedFields.size > 0) {
+            this.events.dispatchEvent(new CustomEvent(
+                'appointment-changed',
+                {
+                    detail: {
+                        id,
+                        doctor: nwData.doctor,
+                        time: nwData.time,
+                        patient: realData.patient
+                    }
+                }
+            ))
+        }
+
 
     }
 

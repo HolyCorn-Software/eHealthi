@@ -119,11 +119,4 @@ global {
         }
     }
 
-    namespace modernuser.ui.notification {
-        interface ClientFrontendEvents {
-            'ehealthi-health-new-timetable-entry': {
-                data: ehealthi.health.appointment.Appointment
-            }
-        }
-    }
 }

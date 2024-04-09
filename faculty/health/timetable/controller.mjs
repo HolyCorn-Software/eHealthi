@@ -43,6 +43,65 @@ export default class TimetableController {
                     }
                 }
             )
+        });
+
+        this[controllers].appointment.events.addEventListener('appointment-changed', async ({ detail }) => {
+            const modernuser = await FacultyPlatform.get().connectionManager.overload.modernuser()
+
+            /** @type {ehealthi.health.appointment.AppointmentMutableData & Pick<ehealthi.health.appointment.Appointment, "patient">} */
+            const data = detail
+            /** @type {ehealthi.health.timetable.TimetableEntry} */
+            let entry;
+            entry = await TimetableController.wrapAppointment(data, data.doctor ? {
+                user: await modernuser.profile.get_profile({ id: data.doctor })
+            } : {});
+
+            // Now, we have to dispatch the events to the frontend, conditionally.
+            // To the client, we're sending the full entry, because he has to know if there's a new doctor
+            // To the doctor, we're sending just time updates, because there can be no new patient profile
+
+
+            // For the patient
+            modernuser.notification.events.inform(
+                {
+                    userids: [data.patient],
+                    event: 'ehealthi-health-appointment-changed',
+                    detail: {
+                        data: {
+                            ...entry,
+                            patient: undefined
+                        }
+                    }
+                }
+            );
+
+
+            // And now, for the doctor
+            modernuser.notification.events.inform(
+                {
+                    userids: [data.doctor],
+                    event: 'ehealthi-health-appointment-changed',
+                    detail: {
+                        data: (
+
+                            /**
+                             * 
+                             * @param {typeof entry} input 
+                             */
+                            (input) => {
+                                /** @type {typeof input} */
+                                const clone = JSON.parse(JSON.stringify(input))
+
+                                delete clone['@timetable-entry'].extra.user
+                                return clone
+                            }
+                        )(entry)
+                    }
+                }
+            )
+
+
+
         })
     }
 
@@ -51,8 +110,9 @@ export default class TimetableController {
      * @param {object} param0 
      * @param {string} param0.userid
      * @param {ehealthi.health.timetable.StartParam} param0.start
+     * @param {('prescription'|'appointment')[]} param0.types
      */
-    async* getRecentEntries({ userid, start } = {}) {
+    async* getRecentEntries({ userid, start, types = ['prescription', 'appointment'] } = {}) {
 
 
         /** 
@@ -83,10 +143,7 @@ export default class TimetableController {
             delete timeQuery.$or
         }
 
-        /** @type {modernuser.profile.UserProfileData[]} */
-        const users = []
-
-        const unpaidAppointments = await this[controllers].appointment.dbController.find(
+        const unpaidAppointments = types.includes('appointment') && await this[controllers].appointment.dbController.find(
             /**
              * Looking for appointments, that the 'paid' field isn't greater than zero, where the user is either the doctor, or patient.
              */
@@ -109,7 +166,7 @@ export default class TimetableController {
 
 
 
-        const confirmedAppointments = await this[controllers].appointment.dbController.find(
+        const confirmedAppointments = types.includes('appointment') && await this[controllers].appointment.dbController.find(
 
             {
                 $or: [
@@ -134,6 +191,10 @@ export default class TimetableController {
 
 
 
+
+        /** @type {modernuser.profile.UserProfileData[]} */
+        const users = []
+
         async function getUser(id) {
             const user0 = {
                 label: `Someone`,
@@ -157,7 +218,7 @@ export default class TimetableController {
 
         }
 
-        const pendingPrescriptions = (await this[controllers].prescription?.getPrescriptions({ userid, active: false, start })) || []
+        const pendingPrescriptions = (types.includes('prescription') && (await this[controllers].prescription?.getPrescriptions({ userid, active: false, start }))) || []
 
         for await (const item of pendingPrescriptions) {
             yield TimetableController.wrapPrescription(item, {
@@ -167,18 +228,22 @@ export default class TimetableController {
 
         for (const cursor of [unpaidAppointments, confirmedAppointments]) {
 
-            for await (const item of cursor) {
-                yield TimetableController.wrapAppointment(item, item.doctor != userid ? {
-                    user: await getUser(item.doctor)
-                } : item.patient != userid ? {
-                    user: await getUser(item.patient)
-                } : {})
+            if (cursor) {
+
+                for await (const item of cursor) {
+                    yield TimetableController.wrapAppointment(item, item.doctor != userid ? {
+                        user: await getUser(item.doctor)
+                    } : item.patient != userid ? {
+                        user: await getUser(item.patient)
+                    } : {})
+                }
             }
         }
 
+        const regularPrescriptions = (types.includes('prescription') && (await this[controllers].prescription.getPrescriptions({ userid, active: true, start }))) || []
         // And then, regular prescriptions
 
-        for await (const item of await this[controllers].prescription.getPrescriptions({ userid, active: true, start })) {
+        for await (const item of regularPrescriptions) {
             yield TimetableController.wrapPrescription(item, {
                 user: await getUser(item.doctor),
             })

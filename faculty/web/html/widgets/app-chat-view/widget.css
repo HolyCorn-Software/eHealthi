@@ -31,7 +31,7 @@
 }
 
 .hc-ehealthi-app-chat-view>.container>.top>.title {
-    font-size: 2em;
+    font-size: clamp(1.35em, 2em, 4vw);
     font-weight: bolder;
 }
 
@@ -71,7 +71,7 @@
 .hc-ehealthi-app-chat-view>.container>.content {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: clamp(1em, 2em, 4vw);
 }
 
 

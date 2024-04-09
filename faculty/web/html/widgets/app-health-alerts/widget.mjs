@@ -5,8 +5,10 @@
  */
 
 import PendingMedicationView from "./item/pending-medication/widget.mjs";
+import PrescriptionView from "./item/prescription/prescription.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { handle } from "/$/system/static/errors/error.mjs";
+import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 
@@ -30,7 +32,10 @@ export default class HealthAlerts extends Widget {
                 `
             }
         );
-        this.statedata = statedata
+        /** @type  {ehealthi.ui.app.app_patient_health.Statedata}*/
+        this.statedata = new AlarmObject() // TODO: Deal with this issue
+        this.statedata.items ||= []
+
         /** @type {HTMLElement[]} */ this.items
         this.pluralWidgetProperty(
             {
@@ -47,6 +52,17 @@ export default class HealthAlerts extends Widget {
             if (this.statedata.items.length > 0) {
                 this.draw()
             }
+        });
+
+        this.blockWithAction(async () => {
+            this.statedata.items = []
+
+            for await (const item of await hcRpc.health.timetable.getRecentEntries({
+                types: ['prescription'],
+                start: new Date().setHours(0, 0, 0, 0)
+            })) {
+                this.statedata.items.push(item)
+            }
         })
 
 
@@ -55,23 +71,31 @@ export default class HealthAlerts extends Widget {
         // This method populates the UI with important stuff
         /*
         The priority goes thus:
-        1) Appointments of the current day
-        2) Pending medications.
-        3) Pending payments.
-        4) Appointments upcoming in 3 days.
-        5) Appointments upcoming in more than 3 days.
+        1) Pending medications.
+        2) Pending payments.
+        3) Medications that day.
         */
 
-        const appointmentsToday = []
         /** @type {ehealthi.health.timetable.TimetablePrescriptionMeta[]} */
         const pendingMedications = []
         const pendingPayments = []
-        const appointmentsL3 = []
-        const appointmentsG3 = []
+
+        /** @type {ehealthi.health.timetable.TimetablePrescriptionMeta[]} */
+        const todaysMedications = []
 
         this.statedata.items.forEach(item => {
-            if (item['@timetable-entry'].type == 'prescription' && !item.started) {
-                pendingMedications.push(item)
+            if (item['@timetable-entry'].type == 'prescription') {
+                if (!item.started) {
+                    pendingMedications.push(item)
+                } else {
+                    if (
+                        item.intake.some(
+                            intake => (intake.start <= Date.now()) && (intake.end > Date.now())
+                        )
+                    ) {
+                        todaysMedications.push(item)
+                    }
+                }
             }
         });
 
@@ -94,7 +118,15 @@ export default class HealthAlerts extends Widget {
                 widget.addEventListener('started', onStart)
 
                 return widget.html
-            })
+            }),
+            ...todaysMedications.map(x => {
+                return (x.intake || []).map(intake => {
+                    return intake.dosage.map(dosage => {
+                        intake.dosage[0]
+                        return new PrescriptionView(x, dosage, dosage.time).html
+                    })
+                })
+            }).flat(3)
         ]
 
 
