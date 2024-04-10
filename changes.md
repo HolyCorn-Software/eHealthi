@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of The Faculty of Chat, with modern APIs.
+Updated to the latest version of modernuser, with bug fixes.
