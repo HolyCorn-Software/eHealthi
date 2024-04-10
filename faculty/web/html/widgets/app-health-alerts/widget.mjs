@@ -6,6 +6,7 @@
 
 import PendingMedicationView from "./item/pending-medication/widget.mjs";
 import PrescriptionView from "./item/prescription/prescription.mjs";
+import ModernuserEventClient from "/$/modernuser/notification/static/event-client.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { handle } from "/$/system/static/errors/error.mjs";
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
@@ -57,12 +58,60 @@ export default class HealthAlerts extends Widget {
         this.blockWithAction(async () => {
             this.statedata.items = []
 
-            for await (const item of await hcRpc.health.timetable.getRecentEntries({
-                types: ['prescription'],
-                start: new Date().setHours(0, 0, 0, 0)
-            })) {
-                this.statedata.items.push(item)
+            const download = async () => {
+
+
+                const modifiedStart = this.statedata.items.sort((a, b) => a.modified || 0 > b.modified || 0 ? 1 : -1).reverse()[0]?.modified;
+                const createdStart = this.statedata.items.sort((a, b) => a.created > b.created ? 1 : -1).reverse()[0]?.created;
+
+
+                for await (const item of await hcRpc.health.timetable.getRecentEntries({
+                    types: ['prescription'],
+                    start: {
+                        time: new Date().setHours(0, 0, 0, 0),
+                        created: createdStart,
+                        modified: modifiedStart
+                    }
+                })) {
+                    this.statedata.items = [
+                        ...this.statedata.$0data.items.filter(x => x.id !== item.id),
+                        item
+                    ]
+                }
+
             }
+
+
+            const client = await ModernuserEventClient.get()
+
+            client.events.addEventListener('ehealthi-health-new-timetable-entry', (event) => {
+                /** @type {ehealthi.health.timetable.TimetableEntry} */
+                const entry = event.detail.data
+                this.statedata.items = [
+                    ...this.statedata.$0data.items.filter(x => x.id !== entry.id),
+                    entry
+                ]
+                this.draw()
+            });
+
+            client.events.addEventListener('ehealthi-health-prescription-changed', (event) => {
+                /** @type {ehealthi.health.prescription.Prescription} */
+                const prescription = event.detail.data
+                const existing = this.statedata.items.find(x => x.id == prescription.id)
+                if (existing) {
+                    Object.assign(existing, prescription)
+                    this.draw()
+                }
+            })
+
+            // Whenever there's a connection, or re-connection, we fetch the latest info from the server
+            client.events.addEventListener('init', () => {
+                download()
+            })
+
+            download()
+
+
         })
 
 
@@ -122,11 +171,12 @@ export default class HealthAlerts extends Widget {
             ...todaysMedications.map(x => {
                 return (x.intake || []).map(intake => {
                     return intake.dosage.map(dosage => {
-                        intake.dosage[0]
-                        return new PrescriptionView(x, dosage, dosage.time).html
+                        const html = new PrescriptionView(x, dosage, dosage.time).html
+                        html.time = dosage.time
+                        return html
                     })
                 })
-            }).flat(3)
+            }).flat(3).sort((a, b) => a.time > b.time ? 1 : a.time == b.time ? 0 : -1)
         ]
 
 

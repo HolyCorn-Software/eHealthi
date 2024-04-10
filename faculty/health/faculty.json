@@ -27,8 +27,15 @@
                     ]
                 },
                 {
-                    "name": "permissions.health.commerce.modify",
-                    "label": "Modify commercial information."
+                    "name": "permissions.health.commerce.inventory.modify",
+                    "label": "Modify inventory"
+                },
+                {
+                    "name": "permissions.health.commerce.service_provider.manage",
+                    "label": "Manage service providers",
+                    "inherits": [
+                        "permissions.modernuser.profiles.search"
+                    ]
                 }
             ]
         }
@@ -38,7 +45,8 @@
             "${fPath}/static/": "./public/",
             "${fPath}/appointment/static/": "./appointment/public/",
             "${fPath}/prescription/static/": "./prescription/public/",
-            "${fPath}/records/static/": "./records/public/"
+            "${fPath}/records/static/": "./records/public/",
+            "${fPath}/commerce/static/": "./commerce/public/"
         }
     }
 }

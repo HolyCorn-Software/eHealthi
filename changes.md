@@ -1,7 +1,8 @@
 .
 
-Improved App UI/UX.
+Added features for managing service providers, and inventory.
 
-Added public customer support feature.
+Improved UI/UX.
 
-Updated to the latest version of finance, chat, backend_dashboard, uniqueFileUpload, system, and modernuser, featuring bug fixes, new features, and improvements.
+Updated to the latest version of the soul system, backend_dashboard, and modernuser, with new features, and bug fixes.
+

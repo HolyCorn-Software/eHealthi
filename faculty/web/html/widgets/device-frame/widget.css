@@ -36,6 +36,7 @@
     border-radius: 2em;
     z-index: 1;
     font-weight: 900;
+    font-size: clamp(0.75em, 1em, min(3.75vw, 2.25vh));
 }
 
 /* About the navigation section of the widget */

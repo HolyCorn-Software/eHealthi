@@ -134,15 +134,14 @@ export default class AppointmentListings extends Widget {
         }
 
         const download = async () => {
-            console.log(`Downloading appointments...`)
-            const modifiedStart = this.statedata.$0data.appointments.sort((a, b) => a.modified || 0 > b.modified || 0 ? 1 : -1).reverse()[0]?.modified;
+            const modifiedStart = this.statedata.$0data.appointments.sort((a, b) => (a.modified || 0) > (b.modified || 0) ? 1 : -1).reverse()[0]?.modified;
             const createdStart = this.statedata.$0data.appointments.sort((a, b) => a.created > b.created ? 1 : -1).reverse()[0]?.created;
-
+            const timeStart = ((this.statedata.$0data.appointments.length == 0) && timeUtils.dayStart(Date.now())) || undefined;
 
             for await (const appointment of await hcRpc.health.timetable.getRecentEntries(
                 {
                     start: {
-                        time: timeUtils.dayStart(Date.now()),
+                        time: timeStart,
                         modified: modifiedStart,
                         created: createdStart
                     },
@@ -150,7 +149,6 @@ export default class AppointmentListings extends Widget {
                 }
             )) {
                 addEntry(appointment)
-                console.log(`Adding appointment `, appointment)
             }
         }
 
@@ -174,7 +172,6 @@ export default class AppointmentListings extends Widget {
                 this.statedata.appointments = this.statedata.appointments.map(x => {
                     if (x.id == data.id) {
                         Object.assign(x, data)
-                        console.log(`Changing this `, x)
                     }
                     return x
                 })

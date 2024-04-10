@@ -54,6 +54,9 @@
             "/$/health/appointment/static/*": [
                 "faculty/health/appointment/public/*"
             ],
+            "/$/health/commerce/static/*": [
+                "faculty/health/commerce/public/*"
+            ],
             "/$/chat/calling/static/*": [
                 "faculty/chat/calling/public/*"
             ]

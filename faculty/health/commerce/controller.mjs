@@ -5,8 +5,16 @@
  * This module (commerce), controls the aspects of the platform, that have to do with provision, and payment for services by especially third-parties.
  */
 
+import InventoryController from "./inventory/controller.mjs";
+import ServiceProviderController from "./service-provider/controller.mjs";
+
 
 
 export default class CommerceController {
+
+    constructor() {
+        this.inventory = new InventoryController()
+        this.service_provider = new ServiceProviderController()
+    }
 
 }

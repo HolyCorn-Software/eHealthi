@@ -59,6 +59,9 @@ export default class eHealthiLoginWidget extends Widget {
         })
 
         this.main = new LoginWidget({ custom: { help: false, navigation: false } })
+        this.main.continue = () => {
+            window.location = '/app/'
+        }
         this.onboarding = new Onboarding()
 
         // Wait till the list of providers have been set on the login widget

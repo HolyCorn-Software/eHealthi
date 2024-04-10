@@ -7,6 +7,7 @@
 
 
 import AppointmentPublicMethods from "../appointment/remote/public.mjs";
+import CommercePublicMethods from "../commerce/remote/public.mjs";
 import PrescriptionPublicMethods from "../prescription/remote/public.mjs";
 import MedicalRecordsPublicMethods from "../records/remote/public.mjs";
 import TimetablePublicMethods from "../timetable/remote/public.mjs";
@@ -23,6 +24,7 @@ export default class HealthPublicMethods extends FacultyPublicMethods {
      * @param {import('../timetable/controller.mjs').default} controllers.timetable
      * @param {import('../prescription/controller.mjs').default} controllers.prescription
      * @param {import('../records/controller.mjs').default} controllers.records
+     * @param {import('../commerce/controller.mjs').default} controllers.commerce
      */
     constructor(controllers) {
         super()
@@ -30,5 +32,6 @@ export default class HealthPublicMethods extends FacultyPublicMethods {
         this.timetable = new TimetablePublicMethods(controllers.timetable)
         this.prescription = new PrescriptionPublicMethods(controllers.prescription)
         this.records = new MedicalRecordsPublicMethods(controllers.records)
+        this.commerce = new CommercePublicMethods(controllers.commerce)
     }
 }

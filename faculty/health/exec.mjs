@@ -36,7 +36,13 @@ export default async function () {
 
     const faculty = FacultyPlatform.get()
 
-    faculty.remote.public = new HealthPublicMethods({ appointment: appointmentController, timetable: timetableController, prescription: prescriptionController, records: recordsController })
+    faculty.remote.public = new HealthPublicMethods({
+        appointment: appointmentController,
+        timetable: timetableController,
+        prescription: prescriptionController,
+        records: recordsController,
+        commerce: commerceController
+    })
 
     await appointmentController.init()
     console.log(`${FacultyPlatform.get().descriptor.label.cyan} running!!`)

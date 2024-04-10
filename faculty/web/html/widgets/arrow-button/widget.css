@@ -15,7 +15,7 @@
     padding-right: calc(var(--arrow-font-size) * 1.6);
     padding-left: calc(var(--arrow-font-size) * 0.5);
     font-family: comfortaa;
-    font-size: 1.5em;
+    font-size: clamp(1em, 1.5em, 6.75vw);
     border-radius: 0.75em;
     background-color: var(--color-primary);
     color: var(--color-secondary);
