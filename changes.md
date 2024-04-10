@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of modernuser, with bug fixes.
+Added beta android APK to coming-soon widget.

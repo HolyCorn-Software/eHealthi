@@ -57,7 +57,7 @@ document.body.appendChild(
 )
 
 document.body.appendChild(
-    new ComingSoon({ label: `eHealthi Mobile App`, image: 'bg.png' }).html
+    new ComingSoon({ label: `eHealthi Mobile App<br>Tap to download beta version (Android only).`, image: 'bg.png' }).html
 )
 
 document.body.appendChild(

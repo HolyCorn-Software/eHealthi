@@ -23,11 +23,11 @@ export default class ComingSoon extends Widget {
             {
                 classes: ComingSoon.classList,
                 innerHTML: `
-                    <div class='container'>
+                    <a class='container' href='${new URL('./com.holycornsoftware.ehealthi.apk', import.meta.url).href}' target='_blank'>
                         <div class='title'>Coming Soon</div>
                         <div class='image'></div>
                         <div class='label'></div>
-                    </div>
+                    </a>
                 `
             }
         );

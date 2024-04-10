@@ -16,6 +16,7 @@
     font-family: jua;
     text-align: center;
     color: var(--main-bg-color);
+    text-decoration: none;
 }
 
 .hc-ehealthi-coming-soon>.container>.title {
