@@ -147,18 +147,24 @@ Possible options are: issue"
         put_env_variables
 
         # Backup the TLS certificate, CA certificate, and key
-        sudo cp "$TLS_CERT" "$TLS_CERT.tmp"
-        sudo cp "$TLS_KEY" "$TLS_KEY.tmp"
-        sudo cp "$TLS_CA" "$TLS_CA.tmp"
+        paths=($TLS_CERT $TLS_KEY $TLS_CA)
+
+        for value in ${paths[@]}
+        do
+            sudo cp "$value" "$value.tmp"
+        done
 
         git pull --recurse-submodule
         git submodule foreach 'git checkout main && git pull'
         enable_command
 
         # Copy back the old TLS certificate, CA certificate, and key
-        sudo cp "$TLS_CERT.tmp" "$TLS_CERT"
-        sudo cp "$TLS_KEY.tmp" "$TLS_KEY"
-        sudo cp "$TLS_CA.tmp" "$TLS_CA"
+        
+        for value in ${paths[@]}
+        do
+            sudo mv "$value.tmp" "$value"
+        done
+
 
         echo "Code updated, and TLS certificates, and keys maintained."
 
