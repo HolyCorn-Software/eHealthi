@@ -39,7 +39,8 @@ export default class PatientHome extends Widget {
                         id: 'home',
                         label: 'Home',
                         content: new PatientHealth().html,
-                        icon: 'home.svg'
+                        icon: 'home.svg',
+                        main: true
                     },
                     {
                         id: 'consult',

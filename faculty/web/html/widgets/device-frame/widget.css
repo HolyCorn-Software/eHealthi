@@ -37,7 +37,9 @@
     z-index: 1;
     font-weight: 900;
     font-size: clamp(0.75em, 1em, min(3.75vw, 2.25vh));
+    transition: 0.25s 0.125s;
 }
+
 
 /* About the navigation section of the widget */
 
@@ -123,4 +125,25 @@
     opacity: 1;
     pointer-events: all;
     font-size: 1em;
+}
+
+
+/** 
+    UI adjustments, when the mobile OS's keyboar is (probably) active.
+ */
+
+body.appframe-mini .hc-ehealthi-device-frame>.container>.nav {
+    font-size: 0em;
+    transition: 0.25s 0.5s;
+}
+
+body.appframe-mini .hc-ehealthi-device-frame-nav>.container>.highlighter {
+    transition: 0.25s 0.25s;
+    opacity: 0;
+}
+
+
+
+body.appframe-mini .hc-ehealthi-device-frame-view-container>.container>.hc-back-forth>.container>.slider>.hc-slide-container>.container>.primary-content {
+    --hc-ehealthi-device-frame-view-available-height: calc(100vh - 1em);
 }

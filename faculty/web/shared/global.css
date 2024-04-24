@@ -55,3 +55,7 @@ body .hc-telep-chat-messaging-compose>.container>.main {
 body .hc-back-forth>.container>.nav>.title {
     font-size: 1.35em;
 }
+
+body.appframe-mini .hc-back-forth.can-go-back>.container>.nav{
+    font-size:0em;
+}

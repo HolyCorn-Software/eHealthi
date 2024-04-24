@@ -15,6 +15,7 @@ global {
             label: string
             icon: string
             content: HTMLElement
+            main: boolean
         }
 
         type Statedata = htmlhc.lib.alarm.AlarmObject<{

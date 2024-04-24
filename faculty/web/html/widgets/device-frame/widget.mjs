@@ -63,27 +63,32 @@ export default class DeviceFrame extends Widget {
             }
         }, 250, 5000))
 
-        this.statedata.items = [
-            {
-                id: 'health',
-                label: 'Health',
-                content: hc.spawn({ innerHTML: 'Health' }),
-                icon: 'doctor-love.png'
-            },
-            {
-                id: 'chat',
-                label: 'Chat',
-                content: hc.spawn({ innerHTML: 'Chat' }),
-                icon: 'message.svg'
-            },
-            {
-                id: 'me',
-                label: 'Me',
-                content: hc.spawn({ innerHTML: 'Me' }),
-                icon: 'user.png'
+        const navigateToRoot = () => {
+            const rootTab = this.statedata.$0data.items.find(x => x.main)
+            if (!rootTab || this[nav].itemSelected == rootTab.id) {
+                return false
             }
-        ]
+            this[nav].select(rootTab.id)
+            return true
+        }
 
+        this.waitTillDOMAttached().then(() => {
+            osBackButtonManager.register({
+                html: this.html,
+                signal: this.destroySignal,
+                callback: (control) => {
+                    // The whole idea, is that returning from any tab that is not the main one, should bring us back to the root tab
+                    if (navigateToRoot()) {
+                        return true
+                    }
+                    control.pass()
+                }
+            });
+
+            this.html.addEventListener('backforth-quit', () => {
+                navigateToRoot()
+            })
+        })
 
 
     }
@@ -170,10 +175,8 @@ class ViewContainer extends Widget {
 
 
 const items = Symbol()
+const itemHTMLs = Symbol()
 
-/**
- * @extends Widget<Navigation>
- */
 class Navigation extends Widget {
     /**
      * 
@@ -195,6 +198,18 @@ class Navigation extends Widget {
         );
 
         this.statedata = statedata;
+
+        const selectMain = new DelayedAction(() => {
+            this.waitTillDOMAttached().then(() => {
+
+                const main = this[items].find(x => x.main);
+                if (main) {
+                    this.select(main.id)
+                } else {
+                    this.html.$('.container >.items >:first-child').click()
+                }
+            })
+        }, 250, 5000)
 
         /** @type {ehealthi.ui.app.device_frame.Item[]} */ this[items];
         this.pluralWidgetProperty(
@@ -229,15 +244,10 @@ class Navigation extends Widget {
                         defineImageProperty.call(object, 'icon', '.icon', new URL('./res/', import.meta.url,).href, 'inline')
 
                         object.icon = data.icon
-                        object.id = data.id
 
-                        html.customData = object
+                        selectMain()
 
-                        setTimeout(() => this.waitTillDOMAttached().then(() => {
-                            if (html.parentElement.$(':first-child') == html) {
-                                html.click()
-                            }
-                        }), 250)
+                        html.customData = data
 
                         return html
 
@@ -250,6 +260,18 @@ class Navigation extends Widget {
         )
 
 
+        /** @type {HTMLElement[]} */ this[itemHTMLs];
+        this.pluralWidgetProperty(
+            {
+                selector: 'div',
+                parentSelector: '.container >.items',
+                property: itemHTMLs,
+                childType: 'html'
+            }
+        )
+
+
+
 
         this.statedata.$0.addEventListener('items-change', new DelayedAction(
             () => {
@@ -257,6 +279,23 @@ class Navigation extends Widget {
             }, 50, 250
         ));
 
+        // Due to the way the widget loads, with CSS coming much later,
+        // we want that whenever the dimensions of the key area of this widget changes, let's adjust the highlight all over
+        this.waitTillDOMAttached().then(() => {
+            const observer = new ResizeObserver(() => {
+                this.select(this.itemSelected)
+            })
+            observer.observe(this.html.$(':scope >.container >.items'), { box: 'content-box' })
+        })
+
+    }
+
+    /**
+     * This method selects a tab
+     * @param {string} id 
+     */
+    select(id) {
+        this[itemHTMLs][this[items].findIndex(x => x.id == id)]?.click()
     }
     /**
      * This method moves the highlighter to the option pertaining to this element.

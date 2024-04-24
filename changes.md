@@ -1,3 +1,5 @@
 .
 
-Updated to the latest version of the soul system, and finance, with bug fixes.
+Optimized for mobile view.
+
+Updated to the latest version of the Chat Faculty, with better UI.
