@@ -1,3 +1,3 @@
 .
 
-Changed the APK.
+Improved onboarding algorithm.

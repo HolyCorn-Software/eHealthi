@@ -8,6 +8,7 @@
 import Onboarding from "./onboarding.mjs";
 import { pluginData } from "/$/modernuser/static/authentication/lib/widget-model.mjs";
 import LoginWidget from "/$/modernuser/static/widgets/login-widget/widget.mjs";
+import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { SlideContainer } from "/$/system/static/html-hc/widgets/slide-container/container.mjs";
 
@@ -101,7 +102,9 @@ export default class eHealthiLoginWidget extends Widget {
             // First things first... Actually allow the natural process to flow
             await LoginWidget.prototype.onAction.call(this.main, widget, action, data)
 
-            if (action !== 'signup') { // If the user is not signing up, then we have no futher business
+            // If the user is signing up, or hasn't configured his account...
+            // we should give him the opportunity to modify his profile
+            if ((action != 'signup') && await hcRpc.modernuser.onboarding.checkMyOnboarding()) {
                 return
             }
 
