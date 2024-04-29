@@ -2,6 +2,9 @@
     "compilerOptions": {
         "baseUrl": "",
         "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "allowImportingTsExtensions": true,
+        "esModuleInterop": true,
         "paths": {
             "/$/system/static/*": [
                 "system/public/*"

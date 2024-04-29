@@ -1,3 +1,3 @@
 .
 
-Updated beta APK. 
+Improved server management command update feature.

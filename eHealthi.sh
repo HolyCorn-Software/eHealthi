@@ -155,7 +155,7 @@ Possible options are: issue"
         done
 
         git pull --recurse-submodule
-        git submodule foreach 'git checkout main && git pull'
+        git submodule foreach --recursive 'git checkout main && git pull'
         enable_command
 
         # Copy back the old TLS certificate, CA certificate, and key
