@@ -99,13 +99,13 @@ export default class eHealthiLoginWidget extends Widget {
 
         this.main.onAction = async (widget, action, data) => {
 
-            // First things first... Actually allow the natural process to flow
-            await LoginWidget.prototype.onAction.call(this.main, widget, action, data)
+            const doNormal = () => LoginWidget.prototype.onAction.call(this.main, widget, action, data)
+
 
             // If the user is signing up, or hasn't configured his account...
             // we should give him the opportunity to modify his profile
             if ((action != 'signup') && await hcRpc.modernuser.onboarding.checkMyOnboarding()) {
-                return
+                return await doNormal()
             }
 
 
@@ -116,6 +116,7 @@ export default class eHealthiLoginWidget extends Widget {
                 // And then, when the user has completely set up his account
                 // we let him sign up again.
                 this.slider.index = 0
+                setTimeout(doNormal, 2000)
             }, { once: true })
         }
 
