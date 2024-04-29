@@ -102,9 +102,9 @@ export default class eHealthiLoginWidget extends Widget {
             const doNormal = () => LoginWidget.prototype.onAction.call(this.main, widget, action, data)
 
 
-            // If the user is signing up, or hasn't configured his account...
-            // we should give him the opportunity to modify his profile
-            if ((action != 'signup') && await hcRpc.modernuser.onboarding.checkMyOnboarding()) {
+            // Only if the user is signing up, or hasn't configured his account...
+            // should give him the opportunity to modify his profile
+            if ((action != 'signup') && (action != 'reset' && await hcRpc.modernuser.onboarding.checkMyOnboarding())) {
                 return await doNormal()
             }
 
