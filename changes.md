@@ -1,3 +1,3 @@
 .
 
-Improved server management command update feature.
+Installed npm package required for soul system compatibility feature.

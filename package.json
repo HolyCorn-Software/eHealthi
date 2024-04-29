@@ -34,6 +34,7 @@
     "@babel/preset-env": "^7.21.5",
     "archiver": "^6.0.1",
     "aws-sdk": "^2.1461.0",
+    "babel-preset-minify": "^0.5.2",
     "chokidar": "^3.5.3",
     "colors": "^1.4.0",
     "formidable-serverless": "^1.1.1",
