@@ -1,3 +1,3 @@
 .
 
-Improved onboarding process algorithm.
+Updated to the latest version of the soul system, with better caching.
