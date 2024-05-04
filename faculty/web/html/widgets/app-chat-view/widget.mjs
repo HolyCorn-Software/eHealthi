@@ -31,8 +31,7 @@ export default class AppChatView extends Widget {
                             </div>
                         </div>
 
-                        <div class='content'>
-                        </div>
+                        <div class='content'></div>
                         
                     </div>
                 `
@@ -57,6 +56,16 @@ export default class AppChatView extends Widget {
                         return html?.widgetObject?.statedata?.$0data
                     }
                 }
+            }
+        )
+
+        /** @type {Item[]} */ this.itemWidgets
+        this.pluralWidgetProperty(
+            {
+                selector: ['', ...Item.classList].join('.'),
+                parentSelector: '.container >.content',
+                property: 'itemWidgets',
+                childType: 'widget'
             }
         )
 
@@ -103,7 +112,24 @@ export default class AppChatView extends Widget {
                 ]
 
             })
-        })
+        });
+
+        // The search functionality.
+        // Let's keep it simple.
+        this.html.$(':scope >.container >.top >.search >input').addEventListener('keydown', new DelayedAction(() => {
+            /** @type {string} */
+            const input = (this.html.$(':scope >.container >.top >.search >input')).value
+
+            const regExp = new RegExp(input.replaceAll(/[^a-zA-Z0-9]/gi, '.*'), 'gi')
+
+            this.itemWidgets.forEach(item => {
+                item.html.classList.toggle(
+                    'hidden-by-search',
+                    !regExp.test(item.statedata.$0data.label) && !regExp.test(item.statedata.$0data.caption)
+                )
+            })
+
+        }, 250, 1500))
 
     }
 

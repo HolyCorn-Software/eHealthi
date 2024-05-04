@@ -46,7 +46,7 @@
     "node-fetch": "^3.3.1",
     "node-static": "^0.7.11",
     "short-uuid": "^4.2.2",
-    "tranzak-node": "^3.1.1",
+    "tranzak-node": "github:HolyCorn-Software/tranzak-node",
     "unzipper": "^0.10.11",
     "uuid": "^9.0.0"
   }

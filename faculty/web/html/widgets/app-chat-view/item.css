@@ -96,3 +96,13 @@
 .hc-ehealthi-app-chat-view-item>.container>.main>.indicators>.count:empty {
     display: none;
 }
+
+
+/** The logic of hidding items on the view, by search */
+.hc-ehealthi-app-chat-view-item {
+    transition: 0.125s;
+}
+.hc-ehealthi-app-chat-view-item.hidden-by-search {
+    opacity: 0;
+    font-size: 0em;
+}

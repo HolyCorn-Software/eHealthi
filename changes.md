@@ -1,5 +1,5 @@
 .
 
-Updated to the latest version of the soul system, with a bug fix.
+Implemented search feature for chats.
 
-Improved the signup and onboardng algorithm.
+Updated to the latest version of the soul system, having better error handling.

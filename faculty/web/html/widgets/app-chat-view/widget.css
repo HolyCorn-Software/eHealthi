@@ -74,6 +74,11 @@
     gap: clamp(1em, 2em, 4vw);
 }
 
+.hc-ehealthi-app-chat-view>.container>.content:empty::before {
+    content: "You don't have any chats yet." "\a Chats appear with people, after you book appointments with them. \a When you book an appointment, you would be assigned someone.\a\a Go to the Consult tab.";
+    white-space: pre-wrap;
+}
+
 
 @keyframes hc-ehealthi-app-chat-view-top-anim {
 
