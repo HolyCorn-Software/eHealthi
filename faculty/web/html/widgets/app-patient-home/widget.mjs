@@ -57,7 +57,7 @@ export default class PatientHome extends Widget {
                     {
                         id: 'lab',
                         label: 'Lab',
-                        content: hc.spawn({ innerHTML: `Coming soon` }),
+                        content: hc.spawn({ innerHTML: `You don't have any things to do in the lab.<br>If the doctor requires that you do a lab test, you can come back to this tab.` }),
                         icon: 'labs.svg'
                     }
                 ]
