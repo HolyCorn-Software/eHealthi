@@ -36,6 +36,7 @@ export default class AppointmentPublicMethods {
                 time: init.time,
                 patient: init.patient || userid,
                 doctor: init.doctor,
+                type: init.type,
             }
         )
     }
@@ -83,12 +84,87 @@ export default class AppointmentPublicMethods {
      * 
      * Users call methods from the TimetableController instead.
      * 
-     * @param {object} data
-     * @param {number} data.start Appointments created before this time would be ignored
+     * @param {object} value
+     * @param {number} value.start Appointments created before this time would be ignored
      */
     async getReadyAppointments(data) {
         return await this[controller].getReadyAppointments({ ...arguments[1], userid: (await muser_common.getUser(arguments[0])).id })
     }
+
+
+    /**
+    * This method adds 
+    * @param {object} param0 
+    * @param {ehealthi.health.appointment.AppointmentType} param0.data
+    */
+    async addAppointmentType({ data }) {
+
+
+        return await this[controller].addAppointmentType(
+            {
+                ...arguments[1],
+                userid: (await muser_common.getUser(arguments[0])).id,
+            }
+        )
+
+
+
+    }
+    /**
+     * This method adds 
+     * @param {object} param0 
+     * @param {string} param0.id
+     * @param {ehealthi.health.appointment.AppointmentType} param0.data
+     */
+    async updateAppointmentType({ id, data }) {
+
+
+        return await this[controller].updateAppointmentType(
+            {
+                ...arguments[1],
+                userid: (await muser_common.getUser(arguments[0])).id,
+            }
+        )
+
+
+    }
+    /**
+     * This method adds 
+     * @param {object} param0 
+     * @param {string} param0.id
+     */
+    async deleteAppointmentType({ id }) {
+
+
+        return await this[controller].deleteAppointmentType(
+            {
+                ...arguments[1],
+                userid: (await muser_common.getUser(arguments[0])).id,
+            }
+        )
+
+
+
+    }
+
+    /**
+     * This method returns the various types of appointments in the system
+     */
+    async getAppointmentTypes() {
+
+        return new JSONRPC.MetaObject(
+            await this[controller].getAppointmentTypes(),
+            {
+                cache: {
+                    expiry: 5 * 60 * 1000,
+                    tag: 'health.appointment.types'
+                }
+            }
+        )
+
+    }
+
+
 
 
 }

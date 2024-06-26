@@ -7,6 +7,7 @@
 
 import InventoryController from "./inventory/controller.mjs";
 import ServiceProviderController from "./service-provider/controller.mjs";
+import TransactionController from "./transaction/controller.mjs";
 
 
 
@@ -15,6 +16,7 @@ export default class CommerceController {
     constructor() {
         this.inventory = new InventoryController()
         this.service_provider = new ServiceProviderController()
+        this.transaction = new TransactionController({ inventory: this.inventory })
     }
 
 }

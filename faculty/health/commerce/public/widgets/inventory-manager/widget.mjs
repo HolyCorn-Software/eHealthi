@@ -48,11 +48,10 @@ export default class InventoryManager extends ListDataManager {
                     return await Promise.all(
                         input.map(
                             async x => {
-                                /** @type {this['content'][number]} */
-                                const adjusted = { ...x, 'price.currency': undefined, price: { currency: 'XAF', value: x['price.currency'] } };
+                                x.price.currency = 'XAF'
                                 return {
-                                    id: await hcRpc.health.commerce.inventory.addItem({ data: adjusted }),
-                                    ...adjusted
+                                    id: await hcRpc.health.commerce.inventory.addItem({ data: x, }),
+                                    ...x
                                 }
                             }
                         )
@@ -93,10 +92,10 @@ export default class InventoryManager extends ListDataManager {
                 edit: {
 
                     execute: async (input) => {
-                        const copy = JSON.parse(JSON.stringify(copy))
+                        const copy = JSON.parse(JSON.stringify(input))
                         delete copy.id
                         await hcRpc.health.commerce.inventory.modifyItem({ id: input.id, data: copy })
-                        return input
+                        return copy
                     },
                 }
             },

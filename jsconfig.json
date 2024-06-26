@@ -62,6 +62,9 @@
             ],
             "/$/chat/calling/static/*": [
                 "faculty/chat/calling/public/*"
+            ],
+            "/$/web/html/*": [
+                "faculty/web/html/*"
             ]
         }
     },

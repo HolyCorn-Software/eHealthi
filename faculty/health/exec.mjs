@@ -32,7 +32,9 @@ export default async function () {
         prescription: prescriptionController
     });
 
-    const recordsController = new MedicalRecordsController()
+    const recordsController = new MedicalRecordsController({
+        transaction: commerceController.transaction
+    })
 
     const faculty = FacultyPlatform.get()
 

@@ -6,6 +6,7 @@
 
 import EHealthiArrowButton from "../../arrow-button/widget.mjs";
 import PatientConsultationExec from "./execute.mjs";
+import SelectAppointmentType from "./select-appointment-type.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 import { NiceNumberInput } from "/$/system/static/html-hc/widgets/nice-number-input/input.mjs";
 import SimpleCalendar from "/$/system/static/html-hc/widgets/simple-calendar/widget.mjs";
@@ -32,8 +33,8 @@ export default class PatientConsultationInit extends Widget {
                                 <div class='title'>What time ?</div>
                             </div>
 
-                            <div class='section doctor-select'>
-                                <div class='title'>Which doctor do you prefer ?</div>
+                            <div class='section select-appointment-type'>
+                                <div class='title'>What type of consultation?</div>
                             </div>
                         </div>
                     </div>
@@ -54,6 +55,7 @@ export default class PatientConsultationInit extends Widget {
                             title: `Consultation`,
                             view: (exec ||= new PatientConsultationExec({
                                 time: dateSelect.selectedDate.setHours(timeSelect.value, 0, 0, 0),
+                                type: selectAppointmentType.value
                             })).html
                         }
                     })
@@ -65,7 +67,7 @@ export default class PatientConsultationInit extends Widget {
                 }, { once: true })
             }
         });
-        
+
         /** @type {(event: 'dismiss', cb: (event: CustomEvent)=>void, opts?: AddEventListenerOptions)} */ this.addEventListener
 
         this.html.$('.container >.btn-continue').appendChild(
@@ -93,7 +95,7 @@ export default class PatientConsultationInit extends Widget {
         timeSelect.value = 10;
 
         const onchange = () => {
-            if (dateSelect.selectedDate < new Date().setHours(0, 0, 0, 0)) {
+            if ((dateSelect.selectedDate < new Date().setHours(0, 0, 0, 0)) || !selectAppointmentType.value) {
                 btnContinue.state = 'disabled'
                 return;
             }
@@ -101,8 +103,14 @@ export default class PatientConsultationInit extends Widget {
             btnContinue.state = 'initial'
         };
 
+        const selectAppointmentType = new SelectAppointmentType()
+        this.html.$(':scope >.container >.sections >.section.select-appointment-type').appendChild(
+            selectAppointmentType.html
+        )
+
         timeSelect.addEventListener('change', onchange)
         dateSelect.addEventListener('selectionchange', onchange)
+        selectAppointmentType.addEventListener('change', onchange)
     }
 
 

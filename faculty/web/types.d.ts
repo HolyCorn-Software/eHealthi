@@ -19,4 +19,16 @@ global {
             }
         }
     }
+
+    namespace telep.chat.management {
+        interface ChatRolesEnum {
+            hc_eHealthi_customer_support: true
+        }
+    }
+
+    namespace modernuser.permission {
+        interface AllPermissions {
+            'permissions.web.customerService.manage': true
+        }
+    }
 }

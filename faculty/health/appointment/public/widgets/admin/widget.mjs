@@ -36,6 +36,25 @@ export default class AppointmentAdmin extends ListDataManager {
                             view: '::text'
                         },
                         {
+                            name: 'type',
+                            label: `Appointment Type`,
+                            view: async (input) => {
+                                const types = await hcRpc.health.appointment.getAppointmentTypes()
+                                const theType = types.find(x => x.id == input) || { id: input, label: 'Unknown Type', icon: '/$/shared/static/logo.png' }
+
+                                return hc.spawn({
+                                    innerHTML: `
+                                        <div class='container'>
+                                            <div class='main'>
+                                                <div class='icon'></div>
+                                                <div class='label'>${theType.label}</div>
+                                            </div>
+                                        </div>
+                                    `
+                                })
+                            }
+                        },
+                        {
                             label: `Patient`,
                             name: 'patient',
                             view: async (userid) => {

@@ -4,6 +4,8 @@
  * This module allows access to generalized features by users over the public web
  */
 
+import muser_common from "muser_common";
+
 
 /**
  * @type {modernuser.notification.Template}
@@ -45,10 +47,10 @@ export default class WebPublicMethods extends FacultyPublicMethods {
 
     /**
      * This method is called by the frontend, when an annonymous user wants to contact support.
-     * @param {object} data 
-     * @param {string} data.names
-     * @param {string} data.contact
-     * @param {string} data.message
+     * @param {object} value 
+     * @param {string} value.names
+     * @param {string} value.contact
+     * @param {string} value.message
      */
     async requestSupport(data) {
         data = arguments[1]
@@ -75,8 +77,108 @@ export default class WebPublicMethods extends FacultyPublicMethods {
         }))
     }
 
+    /**
+     * This method gets the chat that this user uses to speak with customer support.
+     */
+    async getCustomerSupportChat() {
+
+        /** @type {string} */
+        let defaultChat;
+
+        const userid = (await muser_common.getUser(arguments[0])).id;
+        const chatConnection = await connections.chat();
+
+        for await (const item of await chatConnection.management.getUserChats({ userid: userid, type: 'roled' })) {
+            if (item.role.data.name == 'hc_eHealthi_customer_support') {
+                defaultChat = item.id
+            }
+        }
+
+        return await chatConnection.management.getChatViewData({
+            id: defaultChat ||= await (async () => {
+                return await chatConnection.management.createChat({
+                    type: 'roled',
+                    role: 'hc_eHealthi_customer_support',
+                    userid,
+                    recipients: [userid],
+                    rules: {
+                        call: {
+                            voice: ['role'],
+                            video: ['role']
+                        },
+                        end: ['any']
+                    },
+                });
+            })(),
+            userid
+        })
+
+    }
+
+    /**
+     * This method tells the user if he's a customer service representative
+     */
+    async isCustomerServiceAgent() {
+        const value = await (await connections.chat()).management.isMemberOfRole({ role: 'hc_eHealthi_customer_support', userid: (await muser_common.getUser(arguments[0])).id });
+        return new JSONRPC.MetaObject(value, {
+            cache: {
+                expiry: value ? 30 * 60 * 1000 : 18 * 60 * 1000,
+                tag: 'eHealthi.web.customerService.agentState',
+            }
+        })
+    }
+
+    /**
+     * This method makes a particular user a customer service agent
+     * @param {object} param0 
+     * @param {string} param0.accountId
+     */
+    async makeUserAnAgent({ accountId }) {
+        accountId = arguments[1]?.accountId
+
+        await muser_common.whitelisted_permission_check({
+            userid: (await muser_common.getUser(arguments[0])).id,
+            permissions: ['permissions.web.customerService.manage'],
+        });
+
+
+        await (await connections.chat()).management.addUserToRole({
+            role: 'hc_eHealthi_customer_support',
+            member: accountId
+        });
+
+        const profile = await (await FacultyPlatform.get().connectionManager.overload.modernuser()).profile.get_profile({ id: accountId })
+
+        delete profile.meta
+        delete profile.temporal
+
+        return profile
+    }
+
+
+    /**
+     * This method removes someone as a customer service agent
+     * @param {object} param0 
+     * @param {string} param0.accountId
+     */
+    async removeAgent({ accountId }) {
+        accountId = arguments[1]?.accountId
+
+        return await (await connections.chat()).management.removeUserFromRole({
+            role: 'hc_eHealthi_customer_support',
+            member: accountId
+        })
+    }
+
     static async init() {
-        await (await FacultyPlatform.get().connectionManager.overload.modernuser()).notification.createTemplate(SUPPORT_NOTIF_TEMPLATE)
+        await (await connections.modernuser()).notification.createTemplate(SUPPORT_NOTIF_TEMPLATE);
+
+        await (await connections.chat()).management.createChatRole({
+            label: `Customer Support`,
+            name: 'hc_eHealthi_customer_support',
+        });
     }
 
 }
+
+const connections = FacultyPlatform.get().connectionManager.overload;

@@ -36,6 +36,17 @@
                     "inherits": [
                         "permissions.modernuser.profiles.search"
                     ]
+                },
+                {
+                    "name": "permissions.health.commerce.transaction.create",
+                    "label": "Prescribe a lab test"
+                },
+                {
+                    "name": "permissions.health.commerce.transaction.supervise",
+                    "label": "Manage all Lab Test transactions",
+                    "inherits": [
+                        "permissions.health.commerce.transaction.create"
+                    ]
                 }
             ]
         }

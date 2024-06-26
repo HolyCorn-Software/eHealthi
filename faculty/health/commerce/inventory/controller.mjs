@@ -31,7 +31,6 @@ export default class InventoryController {
      * @param {string} param0.userid
      */
     async *getInventory({ userid }) {
-        await InventoryController.permissionCheck({ userid })
 
         for await (const item of collections.inventory.find({})) {
             delete item._id
@@ -39,6 +38,55 @@ export default class InventoryController {
         }
 
     }
+
+    /**
+     * This method searches for an item in the inventory
+     * @param {object} param0 
+     * @param {string} param0.userid
+     * @param {string} param0.filter
+     */
+    async *search({ userid, filter }) {
+        const regexp = new RegExp(filter.replaceAll(/[^a-zA-Z0-9]/gi, '.*'))
+        for await (const item of collections.inventory.find({ $or: [{ label: { $regex: regexp } }, { description: { $regex: regexp } }] }, 'gi')) {
+            delete item._id
+            yield item
+        }
+    }
+
+    /**
+     * This method fetches a single item from the inventory collection
+     * @param {object} param0 
+     * @param {string} param0.userid
+     * @param {string} param0.id
+     */
+    async getItem({ userid, id }) {
+        const data = await collections.inventory.findOne({ id })
+        delete data._id
+        return data
+    }
+
+    /**
+     * This method gets the system's inventory as an array.
+     * This is mainly to aid caching.
+     * @returns 
+     */
+    async getInventoryDirect() {
+        const stream = await this.getInventory({})
+        const array = []
+
+        for await (const item of stream) {
+            array.push(item)
+        }
+
+        return new JSONRPC.MetaObject(array, {
+            cache: {
+                expiry: 45 * 60 * 1000,
+                tag: 'health.commerce.inventory'
+            },
+        })
+
+    }
+
 
     /**
      * This method adds a commodity to the system's inventory list.

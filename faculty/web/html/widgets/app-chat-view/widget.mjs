@@ -4,9 +4,12 @@
  * This widget (app-chat-view), allows a doctor, or patient to chat, and call other users.
  */
 
+import CustomerServiceAgentView from "../app-customer-service-agent/widget.mjs";
+import CustomerServiceChat from "../app-customer-service-chat/widget.mjs";
 import Item from "./item.mjs";
 import ChatEventClient from "/$/chat/static/event-client/client.mjs";
 import hcRpc from "/$/system/static/comm/rpc/aggregate-rpc.mjs";
+import { handle } from "/$/system/static/errors/error.mjs";
 import AlarmObject from "/$/system/static/html-hc/lib/alarm/alarm.mjs";
 import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
@@ -31,12 +34,40 @@ export default class AppChatView extends Widget {
                             </div>
                         </div>
 
+                        <div class='customer-service-float-action'></div>
+
                         <div class='content'></div>
                         
                     </div>
                 `
             }
         );
+
+        const customerServiceFloatSelector = ':scope >.container >.customer-service-float-action';
+        this[this.defineImageProperty({
+            selector: customerServiceFloatSelector,
+            property: Symbol(),
+            cwd: import.meta.url,
+            mode: 'inline',
+        })] = './customer-service.svg';
+
+        this.html.$(customerServiceFloatSelector).addEventListener('click', async () => {
+
+            this.loadWhilePromise((async () => {
+
+                const isAgent = await hcRpc.web.isCustomerServiceAgent()
+
+                this.html.dispatchEvent(new WidgetEvent('backforth-goto', {
+                    detail: {
+                        title: isAgent ? `Customer Service` : ``,
+                        view: isAgent ? new CustomerServiceAgentView().html : new CustomerServiceChat().html,
+                    }
+                }))
+
+
+            })()).catch(handle)
+        })
+
 
         /** @type {ehealthi.ui.app.app_chat_view.Statedata} */
         this.statedata = new AlarmObject()
@@ -77,30 +108,13 @@ export default class AppChatView extends Widget {
         this.statedata.$0.addEventListener('chats-change', onchange)
 
         this.waitTillDOMAttached().then(() => {
-            this.statedata.chats = [...' '.repeat(2)].map(x => [
-                {
-                    label: `Loading...`,
-                    caption: `Loading your chats.`,
-                    id: 'tanko-0',
-                    lastTime: Date.now() - 10 * 60 * 1000,
-                    unreadCount: 2,
-                    icon: '/$/shared/static/logo.png',
-                    lastDirection: 'incoming'
-                },
-                {
-                    label: `Loading...`,
-                    caption: `Loading all your chats, please wait.`,
-                    id: 'tanko-0',
-                    lastTime: Date.now() - 30 * 60 * 1000 + (Math.random() * 60000),
-                    unreadCount: 1,
-                    icon: '/$/shared/static/logo.png',
-                    lastDirection: 'outgoing'
-                }
-            ]).flat()
+            this.statedata.chats = []
         });
 
+        /** @type {telep.chat.management.ChatType} */ this.type
+
         this.blockWithAction(async () => {
-            this.statedata.chats = await hcRpc.chat.getMyChatsMetadata()
+            this.statedata.chats = await hcRpc.chat.getMyChatsMetadata(this.type)
 
             const instance = await ChatEventClient.create()
             instance.events.addEventListener('telep-chat-new-chat', (event) => {

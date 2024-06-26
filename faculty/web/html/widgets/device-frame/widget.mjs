@@ -134,6 +134,10 @@ class ViewContainer extends Widget {
         );
 
         this.htmlProperty(undefined, 'visible', 'class', () => {
+
+            this.html.classList.add('animating')
+
+
             setTimeout(() => {
                 if (this.visible) {
                     this[backforth] ||= (() => {
@@ -153,6 +157,9 @@ class ViewContainer extends Widget {
                         )
                         return backforth
                     })()
+
+                    setTimeout(() => this.html.classList.remove('animating'), 850)
+
                 }
             }, 20)
         })

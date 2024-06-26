@@ -14,8 +14,10 @@ import ServiceProviderProfileController from "./profile/controller.mjs";
 export default class ServiceProviderController {
 
     constructor() {
-        this.inventory = new ServiceProviderInventoryController()
         this.profile = new ServiceProviderProfileController()
+        this.inventory = new ServiceProviderInventoryController({
+            profile: this.profile
+        })
     }
 
 }

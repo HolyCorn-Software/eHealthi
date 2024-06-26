@@ -80,7 +80,8 @@ export default class PatientConsultationExec extends Widget {
             // Once this view becomes visible, create the appointment
             const id = await hcRpc.health.appointment.create(
                 {
-                    time: init.time
+                    time: init.time,
+                    type: init.type,
                 }
             );
 

@@ -35,7 +35,7 @@
     align-self: flex-start;
     border-radius: 0.85em;
     aspect-ratio: 1/1;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
 }
 
@@ -102,6 +102,7 @@
 .hc-ehealthi-app-chat-view-item {
     transition: 0.125s;
 }
+
 .hc-ehealthi-app-chat-view-item.hidden-by-search {
     opacity: 0;
     font-size: 0em;

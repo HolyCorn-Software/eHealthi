@@ -9,6 +9,7 @@
 import muser_common from "muser_common"
 import shortUUID from "short-uuid"
 import { CollectionProxy } from "../../../system/database/collection-proxy.js"
+import TransactionController from "../commerce/transaction/controller.mjs"
 
 
 const collection = Symbol()
@@ -19,11 +20,74 @@ const collections = new CollectionProxy({
     'records': 'records.default',
 })
 
+const controllers = Symbol()
 
 export default class MedicalRecordsController {
 
-    constructor() {
+    /**
+     * 
+     * @param {object} _controllers 
+     * @param {TransactionController} _controllers.transaction
+     */
+    constructor(_controllers) {
         this[collection] = collections.records
+        this[controllers] = _controllers;
+    }
+
+    /**
+     * This method searches medical records for a given patient
+     * @param {object} param0 
+     * @param {string} param0.userid
+     * @param {string} param0.patient
+     * @param {import('mongodb').Filter<Pick<ehealthi.health.records.MedicalRecord, "content"|"type"|"doctor">>} param0.search
+     */
+    async* searchRecordsFor({ userid, patient, search }) {
+        if (userid !== patient) {
+            await muser_common.whitelisted_permission_check(
+                {
+                    userid,
+                    intent: { freedom: 'use' },
+                    permissions: ['permissions.health.records.view'],
+                }
+            )
+        };
+
+        const legal = soulUtils.pickOnlyDefined(search, ['content', 'type', 'doctor'])
+
+        for await (const item of await this[collection].find({ ...legal, patient })) {
+            delete item._id
+            delete item.patient
+            yield await MedicalRecordsController.fillRecord(item, that[controllers].transaction)
+        }
+
+    }
+
+    /**
+     * This method checks if there's any medical record with the given filter
+     * @param {object} param0 
+     * @param {string} param0.userid
+     * @param {string} param0.patient
+     * @param {import('mongodb').Filter<Pick<ehealthi.health.records.MedicalRecord, "content"|"type"|"doctor">>} param0.search
+     */
+    async recordExists({ userid, patient, search }) {
+        if (userid !== patient) {
+            await muser_common.whitelisted_permission_check(
+                {
+                    userid,
+                    intent: { freedom: 'use' },
+                    permissions: ['permissions.health.records.view'],
+                }
+            )
+        };
+
+
+        const legal = {
+            ...soulUtils.pickOnlyDefined(search, ['content', 'type', 'doctor']),
+            patient
+        }
+
+        return (await this[collection].countDocuments(legal)) > 0
+
     }
 
     /**
@@ -54,7 +118,7 @@ export default class MedicalRecordsController {
         async function* dataIterator() {
             for await (const item of await that[collection].find({ patient, severity: { $lte: severity } }, { sort: { time: 'desc' } })) {
                 delete item._id
-                yield item
+                yield await MedicalRecordsController.fillRecord(item, that[controllers].transaction)
                 profilesStream.write(item.doctor)
             }
             profilesStream.end()
@@ -77,7 +141,7 @@ export default class MedicalRecordsController {
      * This method is used to create a medical record
      * @param {object} param0 
      * @param {string} param0.patient
-     * @param {ehealthi.health.records.MedicalRecordInit} param0.data
+     * @param {Omit<ehealthi.health.records.MedicalRecordInit, "patient">} param0.data
      */
     async insertRecord({ userid, patient, data }) {
 
@@ -88,12 +152,16 @@ export default class MedicalRecordsController {
             }
         )
 
+        const content = data.content;
+        delete data.content
+
         soulUtils.checkArgs(data, {
-            content: 'string',
             title: 'string',
             severity: 'number',
             type: 'string',
         }, "record", undefined, ['exclusive'])
+
+        soulUtils.checkArgs(content, "'string'|'object'", 'data.content')
 
         const id = shortUUID.generate()
 
@@ -101,6 +169,7 @@ export default class MedicalRecordsController {
             {
                 ...data,
                 id,
+                content,
                 doctor: userid,
                 patient,
                 time: data.time || Date.now(),
@@ -189,13 +258,22 @@ export default class MedicalRecordsController {
 
         await this.canModify({ id, userid })
 
+
+        const content = data.content;
+        delete data.content
+
         soulUtils.checkArgs(data, {
-            content: 'string',
             title: 'string',
             severity: 'number',
             time: 'number',
             type: 'string',
         }, "record", undefined, ['definite', 'exclusive'])
+
+        if (typeof content != 'undefined') {
+            soulUtils.checkArgs(content, "'string'|'object'", 'data.content')
+        }
+
+
 
         this[collection].updateOne(
             {
@@ -204,7 +282,8 @@ export default class MedicalRecordsController {
             {
                 $set: {
                     ...data,
-                    doctor: userid
+                    doctor: userid,
+                    [content ? 'content' : 'doctor']: content ? content : userid
                 }
             }
         );
@@ -212,6 +291,20 @@ export default class MedicalRecordsController {
 
 
 
+    }
+
+    /**
+     * This method adds the additional necessary data for a medical record
+     * @param {ehealthi.health.records.MedicalRecord} data 
+     * @param {TransactionController} transactionController
+     */
+    static async fillRecord(data, transactionController) {
+
+        if (data.type == 'diagnosis' && typeof data.content?.id == 'string') {
+            data.content.$transaction = await transactionController.getTransaction({ id: data.content.id })
+        }
+
+        return data
     }
 
     /**

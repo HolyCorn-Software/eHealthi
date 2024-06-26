@@ -59,3 +59,19 @@
     width: 2em;
     height: 2em;
 }
+
+
+/** The view of medical records that are about lab tests */
+
+.hc-ehealthi-health-medical-records-item .hc-ehealthi-health-commerce-view-extension-results-view {
+    min-height: unset;
+}
+
+.hc-ehealthi-health-medical-records-item .hc-ehealthi-health-commerce-view-extension-results-view>.container>:is(.summary, .patient-info),
+.hc-ehealthi-health-medical-records-item .hc-ehealthi-health-commerce-view-extension-results-view>.container>.results>:is(.title, .add-to-history) {
+    display: none;
+}
+
+.hc-ehealthi-health-medical-records-item:has(.hc-ehealthi-health-commerce-view-extension-results-view)>.container>.main>.details>.title {
+    padding-left: 0.75em;
+}

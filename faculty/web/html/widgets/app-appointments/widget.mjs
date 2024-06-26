@@ -27,8 +27,9 @@ export default class AppAppointsmentView extends Widget {
             `
         });
 
+        const listings = new AppointmentListings();
         this.html.$(".container >.listings").appendChild(
-            new AppointmentListings().html
+            listings.html
         )
 
 
@@ -45,7 +46,10 @@ export default class AppAppointsmentView extends Widget {
                                     view: (
                                         bookAppointment ||= (() => {
                                             const widget = new PatientConsultationInit()
-                                            widget.addEventListener('dismiss', () => bookAppointment = null)
+                                            widget.addEventListener('dismiss', () => {
+                                                bookAppointment = null
+                                                listings.download()
+                                            })
                                             return widget
                                         })()
                                     ).html,

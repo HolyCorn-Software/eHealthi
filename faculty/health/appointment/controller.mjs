@@ -18,6 +18,7 @@ const collections = new CollectionProxy({
     'recent': 'appointments.recent',
     'ready': 'appointments.ready',
     'archive': 'appointments.old',
+    'types': 'appointment.types'
 })
 
 export default class AppointmentController {
@@ -185,13 +186,14 @@ export default class AppointmentController {
         let payment;
         const user = await (await FacultyPlatform.get().connectionManager.overload.modernuser()).profile.get_profile({ id: init.userid })
         if (!user.meta?.isDoctor) {
+            const typeData = await collections.types.findOne({ id: init.type })
+            if (!typeData) {
+                throw new Exception(`Please, set the type of consultation.`)
+            }
             payment = await (await FacultyPlatform.get().connectionManager.overload.finance()).payment.create({
                 owners: [user.id],
                 type: 'invoice',
-                amount: {
-                    value: 1,
-                    currency: 'XAF', // TODO: create settings for price of consultation.
-                }
+                amount: typeData.price
             })
         }
 
@@ -334,6 +336,110 @@ export default class AppointmentController {
 
         return data;
     }
+
+    /**
+     * This method adds 
+     * @param {object} param0 
+     * @param {ehealthi.health.appointment.AppointmentType} param0.data
+     * @param {string} param0.userid
+     */
+    async addAppointmentType({ data, userid }) {
+
+
+        await muser_common.whitelisted_permission_check(
+            {
+                userid,
+                permissions: ['permissions.health.appointment.supervise'],
+            }
+        );
+
+        const id = shortUUID.generate();
+
+        soulUtils.checkArgs(data, {
+            label: 'string',
+            description: 'string',
+            icon: 'string',
+            price: {
+                currency: 'string',
+                value: 'number'
+            }
+        }, 'data', undefined, ['exclusive']);
+
+        await collections.types.insertOne({ ...data, id })
+
+        return id
+
+
+    }
+
+
+    /**
+     * This method returns the various types of appointments in the system
+     */
+    async getAppointmentTypes() {
+
+        return await collections.types.find().toArray()
+
+    }
+
+
+    /**
+     * This method adds 
+     * @param {object} param0 
+     * @param {string} param0.id
+     * @param {ehealthi.health.appointment.AppointmentType} param0.data
+     * @param {string} param0.userid
+     */
+    async updateAppointmentType({ id, data, userid }) {
+
+
+        await muser_common.whitelisted_permission_check(
+            {
+                userid,
+                permissions: ['permissions.health.appointment.supervise']
+            }
+        );
+
+
+        soulUtils.checkArgs(data, {
+            label: 'string',
+            description: 'string',
+            icon: 'string',
+            price: {
+                currency: 'string',
+                value: 'number'
+            }
+        }, 'data', undefined, ['exclusive', 'definite']);
+
+        await collections.types.updateOne({ id }, { $set: { ...data, id } });
+
+        // TODO: Inform the client, that the types of appointments have changed
+
+
+
+
+    }
+    /**
+     * This method adds 
+     * @param {object} param0 
+     * @param {string} param0.id
+     * @param {string} param0.userid
+     */
+    async deleteAppointmentType({ id, userid }) {
+
+
+        await muser_common.whitelisted_permission_check(
+            {
+                userid,
+                permissions: ['permissions.health.appointment.supervise'],
+            }
+        );
+
+        await collections.types.deleteOne({ id });
+
+
+    }
+
 
 
     /**

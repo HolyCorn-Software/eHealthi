@@ -12,7 +12,10 @@ global {
     namespace ehealthi.health.records {
         interface MedicalRecord {
             title: string
-            content: string
+            content: string | {
+                id: string
+                $transaction: ehealthi.health.commerce.transaction.TransactionRecordExtra
+            }
             time: number
             created: number
             doctor: string

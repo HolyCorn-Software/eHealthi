@@ -89,7 +89,6 @@ export default class MedicalRecordsView extends Widget {
             ;// This should happen in the background (populating the medical records UI)
             (async () => {
                 for await (const record of await session.data()) {
-                    console.log(`record is `, record)
                     while (true) {
 
                         const profile = profiles.find(x => x.id == record.doctor);
@@ -108,36 +107,6 @@ export default class MedicalRecordsView extends Widget {
                     profiles.push(profile)
                 }
             })();
-
-            // for (let i = 0; i < 4; i++) {
-            //     this.entries.push(
-            //         {
-            //             id: `remark-${i}`,
-            //             title: `Drink Water`,
-            //             content: `Drink more than 1.5L of water each day. It's good for health`,
-            //             patient,
-            //             doctor: me,
-            //             created: Date.now(),
-            //             time: Date.now(),
-            //             type: 'general',
-            //             severity: 2
-            //         }
-            //     )
-
-            //     this.entries.push(
-            //         {
-            //             id: `allergy-${i}`,
-            //             title: `Laziness Allergy`,
-            //             content: `Patient is allergic to laziness. Please, treat him in conditions void of it.`,
-            //             patient,
-            //             doctor: me,
-            //             created: Date.now(),
-            //             time: Date.now(),
-            //             type: 'general',
-            //             severity: 2
-            //         }
-            //     )
-            // }
 
         }))
 

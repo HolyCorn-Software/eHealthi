@@ -8,6 +8,7 @@
 import CommerceController from "../controller.mjs";
 import InventoryPublicMethods from "../inventory/remote/public.mjs";
 import ServiceProviderPublicMethods from "../service-provider/remote/public.mjs";
+import TransactionPublicMethods from "../transaction/remote/public.mjs";
 
 
 
@@ -21,6 +22,7 @@ export default class CommercePublicMethods {
     constructor(controller) {
         this.inventory = new InventoryPublicMethods(controller.inventory)
         this.service_provider = new ServiceProviderPublicMethods(controller.service_provider)
+        this.transaction = new TransactionPublicMethods(controller.transaction)
     }
 
 }

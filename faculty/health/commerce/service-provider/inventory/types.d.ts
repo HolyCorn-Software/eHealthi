@@ -21,4 +21,13 @@ global {
 
         type InventoryCollection = Collection<InventoryItem>
     }
+
+    namespace modernuser.ui.notification {
+        interface ClientFrontendEvents {
+            'ehealthi-health-commerce-service-provider-inventory-new-item': {
+                commodity: string
+            }
+        }
+    }
+
 }

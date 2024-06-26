@@ -6,14 +6,13 @@
 
 import AppAppointsmentView from "../app-appointments/widget.mjs";
 import AppChatView from "../app-chat-view/widget.mjs";
+import AppLabsView from "../app-labs-view/widget.mjs";
 import PatientHealth from "../app-patient-health/widget.mjs";
 import DeviceFrame from "../device-frame/widget.mjs";
 import { Widget, hc } from "/$/system/static/html-hc/lib/widget/index.mjs";
 
 
-/**
- * @extends Widget<PatientHome>
- */
+
 export default class PatientHome extends Widget {
 
 
@@ -57,14 +56,14 @@ export default class PatientHome extends Widget {
                     {
                         id: 'lab',
                         label: 'Lab',
-                        content: hc.spawn({ innerHTML: `You don't have any things to do in the lab.<br>If the doctor requires that you do a lab test, you can come back to this tab.` }),
+                        content: new AppLabsView().html,
                         icon: 'labs.svg'
                     }
                 ]
 
 
 
-                this.html.appendChild(frame.html)
+                this.html.$('.container').appendChild(frame.html)
             }
         )
     }

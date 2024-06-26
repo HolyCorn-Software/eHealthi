@@ -33,9 +33,11 @@ global {
             modified: number
             /** This field indicates if the doctor has marked the appointment over. */
             complete: boolean
+            /** The type of appointment we're making. Linked to {@link AppointmentType.id} */
+            type: string
         }
 
-        type AppointmentInit = Pick<Appointment, "doctor" | "patient" | "userid" | "time">
+        type AppointmentInit = Pick<Appointment, "doctor" | "patient" | "userid" | "time" | "type">
         type AppointmentMutableData = Pick<Appointment, "doctor" | "time">
 
         type AppointmentCollection = soul.util.workerworld.TaskCollection<Appointment>
@@ -44,6 +46,15 @@ global {
             recent: AppointmentCollection
             archive: AppointmentCollection
             ready: AppointmentCollection
+            types: Collection<AppointmentType>
+        }
+
+        interface AppointmentType {
+            id: string
+            icon: string
+            label: string
+            description: string
+            price: finance.Amount
         }
 
         namespace notification {

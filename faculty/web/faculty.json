@@ -15,6 +15,17 @@
                 "public": true,
                 "label": "Widgets public settings"
             }
+        },
+        "modernuser": {
+            "permissions": [
+                {
+                    "name": "permissions.web.customerService.manage",
+                    "label": "Oversee Customer Service",
+                    "inherits": [
+                        "permissions.modernuser.profiles.search"
+                    ]
+                }
+            ]
         }
     }
 }

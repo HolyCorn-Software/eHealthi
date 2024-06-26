@@ -33,13 +33,13 @@ export default class TimetableController {
                     },
                     options: {
                         aggregation: {
-                            timeout: 20_000,
+                            timeout: 5_000,
                             sameData: true,
                         },
                         precallWait: 1000,
                         timeout: 5000,
                         retries: 10,
-                        retryDelay: 2000
+                        retryDelay: 1000
                     }
                 }
             )

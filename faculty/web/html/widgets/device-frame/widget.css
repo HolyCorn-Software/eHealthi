@@ -114,6 +114,7 @@
 
 .hc-ehealthi-device-frame-view-container>.container>.hc-back-forth.can-go-back>.container>.slider>.hc-slide-container>.container>.primary-content {
     --hc-ehealthi-device-frame-view-available-height: calc(100vh - 6.25em - 2em - 1em);
+    --hc-telep-mobile-device-frame-content-height: calc(100vh - 6.25em - 1em);
 }
 
 
@@ -125,6 +126,10 @@
     opacity: 1;
     pointer-events: all;
     font-size: 1em;
+}
+
+.hc-ehealthi-device-frame-view-container.animating>.container>.hc-back-forth>.container>.slider>.hc-slide-container>.container>.primary-content {
+    overflow: hidden;
 }
 
 

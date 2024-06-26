@@ -71,6 +71,7 @@
     align-items: center;
 }
 
-.hc-ehealthi-app-patient-health-appointment-init>.container>.sections>.section.doctor-select {
-    display: none;
+.hc-ehealthi-app-patient-health-appointment-init>.container>.sections>.section.select-appointment-type {
+    display: flex;
+    flex-direction: column;
 }

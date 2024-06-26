@@ -68,6 +68,22 @@
 }
 
 
+.hc-ehealthi-app-chat-view>.container>.customer-service-float-action {
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    top: calc(100% - 8em);
+    left: calc(100% - 2em - 2em - 1.5em);
+    background-color: white;
+    border-radius: 100%;
+    box-shadow: 0px 0px 0.75em var(--theme-color);
+    padding: 0.75em;
+    color: var(--accent-color);
+    background-size: cover;
+    border: 0.0625em solid var(--theme-color);
+}
+
+
 .hc-ehealthi-app-chat-view>.container>.content {
     display: flex;
     flex-direction: column;

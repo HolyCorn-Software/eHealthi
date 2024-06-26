@@ -133,7 +133,7 @@ export default class AppointmentListings extends Widget {
             this.statedata.appointments.push(appointment)
         }
 
-        const download = async () => {
+        this.download = async () => {
             const modifiedStart = this.statedata.$0data.appointments.sort((a, b) => (a.modified || 0) > (b.modified || 0) ? 1 : -1).reverse()[0]?.modified;
             const createdStart = this.statedata.$0data.appointments.sort((a, b) => a.created > b.created ? 1 : -1).reverse()[0]?.created;
             const timeStart = ((this.statedata.$0data.appointments.length == 0) && timeUtils.dayStart(Date.now())) || undefined;
@@ -181,10 +181,10 @@ export default class AppointmentListings extends Widget {
 
             // Whenever there's a connection, or re-connection, we fetch the latest info from the server
             client.events.addEventListener('init', () => {
-                download()
+                this.download()
             })
 
-            download()
+            this.download()
         })
 
 
