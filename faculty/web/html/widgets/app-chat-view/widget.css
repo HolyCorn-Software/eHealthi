@@ -81,6 +81,7 @@
     color: var(--accent-color);
     background-size: cover;
     border: 0.0625em solid var(--theme-color);
+    z-index: 2;
 }
 
 
