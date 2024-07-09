@@ -1,4 +1,5 @@
 .
 
+Fixed minor bug related to account creation.
 
-Improved the UI.
+Updated to the latest version of modernuser, and soul system, with bug fixes, and new features.
