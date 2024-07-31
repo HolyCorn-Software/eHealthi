@@ -31,6 +31,10 @@
     font-weight: 400;
 }
 
+.hc-ehealthi-app-health-alerts>.container>.items:empty {
+    padding-bottom: 2em;
+}
+
 .hc-ehealthi-app-health-alerts>.container>.items:empty::before {
     font-size: 1em;
     color: var(--healthi-blue);

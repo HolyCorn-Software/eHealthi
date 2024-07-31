@@ -5,6 +5,8 @@
  */
 
 import muser_common from "muser_common";
+import FeedsPublicMethods from "../feeds/remote/public.mjs";
+import FeedsController from "../feeds/controller.mjs";
 
 
 /**
@@ -42,6 +44,17 @@ const SUPPORT_NOTIF_TEMPLATE = {
 
 
 export default class WebPublicMethods extends FacultyPublicMethods {
+
+    /**
+     * 
+     * @param {object} controllers 
+     * @param {FeedsController} controllers.feeds
+     */
+    constructor(controllers) {
+        super();
+
+        this.feeds = new FeedsPublicMethods(controllers.feeds)
+    }
 
 
 

@@ -16,15 +16,21 @@
 
 
 
-.hc-ehealthi-app-patient-health>.container>.important {
+.hc-ehealthi-app-patient-health>.container>.section {
     display: flex;
     flex-direction: column;
     gap: 1em;
 }
 
-.hc-ehealthi-app-patient-health>.container>.important>.title {
+.hc-ehealthi-app-patient-health>.container>.section>.title {
     font-size: 1.75em;
     font-weight: bolder;
+    padding: 0.5em;
+    padding-left: 0.125em;
+    background-color: var(--app-bg);
+    z-index: 2;
+    position: sticky;
+    top: -0.125em;
 }
 
 
@@ -35,7 +41,24 @@
     display: flex;
     align-items: flex-end;
     flex-direction: column;
+    z-index: 3;
 }
+
+.hc-ehealthi-app-patient-health>.container>.hold-profile>.welcome {
+    align-self: flex-start;
+    min-width: clamp(5em, 80% - 2em, 28ex);
+    display: flex;
+    gap: 0.75ex;
+    font-size: 1.75em;
+    transition: 0.5s 0.125s;
+}
+
+.hc-ehealthi-app-patient-health:is(.welcome-hidden, :not(.hc-widget-ready))>.container>.hold-profile>.welcome {
+    opacity: 0;
+}
+
+
+
 
 .hc-ehealthi-app-patient-health>.container>.hold-profile>.main {
     display: inline-flex;
@@ -72,7 +95,11 @@
 
 
 .hc-ehealthi-app-patient-health>.container>.hold-profile>.main>.icon::after {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(65, 71, 73, 0.2);
+}
+
+.hc-ehealthi-app-patient-health>.container>:not(.hold-profile, .btn-init-appointment) {
+    padding-top: 2em;
 }
 
 
@@ -83,4 +110,13 @@
     padding-bottom: 7em;
     padding-left: 0.25em;
     padding-top: 5em;
+}
+
+.hc-ehealthi-app-patient-health>.container>.notifications>.more {
+    display: flex;
+    justify-content: center;
+}
+
+.hc-ehealthi-app-patient-health>.container>.notifications>.more>.hc-action-button {
+    font-size: 0.85em;
 }

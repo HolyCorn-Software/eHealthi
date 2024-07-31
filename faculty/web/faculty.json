@@ -6,7 +6,8 @@
         "staticPaths": {
             "/$/shared/static/": "./shared/",
             "/$/web/html/": "./html",
-            "/": "./html"
+            "/": "./html",
+            "${fPath}/feeds/static/": "./feeds/public/"
         }
     },
     "meta": {
