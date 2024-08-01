@@ -12,6 +12,7 @@ import AppNotifications from "../app-notifications/widget.mjs";
 import EHealthiArrowButton from "../arrow-button/widget.mjs";
 import OurProcess from "./our-process/widget.mjs";
 import FeedsView from "/$/web/feeds/static/widgets/feeds/widget.mjs";
+import DelayedAction from "/$/system/static/html-hc/lib/util/delayed-action/action.mjs";
 
 
 export default class PatientHealth extends Widget {
@@ -137,16 +138,22 @@ export default class PatientHealth extends Widget {
             )
         }, { signal: this.destroySignal })
 
-        const onWheel = () => {
-            this.html.classList.toggle('welcome-hidden', this.html.$('.container >.section.important').getBoundingClientRect().top < (window.innerHeight / 20))
-        }
+        const onWheel = new DelayedAction((repeated) => {
+            const welcomePos = this.html.$(':scope >.container >.hold-profile >.welcome').getBoundingClientRect().top
+            this.html.classList.toggle('welcome-hidden', this.html.$('.container >.section.important').getBoundingClientRect().top < welcomePos - 4)
+            if (!repeated) {
+                setTimeout(() => onWheel(true), 1000)
+            }
+        }, 250, 1000)
 
         this.html.addEventListener('hc-connected-to-dom', () => {
             window.addEventListener('wheel', onWheel, { signal: this.destroySignal });
+            window.addEventListener('touchmove', onWheel, { signal: this.destroySignal });
         });
 
         this.html.addEventListener('hc-disconnected-from-dom', () => {
             window.removeEventListener('wheel', onWheel)
+            window.removeEventListener('touchmove', onWheel)
         });
 
 

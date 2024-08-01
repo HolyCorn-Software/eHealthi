@@ -42,11 +42,12 @@ export default class FacebookFeedView extends Widget {
                         attributes: {
                             'data-href': `https://www.facebook.com/${pageID}/posts/${postID}/`,
                             'data-show-text': true,
+                            'data-width': '100%'
                         }
                     }
                 )
             )
-        })
+        });
 
     }
 
