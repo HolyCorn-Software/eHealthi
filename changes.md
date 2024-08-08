@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of chat, with better UI.
+Fixed minor bug related to signup.
