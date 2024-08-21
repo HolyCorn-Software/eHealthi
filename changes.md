@@ -1,3 +1,3 @@
 .
 
-Fixed minor bug related to signup.
+Updated to the latest version of the soul system, and uniqueFileUpload, which have more stability.
