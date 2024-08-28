@@ -1,3 +1,5 @@
 .
 
-Reduced risk of too much data consumption of caching, by intentionally denying bundling of user's profile photos.
+Improved sign in algorithm.
+
+Updated to the latest version of modernuser, with better authentication algorithm.
