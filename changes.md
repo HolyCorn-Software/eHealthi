@@ -1,3 +1,3 @@
 .
 
-Updated to the latest version of the soul system, with better a service-worker networking algorithm.
+Reduced risk of too much data consumption of caching, by intentionally denying bundling of user's profile photos.

@@ -113,6 +113,10 @@ export default class ProfileDataSection extends Widget {
                                     }
                                 }
 
+                                if (finalValue.icon.indexOf('bundle-cache-ignore') == -1) {
+                                    finalValue.icon = `${finalValue.icon}?bundle-cache-ignore=true`
+                                }
+
                                 await hcRpc.modernuser.profile.updateMyProfile(finalValue)
 
                                 Object.assign(this.statedata.profile, finalValue)
