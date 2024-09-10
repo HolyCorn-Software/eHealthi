@@ -91,9 +91,21 @@ export default class InventoryManager extends ListDataManager {
                 edit: {
 
                     execute: async (input) => {
+
+                        if (input['price.value']) {
+                            input.price = {
+                                currency: 'XAF',
+                                value: input['price.value']
+                            }
+                            delete input['price.value']
+                        }
+
                         const copy = JSON.parse(JSON.stringify(input))
                         delete copy.id
+
                         await hcRpc.health.appointment.updateAppointmentType({ id: input.id, data: copy })
+                        copy.id = input.id
+                        
                         return copy
                     },
                 },

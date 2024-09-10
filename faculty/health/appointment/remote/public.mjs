@@ -30,15 +30,15 @@ export default class AppointmentPublicMethods {
 
         const userid = (await muser_common.getUser(arguments[0])).id;
 
-        return await this[controller].create(
-            {
-                userid: userid,
-                time: init.time,
-                patient: init.patient || userid,
-                doctor: init.doctor,
-                type: init.type,
-            }
-        )
+        return new JSONRPC.MetaObject(await this[controller].create({
+            userid: userid,
+            time: init.time,
+            patient: init.patient || userid,
+            doctor: init.doctor,
+            type: init.type,
+        }), {
+            rmCache: ['health.appointment.types']
+        });
     }
 
     /**
@@ -49,12 +49,17 @@ export default class AppointmentPublicMethods {
      * 
      */
     async modify({ id, data }) {
-        return await this[controller].modify(
+        await this[controller].modify(
             {
                 ...arguments[1],
                 userid: (await muser_common.getUser(arguments[0])).id
             }
-        )
+        );
+
+
+        return new JSONRPC.MetaObject({}, {
+            rmCache: ['health.appointment.types']
+        });
     }
 
     /**
@@ -100,7 +105,7 @@ export default class AppointmentPublicMethods {
     async addAppointmentType({ data }) {
 
 
-        return await this[controller].addAppointmentType(
+        await this[controller].addAppointmentType(
             {
                 ...arguments[1],
                 userid: (await muser_common.getUser(arguments[0])).id,
@@ -108,6 +113,9 @@ export default class AppointmentPublicMethods {
         )
 
 
+        return new JSONRPC.MetaObject({}, {
+            rmCache: ['health.appointment.types']
+        });
 
     }
     /**
@@ -119,13 +127,17 @@ export default class AppointmentPublicMethods {
     async updateAppointmentType({ id, data }) {
 
 
-        return await this[controller].updateAppointmentType(
+        await this[controller].updateAppointmentType(
             {
                 ...arguments[1],
                 userid: (await muser_common.getUser(arguments[0])).id,
             }
         )
 
+
+        return new JSONRPC.MetaObject({}, {
+            rmCache: ['health.appointment.types']
+        });
 
     }
     /**
@@ -136,12 +148,16 @@ export default class AppointmentPublicMethods {
     async deleteAppointmentType({ id }) {
 
 
-        return await this[controller].deleteAppointmentType(
+        await this[controller].deleteAppointmentType(
             {
                 ...arguments[1],
                 userid: (await muser_common.getUser(arguments[0])).id,
             }
-        )
+        );
+
+        return new JSONRPC.MetaObject({}, {
+            rmCache: ['health.appointment.types']
+        });
 
 
 

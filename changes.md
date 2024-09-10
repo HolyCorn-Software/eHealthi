@@ -1,5 +1,5 @@
 .
 
-Improved sign in algorithm.
+Updated to the latest version of the soul system with bug fixes.
 
-Updated to the latest version of modernuser, with better authentication algorithm.
+Fixed minor bug with appointment pricing management.

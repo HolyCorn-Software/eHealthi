@@ -411,6 +411,8 @@ export default class AppointmentController {
             }
         }, 'data', undefined, ['exclusive', 'definite']);
 
+        delete data._id;
+
         await collections.types.updateOne({ id }, { $set: { ...data, id } });
 
         // TODO: Inform the client, that the types of appointments have changed
