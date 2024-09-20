@@ -1,3 +1,3 @@
 .
 
-Debugging a notification issue.
+Improved user photo upload.
