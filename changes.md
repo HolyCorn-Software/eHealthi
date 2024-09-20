@@ -1,3 +1,5 @@
 .
 
-Updated to the latest version of the soul system with a minor bug fix.
+Improved background service.
+
+Added transpiling options.

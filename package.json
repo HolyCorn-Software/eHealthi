@@ -28,7 +28,6 @@
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.427.0",
-    "@babel/core": "^7.21.8",
     "@babel/plugin-transform-runtime": "^7.23.2",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.21.5",
@@ -49,7 +48,12 @@
     "short-uuid": "^4.2.2",
     "tranzak-node": "github:HolyCorn-Software/tranzak-node",
     "twitter-api-sdk": "^1.2.1",
+    "uglify-js": "^3.19.3",
     "unzipper": "^0.10.11",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2"
   }
 }
