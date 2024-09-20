@@ -1,5 +1,3 @@
 .
 
-Improved background service.
-
-Added transpiling options.
+Debugging a notification issue.

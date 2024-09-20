@@ -72,32 +72,37 @@ export default class TransactionNotificationController extends EventChannelServe
                 const templates = TransactionNotificationController.templates;
 
                 // Okay, so the client is offline. Let's notify him
-                switch (task.role) {
-                    case 'doctor':
-                    case 'patient':
+                try {
+                    switch (task.role) {
+                        case 'doctor':
+                        case 'patient':
 
-                        await (await FacultyPlatform.get().connectionManager.overload.modernuser()).notification.notifyUser({
-                            userid: task.target,
-                            language: 'en',
-                            template: task.role == 'doctor' ? templates.results_available_doctor.name : templates.results_available_patient.name,
-                            data: task.role == 'doctor' ? [doctor.label, patient.label] : [patient.label, doctor.label]
-                        });
-                        break;
-                    case 'provider':
+                            await (await FacultyPlatform.get().connectionManager.overload.modernuser()).notification.notifyUser({
+                                userid: task.target,
+                                language: 'en',
+                                template: task.role == 'doctor' ? templates.results_available_doctor.name : templates.results_available_patient.name,
+                                data: task.role == 'doctor' ? [doctor.label, patient.label] : [patient.label, doctor.label]
+                            });
+                            break;
+                        case 'provider':
 
-                        await (await FacultyPlatform.get().connectionManager.overload.modernuser()).notification.notifyUser({
-                            userid: task.target,
-                            language: 'en',
-                            template: templates.nw_lab_test.name,
-                            data: [provider.label, "lab test", doctor.label]
-                        });
+                            await (await FacultyPlatform.get().connectionManager.overload.modernuser()).notification.notifyUser({
+                                userid: task.target,
+                                language: 'en',
+                                template: templates.nw_lab_test.name,
+                                data: [provider.label, "lab test", doctor.label]
+                            });
 
-                        break;
-                    default:
-                        console.warn(`Unknown role '${task.role}', for lab notifications.`)
-                        return {
-                            ignored: Date.now() + 45_000
-                        }
+                            break;
+                        default:
+                            console.warn(`Unknown role '${task.role}', for lab notifications.`)
+                            return {
+                                ignored: Date.now() + 45_000
+                            }
+                    }
+                } catch (e) {
+                    console.log(e, `\nprovider `, provider, `\ndoctor `, doctor, `\npatient `, patient, `\naction `, task.role,);
+                    throw e;
                 }
 
                 return {
