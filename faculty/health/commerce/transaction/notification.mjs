@@ -63,6 +63,11 @@ export default class TransactionNotificationController extends EventChannelServe
 
 
                 const fulldata = await this[controllers].transaction.getTransaction({ id: task.transaction })
+                if (!fulldata) {
+                    return {
+                        delete: true,
+                    }
+                }
                 if (task.role == 'provider' && !fulldata.service_provider) {
                     return {
                         ignored: Date.now() + (1.5 * 60_000)
